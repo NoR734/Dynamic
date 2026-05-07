@@ -1,8 +1,8 @@
 id=DynamicTraits
 name=Dynamic Traits and Expanded Moodles
-require=\MoodleFramework
+require=MoodleFramework
 author=PepperCat
-versionMin=42.0.0
+versionMin=42.17.0
 poster=DynamicTraitsAndExpandedMoodles-poster.png
 icon=DynamicTraitsAndExpandedMoodles-icon.png
 description=Features: <LINE>

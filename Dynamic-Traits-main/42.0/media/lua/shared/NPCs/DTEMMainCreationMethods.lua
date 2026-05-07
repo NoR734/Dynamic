@@ -418,12 +418,12 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     TraitFactory.addTrait("SundayDriver", getText("UI_trait_SundayDriver"), -1, getText("UI_trait_SundayDriverDesc"), false)
     TraitFactory.addTrait("PoorPassenger", getText("UI_trait_PoorPassenger"), -1, getText("UI_trait_PoorPassengerDesc"), false, not isMP)
 
-    TraitFactory.addTrait("Nutritionist", getText("UI_trait_nutritionist"), 4, getText("UI_trait_nutritionistdesc"), false)
+    TraitFactory.addTrait("Nutritionist", getText("UI_trait_nutritionist"), 2, getText("UI_trait_nutritionistdesc"), false)
     TraitFactory.addTrait("Nutritionist2", getText("UI_trait_nutritionist"), 0, getText("UI_trait_nutritionistdesc"), true)
 
     TraitFactory.addTrait("Outdoorsman", getText("UI_trait_outdoorsman"), 8, getText("UI_trait_outdoorsmandesc"), false)
     TraitFactory.addTrait("NightVision", getText("UI_trait_NightVision"), 4, getText("UI_trait_NightVisionDesc"), false)
-    TraitFactory.addTrait("Smoker", getText("UI_trait_Smoker"), -4, getText("UI_trait_SmokerDesc"), false)
+    TraitFactory.addTrait("Smoker", getText("UI_trait_Smoker"), -3, getText("UI_trait_SmokerDesc"), false)
     TraitFactory.addTrait("WeakStomach", getText("UI_trait_WeakStomach"), -5, getText("UI_trait_WeakStomachDesc"), false)
     TraitFactory.addTrait("IronGut", getText("UI_trait_IronGut"), 5, getText("UI_trait_IronGutDesc"), false)
 
@@ -958,16 +958,16 @@ DTEMBaseGameCharacterDetails.DoProfessions = function()
 	    repairman:addXPBoost(Perks.Woodwork, 1)
 	    repairman:addXPBoost(Perks.Maintenance, 3)
 	    repairman:addXPBoost(Perks.SmallBlunt, 1)
-        repairman:addXPBoost(Perks.Carving, 1)
+        repairman:addFreeTrait("Inventive")
     else
         local repairman = ProfessionFactory.addProfession("repairman", getText("UI_prof_Repairman"), "profession_repairman2", -3);
 	    repairman:addXPBoost(Perks.Woodwork, 1)
 	    repairman:addXPBoost(Perks.Maintenance, 3)
 	    repairman:addXPBoost(Perks.SmallBlunt, 1)
-        repairman:addXPBoost(Perks.Carving, 1)
+        repairman:addFreeTrait("Inventive")
     end
 
-    local rancher = ProfessionFactory.addProfession("rancher", getText("UI_prof_rancher"), "profession_rancher", -2);
+    local rancher = ProfessionFactory.addProfession("rancher", getText("UI_prof_rancher"), "profession_rancher", 0);
     rancher:addXPBoost(Perks.Farming, 1)
     rancher:addXPBoost(Perks.Husbandry, 3)
     rancher:addXPBoost(Perks.Butchering, 3)
@@ -976,6 +976,7 @@ DTEMBaseGameCharacterDetails.DoProfessions = function()
     if getActivatedMods():contains("LeGourmetRevolution") then
         local farmer = ProfessionFactory.addProfession("farmer", getText("UI_prof_Farmer"), "profession_farmer2", -1);
 	    farmer:addXPBoost(Perks.Farming, 4);
+        farmer:addXPBoost(Perks.Strength, 1);
         farmer:getFreeRecipes():add("MakeMildewCure");
         farmer:getFreeRecipes():add("MakeFliesCureFromCigarettes");
         farmer:getFreeRecipes():add("MakeFliesCureFromLooseTobacco");
@@ -1050,6 +1051,7 @@ DTEMBaseGameCharacterDetails.DoProfessions = function()
     else
         local farmer = ProfessionFactory.addProfession("farmer", getText("UI_prof_Farmer"), "profession_farmer2", 5);
 	    farmer:addXPBoost(Perks.Farming, 4);
+        farmer:addXPBoost(Perks.Strength, 1);
         farmer:getFreeRecipes():add("MakeMildewCure");
         farmer:getFreeRecipes():add("MakeFliesCureFromCigarettes");
         farmer:getFreeRecipes():add("MakeFliesCureFromLooseTobacco");
