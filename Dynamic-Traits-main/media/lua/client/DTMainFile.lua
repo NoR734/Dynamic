@@ -1,5 +1,10 @@
 -- MAIN FILE WHERE ALL THE DIFFERENT FUNCTIONS WILL BE CALLED BASED ON THE DIFFERENT EVENTS
 
+-- In multiplayer client mode, avoid running authoritative progression logic locally.
+local function DTCanRunAuthoritativeTraitLogic()
+    return not isClient();
+end
+
 -- OnPlayerUpdate Main Method to call others
 function DTOnPlayerUpdateMain(player)
     -- INITIALIZATIONS FOR AN EXISTING CHARACTER
@@ -10,9 +15,14 @@ Events.OnPlayerUpdate.Add(DTOnPlayerUpdateMain);
 -- EveryOneMinutes Main Method to call others
 function DTEveryOneMinuteMain()
 
+    if not DTCanRunAuthoritativeTraitLogic() then
+        return;
+    end
+
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryOneMinute EVENT
+        if player then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryOneMinute EVENT
 
         -- MOODLE DISPLAY MANAGEMENT
         overdoseMoodleUpdate(player);
@@ -58,7 +68,8 @@ function DTEveryOneMinuteMain()
         fracturesIfHeavyLoad(player);
 
         tweaksToPlayerMoving(player)
-        
+
+        end
     end
 end
 Events.EveryOneMinute.Add(DTEveryOneMinuteMain);
@@ -66,9 +77,14 @@ Events.EveryOneMinute.Add(DTEveryOneMinuteMain);
 -- EveryTenMinutes Main Method to call others
 function DTEveryTenMinutesMain()
 
+    if not DTCanRunAuthoritativeTraitLogic() then
+        return;
+    end
+
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryTenMinutes EVENT
+        if player then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryTenMinutes EVENT
         if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
             luckyUnluckyEffectsForAgoraClaustroTraits(player);
         end
@@ -93,6 +109,7 @@ function DTEveryTenMinutesMain()
         if player:HasTrait("Bloodlust") then
             bloodlustTraitEffects(player);
         end
+        end
     end
 end
 Events.EveryTenMinutes.Add(DTEveryTenMinutesMain);
@@ -100,9 +117,14 @@ Events.EveryTenMinutes.Add(DTEveryTenMinutesMain);
 -- EveryHours Main Method to call others
 function DTEveryHoursMain()
 
+    if not DTCanRunAuthoritativeTraitLogic() then
+        return;
+    end
+
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryHours EVENT
+        if player then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryHours EVENT
         if player:HasTrait("Smoker") then
             smokerTrait(player);
         end
@@ -129,17 +151,24 @@ function DTEveryHoursMain()
             melancholicTrait(player);
         end
         DTOverdose.overdoseDecrease(player);
+        end
     end
 end
 Events.EveryHours.Add(DTEveryHoursMain);
 
 -- EveryDays Main Method to call others
 function DTEveryDaysMain()
+    if not DTCanRunAuthoritativeTraitLogic() then
+        return;
+    end
+
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
 
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryDays EVENT
-        emotionalIntelligenceRecipes(player);
+        if player then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryDays EVENT
+            emotionalIntelligenceRecipes(player);
+        end
     end
 end
 Events.EveryDays.Add(DTEveryDaysMain);
@@ -147,14 +176,20 @@ Events.EveryDays.Add(DTEveryDaysMain);
 -- OnZombieDead Main Method to call others
 function DTOnZombieDeadMain(zombie)
 
+    if not DTCanRunAuthoritativeTraitLogic() then
+        return;
+    end
+
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE OnZombieDead EVENT
+        if player then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE OnZombieDead EVENT
         if not player:HasTrait("Bloodlust") then
             traitsGainsByKills(player);
         end
         if player:HasTrait("Bloodlust") then
             bloodlustTraitOnZombieKill(player);
+        end
         end
     end
 end
