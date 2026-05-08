@@ -15,6 +15,9 @@ function DTEMEveryOneMinuteMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
+        if player == nil then
+            goto continueEveryOneMinute
+        end
         -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryOneMinute EVENT
 
         -- MOODLE DISPLAY MANAGEMENT
@@ -59,7 +62,8 @@ function DTEMEveryOneMinuteMain()
         DTEMfracturesIfHeavyLoad(player);
 
         DTEMonPlayerMoving(player)
-        
+
+        ::continueEveryOneMinute::
     end
 end
 Events.EveryOneMinute.Add(DTEMEveryOneMinuteMain);
@@ -72,6 +76,9 @@ function DTEMEveryTenMinutesMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
+        if player == nil then
+            goto continueEveryTenMinutes
+        end
         -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryTenMinutes EVENT
         if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
             DTEMluckyUnluckyEffectsForAgoraClaustroTraits(player);
@@ -98,6 +105,8 @@ function DTEMEveryTenMinutesMain()
         if player:HasTrait("Bloodlust") then
             DTEMbloodlustTraitEffects(player);
         end
+
+        ::continueEveryTenMinutes::
     end
 end
 Events.EveryTenMinutes.Add(DTEMEveryTenMinutesMain);
@@ -111,6 +120,9 @@ function DTEMEveryHoursMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
+        if player == nil then
+            goto continueEveryHours
+        end
         -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryHours EVENT
         if player:HasTrait("Smoker") then
             DTEMsmokerTrait(player);
@@ -140,6 +152,7 @@ function DTEMEveryHoursMain()
             --print("Overdose Sandbox is enabled")
             DTEMoverdoseDecrease(player)
         end
+        ::continueEveryHours::
     end
 end
 Events.EveryHours.Add(DTEMEveryHoursMain);

@@ -10,13 +10,14 @@ function DTEMoverdoseMoodleUpdate(player)
     --print("Player overdose: " .. player:getModData().DTEMoverdose)
     local moodle = MF.getMoodle("dtemoverdose", player:getPlayerNum())
     if moodle ~= nil then
-        if player:getModData().DTEMoverdose > 50 and player:getModData().DTEMoverdose <= 70 then
+        local overdoseLevel = tonumber(player:getModData().DTEMoverdose) or 0
+        if overdoseLevel > 50 and overdoseLevel <= 70 then
             moodle:setValue(0.3);
             --print("Moodle 2")
-        elseif player:getModData().DTEMoverdose > 70 and player:getModData().DTEMoverdose <= 85 then
+        elseif overdoseLevel > 70 and overdoseLevel <= 85 then
             moodle:setValue(0.2);
             --print("Moodle 3")
-        elseif player:getModData().DTEMoverdose > 85 and player:getModData().DTEMoverdose <= 100 then
+        elseif overdoseLevel > 85 and overdoseLevel <= 100 then
             moodle:setValue(0.1);
             --print("Moodle 4")
         else
