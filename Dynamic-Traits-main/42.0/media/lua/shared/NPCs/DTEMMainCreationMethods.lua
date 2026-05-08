@@ -7,6 +7,11 @@ DTEMBaseGameCharacterDetails = {}
 DTEMBaseGameCharacterDetails.DoTraits = function()
     print("DT Logger: DTEMBaseGameCharacterDetails.DoTraits function");
 
+    if not TraitFactory or not TraitFactory.addTrait then
+        print("DT Logger: TraitFactory is not available, skipping DoTraits.")
+        return
+    end
+
     local isMP = (isClient() or isServer());
 
     -- VANILLA TRAITS COST REBALANCE
@@ -729,6 +734,11 @@ end
 ---------------------------------
 DTEMBaseGameCharacterDetails.DoProfessions = function()
     print("DT Logger: DTEMBaseGameCharacterDetails.DoProfessions function");
+
+    if not ProfessionFactory or not ProfessionFactory.addProfession then
+        print("DT Logger: ProfessionFactory is not available, skipping DoProfessions.")
+        return
+    end
 
     -- SNAKE ALICE BACKPACK COMPATIBILITY
     if getActivatedMods():contains("AliceSPack") then

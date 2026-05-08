@@ -19,9 +19,7 @@ ToadTraitsRegistries.preparedcoordination = CharacterTrait.register("ToadTraits:
 ToadTraitsRegistries.swift = CharacterTrait.register("ToadTraits:swift")
 ToadTraitsRegistries.ingenuitive = CharacterTrait.register("ToadTraits:ingenuitive")
 
-if getActivatedMods():contains("DynamicTraits") == false then
-    ToadTraitsRegistries.generator = CharacterTrait.register("ToadTraits:generator")
-end
+ToadTraitsRegistries.generator = CharacterTrait.register("ToadTraits:generator")
 
 ToadTraitsRegistries.olympian = CharacterTrait.register("ToadTraits:olympian")
 ToadTraitsRegistries.bouncer = CharacterTrait.register("ToadTraits:bouncer")
