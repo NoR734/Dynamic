@@ -418,7 +418,15 @@ function MF.ISMoodle:getXYPosition()
     local x = getPlayerScreenLeft(self.playerNum) + getPlayerScreenWidth(self.playerNum) - MF.xOffset - self:getWidth()
     local y = getPlayerScreenTop(self.playerNum) + MF.yOffset
     local distY = 10 + MF.defaultWidth * MF.scale
-    local numMoodles = self.char:getMoodles():getNumMoodles();
+    local moodles = self.char and self.char.getMoodles and self.char:getMoodles() or nil
+    local numMoodles = 0
+    if moodles then
+        if moodles.getNumMoodles then
+            numMoodles = moodles:getNumMoodles();
+        elseif MoodleType and MoodleType.MAX then
+            numMoodles = MoodleType.MAX;
+        end
+    end
 
     if self.disable then
         if MF.verbose then print("MF.ISMoodle:getXYPosition while disabled. "..self.name) end;

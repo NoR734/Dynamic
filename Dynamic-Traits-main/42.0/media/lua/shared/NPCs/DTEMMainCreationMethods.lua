@@ -1412,28 +1412,34 @@ end
 DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum, character)
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoNewCharacterInitializations function")
     local player = getSpecificPlayer(playernum);
+    local hasTraitFn = player.HasTrait or player.hasTrait
+    local function hasTrait(traitName)
+        if hasTraitFn then return hasTraitFn(player, traitName) end
+        local traits = player.getTraits and player:getTraits() or nil
+        return traits and traits.contains and traits:contains(traitName) or false
+    end
 
     -- TRAITS CHANGE
-    if player:HasTrait("PhysicallyActive2") then
+    if hasTrait("PhysicallyActive2") then
         player:getTraits():remove("PhysicallyActive2");
         player:getTraits():add("PhysicallyActive");
     end
-    if player:HasTrait("Handy2") then
+    if hasTrait("Handy2") then
         player:getTraits():remove("Handy2");
         player:getTraits():add("Handy");
     end
-    if player:HasTrait("Dextrous2") then
+    if hasTrait("Dextrous2") then
         player:getTraits():remove("Dextrous2");
         player:getTraits():add("Dextrous");
     end
 
     -- INITIALIZATION FOR KILLS PATH
     if player:getModData().DTEMKillsPath == nil then
-        if player:HasTrait("Cowardly") then
+        if hasTrait("Cowardly") then
             player:getModData().DTEMKillsPath = 1;
-        elseif player:HasTrait("Brave") then
+        elseif hasTrait("Brave") then
             player:getModData().DTEMKillsPath = 2;
-        elseif player:HasTrait("Desensitized") then
+        elseif hasTrait("Desensitized") then
             player:getModData().DTEMKillsPath = 3;
         else
             player:getModData().DTEMKillsPath = 4;
@@ -1445,7 +1451,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR DEXTROUS/ALLTHUMBS
     if player:getModData().DTEMallThumbsDextrousTraits == nil then
-        if player:HasTrait("AllThumbs") then
+        if hasTrait("AllThumbs") then
             if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
                 player:getModData().DTEMallThumbsDextrousTraits = -125000;
             elseif player:getDescriptor():getProfession() == "burglar" then
@@ -1455,7 +1461,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
             else
                 player:getModData().DTEMallThumbsDextrousTraits = -200000;
             end
-        elseif player:HasTrait("Dextrous") then
+        elseif hasTrait("Dextrous") then
             player:getModData().DTEMallThumbsDextrousTraits = 200000;
         else
             if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
@@ -1472,7 +1478,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR ORGANIZED/DISORGANIZED TRAITS
     if player:getModData().DTEMdisorganizedOrganizedTraits == nil then
-        if player:HasTrait("Disorganized") then
+        if hasTrait("Disorganized") then
             if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
                 player:getModData().DTEMdisorganizedOrganizedTraits = -200000;
             elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
@@ -1482,7 +1488,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
             else
                 player:getModData().DTEMdisorganizedOrganizedTraits = -300000;
             end
-        elseif player:HasTrait("Organized") then
+        elseif hasTrait("Organized") then
             player:getModData().DTEMdisorganizedOrganizedTraits = 300000;
         else
             if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
@@ -1498,7 +1504,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR OUTDOORSMAN TRAIT
     if player:getModData().DTOutdoorsmanTrait == nil then
-        if player:HasTrait("Outdoorsman") then
+        if hasTrait("Outdoorsman") then
             player:getModData().DTOutdoorsmanTrait = 600000;
         else
             if player:getDescriptor():getProfession() == "parkranger" then
@@ -1514,7 +1520,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR CATSEYES TRAIT
     if player:getModData().DTEMCatsEyesTrait == nil then
-        if player:HasTrait("NightVision") then
+        if hasTrait("NightVision") then
             player:getModData().DTEMCatsEyesTrait = 150000;
         else
             if player:getDescriptor():getProfession() == "securityguard" then
@@ -1530,9 +1536,9 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR RAIN TRAITS
     if player:getModData().DTEMRainTraits == nil then
-        if player:HasTrait("Pluviophile") then
+        if hasTrait("Pluviophile") then
             player:getModData().DTEMRainTraits = 40000;
-        elseif player:HasTrait("Pluviophobia") then
+        elseif hasTrait("Pluviophobia") then
             player:getModData().DTEMRainTraits = -40000;
         else
             player:getModData().DTEMRainTraits = 0;
@@ -1555,7 +1561,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR ALCOHOLIC TRAIT
     if player:getModData().DTEMalcoholicTrait == nil then
-        if player:HasTrait("Alcoholic") then
+        if hasTrait("Alcoholic") then
             player:getModData().DTEMalcoholicTrait = -44640;
         else
             player:getModData().DTEMalcoholicTrait = 0;
@@ -1566,7 +1572,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR ANOREXIC TRAIT
     if player:getModData().DTEManorexyTrait == nil then
-        if player:HasTrait("Anorexy") then
+        if hasTrait("Anorexy") then
             player:getModData().DTEManorexyTrait = -720;
         else
             player:getModData().DTEManorexyTrait = 0;
@@ -1574,9 +1580,9 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR PHYSICALLY ACTIVE/SEDENTARY TRAITS
     if player:getModData().DTEMphysicallyActiveSedentaryTraits == nil then
-        if player:HasTrait("PhysicallyActive") then
+        if hasTrait("PhysicallyActive") then
             player:getModData().DTEMphysicallyActiveSedentaryTraits = 60000;
-        elseif player:HasTrait("Sedentary") then
+        elseif hasTrait("Sedentary") then
             player:getModData().DTEMphysicallyActiveSedentaryTraits = -60000;
         else
             player:getModData().DTEMphysicallyActiveSedentaryTraits = 0;
@@ -1603,12 +1609,12 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         -- MOD DATA = TOTAL
         player:getModData().DTEMkeenHearingHardOfHearingTraits = total;
         -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE HARD OF HEARING OR OBTAIN KEEN HEARING
-        if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and player:HasTrait("HardOfHearing") then
+        if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and hasTrait("HardOfHearing") then
             player:getTraits():remove("HardOfHearing");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_hardhear"), false, HaloTextHelper.getColorGreen());
         end
-        if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not player:HasTrait("KeenHearing") and
-            not player:HasTrait("Deaf") then
+        if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not hasTrait("KeenHearing") and
+            not hasTrait("Deaf") then
             player:getTraits():add("KeenHearing");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_keenhearing"), true,
                 HaloTextHelper.getColorGreen());
@@ -1633,12 +1639,12 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         -- MOD DATA = TOTAL
         player:getModData().DTEMslowFastLearnerTraits = total;
         -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE SLOW LEARNER OR OBTAIN FAST LEARNER
-        if player:getModData().DTEMslowFastLearnerTraits >= 30 and player:HasTrait("SlowLearner") then
+        if player:getModData().DTEMslowFastLearnerTraits >= 30 and hasTrait("SlowLearner") then
             player:getTraits():remove("SlowLearner");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_SlowLearner"), false,
                 HaloTextHelper.getColorGreen());
         end
-        if player:getModData().DTEMslowFastLearnerTraits >= 50 and not player:HasTrait("FastLearner") then
+        if player:getModData().DTEMslowFastLearnerTraits >= 50 and not hasTrait("FastLearner") then
             player:getTraits():add("FastLearner");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_FastLearner"), true,
                 HaloTextHelper.getColorGreen());
@@ -1650,7 +1656,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR NERVOUS WRECK
     if player:getModData().DTEMisNervousWreck == nil then
-        if player:HasTrait("NervousWreck") then
+        if hasTrait("NervousWreck") then
             player:getModData().DTEMisNervousWreck = true
         else
             player:getModData().DTEMisNervousWreck = false
@@ -1664,7 +1670,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR MELANCHOLIC
     if player:getModData().DTEMisMelancholic == nil then
-        if player:HasTrait("Melancholic") then
+        if hasTrait("Melancholic") then
             player:getModData().DTEMisMelancholic = true
         else
             player:getModData().DTEMisMelancholic = false
@@ -1717,7 +1723,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     end
     -- INITIALIZATION FOR ADDICTED TO CAFFEINE TRAIT
     if player:getModData().DTEMaddictedToCaffeineTrait == nil then
-        if player:HasTrait("AddictedToCaffeine") then
+        if hasTrait("AddictedToCaffeine") then
             player:getModData().DTEMaddictedToCaffeineTrait = -20160;
         else
             player:getModData().DTEMaddictedToCaffeineTrait = 0;
@@ -1736,6 +1742,12 @@ end
 ----------------------------------------------------
 DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(player)
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations function")
+    local hasTraitFn = player.HasTrait or player.hasTrait
+    local function hasTrait(traitName)
+        if hasTraitFn then return hasTraitFn(player, traitName) end
+        local traits = player.getTraits and player:getTraits() or nil
+        return traits and traits.contains and traits:contains(traitName) or false
+    end
     -- NPC MOD COMPATIBILITY
     if (player:getModData().DTEMKillsPath == nil or player:getModData().DTEMKillscheck2 == nil or
         player:getModData().DTEMallThumbsDextrousTraits == nil or player:getModData().DTEMdisorganizedOrganizedTraits == nil or
@@ -1755,29 +1767,29 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         player:getModData().DTEMallergy == nil or player:getModData().DTEMpassingOut == nil or 
         player:getModData().DTEMpassingOutQuietTime == nil or player:getModData().DTEMcurrentStrXPLevel == nil or 
         player:getModData().DTEMcurrentFitXPLevel == nil or player:getModData().DTEMaddictedToCaffeineTrait == nil or 
-        player:getModData().DTEMtimeSinceLastCaffeine or player:getModData().DTEMcaffeineOnBody == nil) then
+        player:getModData().DTEMtimeSinceLastCaffeine == nil or player:getModData().DTEMcaffeineOnBody == nil) then
 
         -- TRAITS CHANGE
-        if player:HasTrait("PhysicallyActive2") then
+        if hasTrait("PhysicallyActive2") then
             player:getTraits():remove("PhysicallyActive2");
             player:getTraits():add("PhysicallyActive");
         end
-        if player:HasTrait("Handy2") then
+        if hasTrait("Handy2") then
             player:getTraits():remove("Handy2");
             player:getTraits():add("Handy");
         end
-        if player:HasTrait("Dextrous2") then
+        if hasTrait("Dextrous2") then
             player:getTraits():remove("Dextrous2");
             player:getTraits():add("Dextrous");
         end
 
         -- INITIALIZATION FOR KILLS PATH
         if player:getModData().DTEMKillsPath == nil then
-            if player:HasTrait("Cowardly") then
+            if hasTrait("Cowardly") then
                 player:getModData().DTEMKillsPath = 1;
-            elseif player:HasTrait("Brave") then
+            elseif hasTrait("Brave") then
                 player:getModData().DTEMKillsPath = 2;
-            elseif player:HasTrait("Desensitized") then
+            elseif hasTrait("Desensitized") then
                 player:getModData().DTEMKillsPath = 3;
             else
                 player:getModData().DTEMKillsPath = 4;
@@ -1789,7 +1801,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR DEXTROUS/ALLTHUMBS
         if player:getModData().DTEMallThumbsDextrousTraits == nil then
-            if player:HasTrait("AllThumbs") then
+            if hasTrait("AllThumbs") then
                 if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
                     player:getModData().DTEMallThumbsDextrousTraits = -125000;
                 elseif player:getDescriptor():getProfession() == "burglar" then
@@ -1799,7 +1811,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
                 else
                     player:getModData().DTEMallThumbsDextrousTraits = -200000;
                 end
-            elseif player:HasTrait("Dextrous") then
+            elseif hasTrait("Dextrous") then
                 player:getModData().DTEMallThumbsDextrousTraits = 200000;
             else
                 if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
@@ -1816,7 +1828,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR ORGANIZED/DISORGANIZED TRAITS
         if player:getModData().DTEMdisorganizedOrganizedTraits == nil then
-            if player:HasTrait("Disorganized") then
+            if hasTrait("Disorganized") then
                 if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
                     player:getModData().DTEMdisorganizedOrganizedTraits = -200000;
                 elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
@@ -1826,7 +1838,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
                 else
                     player:getModData().DTEMdisorganizedOrganizedTraits = -300000;
                 end
-            elseif player:HasTrait("Organized") then
+            elseif hasTrait("Organized") then
                 player:getModData().DTEMdisorganizedOrganizedTraits = 300000;
             else
                 if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
@@ -1842,7 +1854,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR OUTDOORSMAN TRAIT
         if player:getModData().DTOutdoorsmanTrait == nil then
-            if player:HasTrait("Outdoorsman") then
+            if hasTrait("Outdoorsman") then
                 player:getModData().DTOutdoorsmanTrait = 600000;
             else
                 if player:getDescriptor():getProfession() == "parkranger" then
@@ -1858,7 +1870,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR CATSEYES TRAIT
         if player:getModData().DTEMCatsEyesTrait == nil then
-            if player:HasTrait("NightVision") then
+            if hasTrait("NightVision") then
                 player:getModData().DTEMCatsEyesTrait = 150000;
             else
                 if player:getDescriptor():getProfession() == "securityguard" then
@@ -1874,9 +1886,9 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR RAIN TRAITS
         if player:getModData().DTEMRainTraits == nil then
-            if player:HasTrait("Pluviophile") then
+            if hasTrait("Pluviophile") then
                 player:getModData().DTEMRainTraits = 40000;
-            elseif player:HasTrait("Pluviophobia") then
+            elseif hasTrait("Pluviophobia") then
                 player:getModData().DTEMRainTraits = -40000;
             else
                 player:getModData().DTEMRainTraits = 0;
@@ -1899,7 +1911,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR ALCOHOLIC TRAIT
         if player:getModData().DTEMalcoholicTrait == nil then
-            if player:HasTrait("Alcoholic") then
+            if hasTrait("Alcoholic") then
                 player:getModData().DTEMalcoholicTrait = -44640;
             else
                 player:getModData().DTEMalcoholicTrait = 0;
@@ -1910,7 +1922,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR ANOREXIC TRAIT
         if player:getModData().DTEManorexyTrait == nil then
-            if player:HasTrait("Anorexy") then
+            if hasTrait("Anorexy") then
                 player:getModData().DTEManorexyTrait = -720;
             else
                 player:getModData().DTEManorexyTrait = 0;
@@ -1918,9 +1930,9 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR PHYSICALLY ACTIVE/SEDENTARY TRAITS
         if player:getModData().DTEMphysicallyActiveSedentaryTraits == nil then
-            if player:HasTrait("PhysicallyActive") then
+            if hasTrait("PhysicallyActive") then
                 player:getModData().DTEMphysicallyActiveSedentaryTraits = 60000;
-            elseif player:HasTrait("Sedentary") then
+            elseif hasTrait("Sedentary") then
                 player:getModData().DTEMphysicallyActiveSedentaryTraits = -60000;
             else
                 player:getModData().DTEMphysicallyActiveSedentaryTraits = 0;
@@ -1947,13 +1959,13 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             -- MOD DATA = TOTAL
             player:getModData().DTEMkeenHearingHardOfHearingTraits = total;
             -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE HARD OF HEARING OR OBTAIN KEEN HEARING
-            if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and player:HasTrait("HardOfHearing") then
+            if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and hasTrait("HardOfHearing") then
                 player:getTraits():remove("HardOfHearing");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_hardhear"), false,
                     HaloTextHelper.getColorGreen());
             end
-            if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not player:HasTrait("KeenHearing") and
-                not player:HasTrait("Deaf") then
+            if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not hasTrait("KeenHearing") and
+                not hasTrait("Deaf") then
                 player:getTraits():add("KeenHearing");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_keenhearing"), true,
                     HaloTextHelper.getColorGreen());
@@ -1978,12 +1990,12 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             -- MOD DATA = TOTAL
             player:getModData().DTEMslowFastLearnerTraits = total;
             -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE SLOW LEARNER OR OBTAIN FAST LEARNER
-            if player:getModData().DTEMslowFastLearnerTraits >= 30 and player:HasTrait("SlowLearner") then
+            if player:getModData().DTEMslowFastLearnerTraits >= 30 and hasTrait("SlowLearner") then
                 player:getTraits():remove("SlowLearner");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_SlowLearner"), false,
                     HaloTextHelper.getColorGreen());
             end
-            if player:getModData().DTEMslowFastLearnerTraits >= 50 and not player:HasTrait("FastLearner") then
+            if player:getModData().DTEMslowFastLearnerTraits >= 50 and not hasTrait("FastLearner") then
                 player:getTraits():add("FastLearner");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_FastLearner"), true,
                     HaloTextHelper.getColorGreen());
@@ -1995,7 +2007,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR NERVOUS WRECK
         if player:getModData().DTEMisNervousWreck == nil then
-            if player:HasTrait("NervousWreck") then
+            if hasTrait("NervousWreck") then
                 player:getModData().DTEMisNervousWreck = true
             else
                 player:getModData().DTEMisNervousWreck = false
@@ -2009,7 +2021,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR MELANCHOLIC
         if player:getModData().DTEMisMelancholic == nil then
-            if player:HasTrait("Melancholic") then
+            if hasTrait("Melancholic") then
                 player:getModData().DTEMisMelancholic = true
             else
                 player:getModData().DTEMisMelancholic = false
@@ -2062,7 +2074,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         end
         -- INITIALIZATION FOR ADDICTED TO CAFFEINE TRAIT
         if player:getModData().DTEMaddictedToCaffeineTrait == nil then
-            if player:HasTrait("AddictedToCaffeine") then
+            if hasTrait("AddictedToCaffeine") then
                 player:getModData().DTEMaddictedToCaffeineTrait = -20160;
             else
                 player:getModData().DTEMaddictedToCaffeineTrait = 0;
