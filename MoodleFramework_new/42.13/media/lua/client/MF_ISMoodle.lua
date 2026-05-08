@@ -418,6 +418,7 @@ function MF.ISMoodle:getXYPosition()
     local x = getPlayerScreenLeft(self.playerNum) + getPlayerScreenWidth(self.playerNum) - MF.xOffset - self:getWidth()
     local y = getPlayerScreenTop(self.playerNum) + MF.yOffset
     local distY = 10 + MF.defaultWidth * MF.scale
+    local numMoodles = self.char:getMoodles():getNumMoodles();
 
     if self.disable then
         if MF.verbose then print("MF.ISMoodle:getXYPosition while disabled. "..self.name) end;
@@ -425,13 +426,10 @@ function MF.ISMoodle:getXYPosition()
     end
     
     if self:getLevel() ~= 0 then--bypass when not displayed (this is bad design)
-        local moodlesValuesForType = Registries.MOODLE_TYPE:values()
-        local numMoodles = moodlesValuesForType:size()
-        local moodles = self.char:getMoodles()
         for i = 0, numMoodles-1 do--vanilla moodles first
-            local moodleType = moodlesValuesForType:get(i)
-            local moodleLevel = moodles:getMoodleLevel(moodleType)
-            if moodleLevel ~= 0 and moodleType ~= MoodleType.FOOD_EATEN or moodleLevel >= 3 then
+            local moodleType = MoodleType.FromIndex(i)
+            local moodleLevel = self.char:getMoodles():getMoodleLevel(moodleType)
+            if moodleLevel ~= 0 and moodleType ~= MoodleType.FoodEaten or moodleLevel >= 3 then
                 y = y + distY;
             end
         end
