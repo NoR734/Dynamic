@@ -254,6 +254,16 @@ local function ProcessBodyPartMechanics(player, args)
     local bodyDamage = player:getBodyDamage()
     local fitness = player:getFitness()
 
+    if args.generalHealthReduce ~= nil then
+        local minimumHealth = clamp(args.minimumHealth or 0, 0, 100)
+        local currentHealth = bodyDamage:getOverallBodyHealth()
+        local safeDamage = clamp(args.generalHealthReduce, 0, 100)
+        safeDamage = math.min(safeDamage, math.max(0, currentHealth - minimumHealth))
+        if safeDamage > 0 then
+            bodyDamage:ReduceGeneralHealth(safeDamage)
+        end
+    end
+
     for _, index in ipairs(PartIndexes) do
         local bodyPartType = BodyPartType.FromIndex(index)
         local bodyPart = bodyDamage:getBodyPart(bodyPartType)

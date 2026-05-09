@@ -1633,7 +1633,6 @@ local function SpecializationAndAntiGun(player, perk, amount)
                 Perks.PlantScavenging,
                 Perks.Trapping,
                 Perks.Fishing,
-                Perks.Foraging,
                 Perks.Tracking,
                 Perks.Husbandry,
                 Perks.Butchering,
@@ -3180,7 +3179,7 @@ local function SuperImmuneRecoveryProcess(player, playerdata)
 
             playerdata.SuperImmuneInfections = 0
         else
-            if not isServer() and MT_Config:getOption("SuperImmuneAnnounce"):getValue() then
+            if not isServer() and MT_Config and MT_Config:getOption("SuperImmuneAnnounce"):getValue() then
                 HaloTextHelper.addTextWithArrow(
                         player,
                         getText("UI_trait_superimmune_fullheal"),
@@ -3233,11 +3232,6 @@ local function SuperImmuneFakeInfectionHealthLoss(player, playerdata)
     if not playerdata.SuperImmuneActive then
         return
     end
-    -- B42 MP sleep can run with accelerated server ticks.
-    -- Avoid applying Super Immune HP decay while asleep in MP to prevent sleep deaths.
-    if (isClient() or isServer()) and player:isAsleep() then
-        return
-    end
 
     local maxHealth = isClient() and 20 or 15
     if player:hasTrait(ToadTraitsRegistries.indefatigable) then
@@ -3272,8 +3266,7 @@ local function SuperImmuneFakeInfectionHealthLoss(player, playerdata)
     local currentHealth = bodyDamage:getOverallBodyHealth()
     local targetHealth = math.max(maxHealth, 100 - illness) -- Prevent it dropping below maxHealth unless Lethal
 
-    if currentHealth >= targetHealth or currentHealth > maxHealth then
-        local parts = bodyDamage:getBodyParts()
+    if playerdata.SuperImmuneLethal or currentHealth > targetHealth then
         -- Increased damage amounts because this only fires once per in-game minute
         local damageAmount = 1.0
 
@@ -3293,14 +3286,23 @@ local function SuperImmuneFakeInfectionHealthLoss(player, playerdata)
             damageAmount = damageAmount + 5.0
         end
 
-        local randomBodyPart = parts:get(ZombRand(0, parts:size() - 1))
+        if not playerdata.SuperImmuneLethal then
+            damageAmount = math.min(damageAmount, math.max(0, currentHealth - targetHealth))
+        end
 
-        if isClient() then
-            local bodyPartIndex = BodyPartType.ToIndex(randomBodyPart:getType())
-            local args = { bodyPart = bodyPartIndex, partDamage = damageAmount }
-            sendClientCommand(player, "ToadTraits", "BodyPartMechanics", args)
-        else
-            randomBodyPart:AddDamage(damageAmount)
+        if damageAmount > 0 then
+            if isClient() then
+                local args = { generalHealthReduce = damageAmount, minimumHealth = targetHealth }
+                sendClientCommand(player, "ToadTraits", "BodyPartMechanics", args)
+            else
+                local safeDamage = damageAmount
+                if not playerdata.SuperImmuneLethal then
+                    safeDamage = math.min(safeDamage, math.max(0, bodyDamage:getOverallBodyHealth() - targetHealth))
+                end
+                if safeDamage > 0 then
+                    bodyDamage:ReduceGeneralHealth(safeDamage)
+                end
+            end
         end
     end
 
@@ -4551,7 +4553,7 @@ end
 
 local function FixSpecialization(player, perk)
     if player:getXp():getXP(perk) < 0 then
-        player:getXp():setXPToLevel(Perks.perk, player:getPerkLevel(perk))
+        player:getXp():setXPToLevel(perk, player:getPerkLevel(perk))
     end
 end
 

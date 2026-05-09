@@ -61,7 +61,6 @@ module ToadTraits {
         Cost = 6,
         UIName = UI_trait_antique,
         UIDescription = UI_trait_antiquedesc,
-        XPBoosts = Scavenging=1,
     }
 
     character_trait_definition ToadTraits:ascetic
@@ -333,7 +332,6 @@ module ToadTraits {
         Cost = 7,
         UIName = UI_trait_graverobber,
         UIDescription = UI_trait_graverobberdesc,
-        XPBoosts = Scavenging=1,
     }
 
     character_trait_definition ToadTraits:grunt
@@ -1053,7 +1051,6 @@ module ToadTraits {
         Cost = 3,
         UIName = UI_trait_vagabond,
         UIDescription = UI_trait_vagabonddesc,
-        XPBoosts = Scavenging=1,
     }
 
     character_trait_definition ToadTraits:wildsman
