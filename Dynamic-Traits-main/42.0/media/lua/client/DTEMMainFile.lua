@@ -15,7 +15,8 @@ function DTEMEveryOneMinuteMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryOneMinute EVENT
+        if player ~= nil then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryOneMinute EVENT
 
         -- MOODLE DISPLAY MANAGEMENT
         if overdoseMechanic then 
@@ -58,8 +59,8 @@ function DTEMEveryOneMinuteMain()
 
         DTEMfracturesIfHeavyLoad(player);
 
-        DTEMonPlayerMoving(player)
-        
+            DTEMonPlayerMoving(player)
+        end
     end
 end
 Events.EveryOneMinute.Add(DTEMEveryOneMinuteMain);
@@ -72,31 +73,33 @@ function DTEMEveryTenMinutesMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryTenMinutes EVENT
-        if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
-            DTEMluckyUnluckyEffectsForAgoraClaustroTraits(player);
-        end
-        if player:HasTrait("Anorexy") then
-            DTEManorexyTraitHungerSymptoms(player);
-        end
-        DTEMactiveSedentaryTraits(player);
-        DTEMnightmaresTrait(player);
-           
-        DTEMexpandedWetnessMoodle(player);
-        DTEMexpandedHasAColdMoodle(player);
-        DTEMexpandedSicknessMoodle(player);
+        if player ~= nil then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryTenMinutes EVENT
+            if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
+                DTEMluckyUnluckyEffectsForAgoraClaustroTraits(player);
+            end
+            if player:HasTrait("Anorexy") then
+                DTEManorexyTraitHungerSymptoms(player);
+            end
+            DTEMactiveSedentaryTraits(player);
+            DTEMnightmaresTrait(player);
+               
+            DTEMexpandedWetnessMoodle(player);
+            DTEMexpandedHasAColdMoodle(player);
+            DTEMexpandedSicknessMoodle(player);
 
-        if overdoseMechanic then 
-            --print("Overdose Sandbox is enabled")
-            DTEMoverdoseMoodleEffects(player)
-        end
+            if overdoseMechanic then 
+                --print("Overdose Sandbox is enabled")
+                DTEMoverdoseMoodleEffects(player)
+            end
 
-        if player:HasTrait("Smoker") then
-            DTEMsmokerCough(player);
-        end
+            if player:HasTrait("Smoker") then
+                DTEMsmokerCough(player);
+            end
 
-        if player:HasTrait("Bloodlust") then
-            DTEMbloodlustTraitEffects(player);
+            if player:HasTrait("Bloodlust") then
+                DTEMbloodlustTraitEffects(player);
+            end
         end
     end
 end
@@ -111,34 +114,36 @@ function DTEMEveryHoursMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
-        -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryHours EVENT
-        if player:HasTrait("Smoker") then
-            DTEMsmokerTrait(player);
-        end
+        if player ~= nil then
+            -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryHours EVENT
+            if player:HasTrait("Smoker") then
+                DTEMsmokerTrait(player);
+            end
 
-        DTEManorexyTrait(player);
-        if player:HasTrait("Anorexy") then
-            DTEManorexyTraitPassiveSymptoms(player);
-        end
+            DTEManorexyTrait(player);
+            if player:HasTrait("Anorexy") then
+                DTEManorexyTraitPassiveSymptoms(player);
+            end
 
-        if not getActivatedMods():contains("FWOFitnessWorkoutOverhaul") then
-            DTEMexerciseMultiplierIfMaxRegularity(player);
-        end
+            if not getActivatedMods():contains("FWOFitnessWorkoutOverhaul") then
+                DTEMexerciseMultiplierIfMaxRegularity(player);
+            end
 
-        if player:HasTrait("Bloodlust") then
-            DTEMbloodlustTrait(player);
-        end
+            if player:HasTrait("Bloodlust") then
+                DTEMbloodlustTrait(player);
+            end
 
-        DTEMmelancholicTrait(player)
-        DTEMnervousWreckTrait(player)
-        
-        if pillsTraitsDevelopment then
-            DTEMpillsTraitsDevelopment(player)
-        end
+            DTEMmelancholicTrait(player)
+            DTEMnervousWreckTrait(player)
+            
+            if pillsTraitsDevelopment then
+                DTEMpillsTraitsDevelopment(player)
+            end
 
-        if overdoseMechanic then 
-            --print("Overdose Sandbox is enabled")
-            DTEMoverdoseDecrease(player)
+            if overdoseMechanic then 
+                --print("Overdose Sandbox is enabled")
+                DTEMoverdoseDecrease(player)
+            end
         end
     end
 end

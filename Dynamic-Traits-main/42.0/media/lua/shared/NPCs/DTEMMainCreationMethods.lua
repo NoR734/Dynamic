@@ -1412,10 +1412,14 @@ end
 DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum, character)
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoNewCharacterInitializations function")
     local player = getSpecificPlayer(playernum);
-    local hasTraitFn = player.HasTrait or player.hasTrait
     local function hasTrait(traitName)
-        if hasTraitFn then return hasTraitFn(player, traitName) end
-        local traits = player.getTraits and player:getTraits() or nil
+        if player and player.HasTrait then
+            return player:HasTrait(traitName)
+        end
+        if player and player.hasTrait then
+            return player:hasTrait(traitName)
+        end
+        local traits = player and player.getTraits and player:getTraits() or nil
         return traits and traits.contains and traits:contains(traitName) or false
     end
 
@@ -1742,10 +1746,14 @@ end
 ----------------------------------------------------
 DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(player)
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations function")
-    local hasTraitFn = player.HasTrait or player.hasTrait
     local function hasTrait(traitName)
-        if hasTraitFn then return hasTraitFn(player, traitName) end
-        local traits = player.getTraits and player:getTraits() or nil
+        if player and player.HasTrait then
+            return player:HasTrait(traitName)
+        end
+        if player and player.hasTrait then
+            return player:hasTrait(traitName)
+        end
+        local traits = player and player.getTraits and player:getTraits() or nil
         return traits and traits.contains and traits:contains(traitName) or false
     end
     -- NPC MOD COMPATIBILITY
