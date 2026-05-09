@@ -11,6 +11,22 @@ DTEMCompat.TraitAliases = DTEMCompat.TraitAliases or {
 
 local resolvedTraits = {}
 
+local function getMoreTraitsLuckAlias(trait)
+    if not trait or not ToadTraitsRegistries then
+        return nil
+    end
+
+    local normalizedTrait = string.lower(tostring(trait))
+    if normalizedTrait == "lucky" or normalizedTrait == "base:lucky" then
+        return ToadTraitsRegistries.lucky
+    end
+    if normalizedTrait == "unlucky" or normalizedTrait == "base:unlucky" then
+        return ToadTraitsRegistries.unlucky
+    end
+
+    return nil
+end
+
 local function getTraitResourceName(trait)
     if not trait then
         return nil
@@ -71,6 +87,11 @@ function DTEMHasTrait(player, trait)
         return false
     end
 
+    local moreTraitsLuckAlias = getMoreTraitsLuckAlias(trait)
+    if moreTraitsLuckAlias and player.hasTrait and player:hasTrait(moreTraitsLuckAlias) then
+        return true
+    end
+
     local characterTrait = DTEMResolveTrait(trait)
     if characterTrait and player.hasTrait then
         return player:hasTrait(characterTrait) == true
@@ -91,6 +112,32 @@ function DTEMHasTrait(player, trait)
     end
 
     return false
+end
+
+local function setMutualExclusiveIfPossible(firstTrait, secondTrait)
+    if CharacterTraitDefinition and CharacterTraitDefinition.setMutualExclusive and firstTrait and secondTrait then
+        CharacterTraitDefinition.setMutualExclusive(firstTrait, secondTrait)
+    end
+end
+
+function DTEMApplyMoreTraitsCompatibility()
+    if not ToadTraitsRegistries then
+        return
+    end
+
+    local baseLucky = DTEMResolveTrait("Lucky")
+    local baseUnlucky = DTEMResolveTrait("Unlucky")
+    local toadLucky = ToadTraitsRegistries.lucky
+    local toadUnlucky = ToadTraitsRegistries.unlucky
+
+    setMutualExclusiveIfPossible(baseLucky, toadLucky)
+    setMutualExclusiveIfPossible(baseLucky, toadUnlucky)
+    setMutualExclusiveIfPossible(baseUnlucky, toadLucky)
+    setMutualExclusiveIfPossible(baseUnlucky, toadUnlucky)
+end
+
+if Events and Events.OnGameBoot then
+    Events.OnGameBoot.Add(DTEMApplyMoreTraitsCompatibility)
 end
 
 function DTEMAddTrait(player, trait)

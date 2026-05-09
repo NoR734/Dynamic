@@ -1,3 +1,10 @@
+if not MTBaseOrToadTraitsHasTrait then
+    function MTBaseOrToadTraitsHasTrait(player, traitName)
+        local toadTrait = ToadTraitsRegistries and ToadTraitsRegistries[traitName]
+        return player and player.hasTrait and toadTrait and player:hasTrait(toadTrait) == true
+    end
+end
+
 local function MT_QuickSlowTraitCheck(self, baseTime)
     if baseTime <= 1 then return baseTime end
     if type(self) ~= "table" or not self.character then return baseTime end
@@ -36,17 +43,17 @@ local function MT_QuickSlowTraitCheck(self, baseTime)
 
     local bonus = 0
     if ZombRand(100) <= 10 then
-        if self.character:hasTrait(ToadTraitsRegistries.lucky) then 
-            bonus = bonus + (0.25 * (luckimpact or 1)) 
+        if MTBaseOrToadTraitsHasTrait(self.character, "lucky") then
+            bonus = bonus + (0.25 * (luckimpact or 1))
         end
-        if self.character:hasTrait(CharacterTrait.DEXTROUS) then 
-            bonus = bonus + 0.25 
+        if self.character:hasTrait(CharacterTrait.DEXTROUS) then
+            bonus = bonus + 0.25
         end
-        if self.character:hasTrait(ToadTraitsRegistries.unlucky) then 
-            bonus = bonus - (0.25 * (luckimpact or 1)) 
+        if MTBaseOrToadTraitsHasTrait(self.character, "unlucky") then
+            bonus = bonus - (0.25 * (luckimpact or 1))
         end
-        if self.character:hasTrait(CharacterTrait.ALL_THUMBS) then 
-            bonus = bonus - 0.25 
+        if self.character:hasTrait(CharacterTrait.ALL_THUMBS) then
+            bonus = bonus - 0.25
         end
     end
 

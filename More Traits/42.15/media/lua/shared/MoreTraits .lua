@@ -30,6 +30,34 @@ luckimpact = 1.0
 MTModVersion = 42.15 --REMEMBER TO MANUALLY INCREASE
 isMoodleFrameWorkEnabled = false; --getActivatedMods():contains("MoodleFramework")
 
+local function MTResolveDynamicTraitsLuckAlias(traitName)
+    if not traitName or not getActivatedMods or not getActivatedMods():contains("DynamicTraits") then
+        return nil
+    end
+    if traitName ~= "lucky" and traitName ~= "unlucky" then
+        return nil
+    end
+    if not CharacterTrait or not CharacterTrait.get or not ResourceLocation or not ResourceLocation.of then
+        return nil
+    end
+
+    return CharacterTrait.get(ResourceLocation.of("base:" .. traitName))
+end
+
+function MTBaseOrToadTraitsHasTrait(player, traitName)
+    if not player or not player.hasTrait then
+        return false
+    end
+
+    local toadTrait = ToadTraitsRegistries and ToadTraitsRegistries[traitName]
+    if toadTrait and player:hasTrait(toadTrait) then
+        return true
+    end
+
+    local dynamicTraitsAlias = MTResolveDynamicTraitsLuckAlias(traitName)
+    return dynamicTraitsAlias and player:hasTrait(dynamicTraitsAlias) == true
+end
+
 local playerDefaultData = {
     MTModVersion = MTModVersion,
     secondwinddisabled = false,
@@ -521,14 +549,14 @@ local function initToadTraitsPerks(player, playerdata)
     InitPlayerData(player, playerdata)
 
     -- Luck Modifications
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         damage = damage - (5 * luckimpact)
         bandagestrength = bandagestrength + (2 * luckimpact)
         fracturetime = fracturetime - (5 * luckimpact)
         splintstrength = splintstrength + (0.1 * luckimpact)
         scratchtimemod = scratchtimemod - (5 * luckimpact)
         bleedtimemod = bleedtimemod - (2 * luckimpact)
-    elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+    elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         damage = damage + (5 * luckimpact)
         bandagestrength = bandagestrength - (2 * luckimpact)
         fracturetime = fracturetime + (5 * luckimpact)
@@ -675,10 +703,10 @@ local function GlassBody(player, playerData)
         local chance = 33
         local woundstrength = 10
 
-        if player:hasTrait(ToadTraitsRegistries.lucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "lucky") then
             chance = chance - (5 * luckimpact)
             woundstrength = woundstrength - (5 * luckimpact)
-        elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+        elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
             chance = chance + (5 * luckimpact)
             woundstrength = woundstrength + (5 * luckimpact)
         end
@@ -898,10 +926,10 @@ local function ToadTraitButter(player)
         if player:hasTrait(ToadTraitsRegistries.packmouse) then
             basechance = basechance + 1
         end
-        if player:hasTrait(ToadTraitsRegistries.lucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "lucky") then
             basechance = basechance - 1 * luckimpact
         end
-        if player:hasTrait(ToadTraitsRegistries.unlucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
             basechance = basechance + 1 * luckimpact
         end
 
@@ -988,10 +1016,10 @@ local function ToadTraitScrounger(page, player, playerdata)
     local modifier = 1.0 + (SandboxVars.MoreTraits.ScroungerLootModifier or 30) * 0.01
     local baseChance = SandboxVars.MoreTraits.ScroungerItemChance or 10
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         modifier = modifier + (0.1 * luckimpact)
         baseChance = baseChance + (5 * luckimpact)
-    elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+    elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         modifier = modifier - (0.1 * luckimpact)
         baseChance = baseChance - (5 * luckimpact)
     end
@@ -1134,9 +1162,9 @@ local function ToadTraitIncomprehensive(page, player)
 
     local baseChance = SandboxVars.MoreTraits.IncomprehensiveChance or 10
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         baseChance = baseChance - (5 * luckimpact)
-    elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+    elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         baseChance = baseChance + (5 * luckimpact)
     end
 
@@ -1173,9 +1201,9 @@ local function ToadTraitIncomprehensive(page, player)
                                 local removeCount = 0
                                 if count == 1 then
                                     local bChance = 5
-                                    if player:hasTrait(ToadTraitsRegistries.lucky) then
+                                    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
                                         bChance = bChance - (5 * luckimpact)
-                                    elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+                                    elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
                                         bChance = bChance + (5 * luckimpact)
                                     end
 
@@ -1255,10 +1283,10 @@ local function ToadTraitAntique(page, player, playerdata)
     local baseChance = 10
     local roll = SandboxVars.MoreTraits.AntiqueChance or 1500
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         baseChance = baseChance + (1 * luckimpact)
     end
-    if player:hasTrait(ToadTraitsRegistries.unlucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         baseChance = baseChance - (1 * luckimpact)
     end
     if player:hasTrait(CharacterTrait.DEXTROUS) then
@@ -1365,10 +1393,10 @@ local function ToadTraitVagabond(page, player)
     end
 
     local baseChance = SandboxVars.MoreTraits.VagabondChance or 33
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         baseChance = baseChance + (5 * luckimpact)
     end
-    if player:hasTrait(ToadTraitsRegistries.unlucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         baseChance = baseChance - (5 * luckimpact)
     end
 
@@ -1473,9 +1501,9 @@ local function ToadTraitDepressive(player, playerdata)
 
     local baseChance = 2
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         baseChance = baseChance - (1 * luckimpact)
-    elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+    elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         baseChance = baseChance + (1 * luckimpact)
     end
 
@@ -2040,9 +2068,9 @@ local function drinkertick(player, playerdata)
 
     local hourThreshold = SandboxVars.MoreTraits.AlcoholicFrequency or 24
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         hourThreshold = hourThreshold + (4 * luckimpact)
-    elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+    elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         hourThreshold = hourThreshold - (2 * luckimpact)
     end
 
@@ -2168,10 +2196,10 @@ local function bouncerupdate(player, playerdata)
     local cooldown = SandboxVars.MoreTraits.BouncerCooldown or 60
     local distance = SandboxVars.MoreTraits.BouncerDistance or 1.75
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         chance = chance + (luckimpact or 1)
     end
-    if player:hasTrait(ToadTraitsRegistries.unlucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         chance = chance - (luckimpact or 1)
     end
 
@@ -2274,10 +2302,10 @@ local function martial(actor, target, weapon, damage)
         local blunt = player:getPerkLevel(Perks.SmallBlunt)
         local critchance = (5 + blunt) * scaling
 
-        if player:hasTrait(ToadTraitsRegistries.lucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "lucky") then
             critchance = critchance + 1 * luckimpact
         end
-        if player:hasTrait(ToadTraitsRegistries.unlucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
             critchance = critchance - 1 * luckimpact
         end
 
@@ -2375,10 +2403,10 @@ local function actionhero(actor, target, weapon, damage)
         end
     end
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         critchance = critchance + 5 * luckimpact
     end
-    if player:hasTrait(ToadTraitsRegistries.unlucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         critchance = critchance - 5 * luckimpact
     end
 
@@ -2452,10 +2480,10 @@ local function MT_MeleeTraits(actor, target, weapon, damage)
         end
 
         if hasTrait then
-            if player:hasTrait(ToadTraitsRegistries.lucky) then
+            if MTBaseOrToadTraitsHasTrait(player, "lucky") then
                 critchance = critchance + (1 * (luckimpact or 1))
             end
-            if player:hasTrait(ToadTraitsRegistries.unlucky) then
+            if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
                 critchance = critchance - (1 * (luckimpact or 1))
             end
 
@@ -2508,10 +2536,10 @@ local function MT_MeleeTraits(actor, target, weapon, damage)
                 multiplier = 0.25
             end
 
-            if player:hasTrait(ToadTraitsRegistries.lucky) then
+            if MTBaseOrToadTraitsHasTrait(player, "lucky") then
                 repairChance = repairChance + (5 * (luckimpact or 1))
                 multiplier = multiplier + 0.1
-            elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+            elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
                 repairChance = repairChance - (5 * (luckimpact or 1))
                 multiplier = multiplier - 0.1
             end
@@ -2581,10 +2609,10 @@ local function progun(actor, weapon)
     end
 
     if isFirearm then
-        if player:hasTrait(ToadTraitsRegistries.lucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "lucky") then
             chance = chance + 1 * luckimpact
         end
-        if player:hasTrait(ToadTraitsRegistries.unlucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
             chance = chance - 1 * luckimpact
         end
 
@@ -3055,10 +3083,10 @@ local function SuperImmune(player, playerdata)
     if player:hasTrait(CharacterTrait.SLOW_HEALER) then
         timeOfRecovery = timeOfRecovery + 5
     end
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         timeOfRecovery = timeOfRecovery - 2 * luckimpact
     end
-    if player:hasTrait(ToadTraitsRegistries.unlucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         timeOfRecovery = timeOfRecovery + 2 * luckimpact
     end
 
@@ -3385,10 +3413,10 @@ local function graveRobber(page, player)
                     local sandboxChance = SandboxVars.MoreTraits.GraveRobberChance or 1.0
                     local chance = sandboxChance * 10
 
-                    if player:hasTrait(ToadTraitsRegistries.lucky) then
+                    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
                         chance = chance + (2 * luckimpact)
                     end
-                    if player:hasTrait(ToadTraitsRegistries.unlucky) then
+                    if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
                         chance = chance - (2 * luckimpact)
                     end
                     if player:hasTrait(ToadTraitsRegistries.scrounger) then
@@ -3743,9 +3771,9 @@ local function Gourmand(page, player)
 
     local baseChance = 33
 
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         baseChance = baseChance + (10 * luckimpact)
-    elseif player:hasTrait(ToadTraitsRegistries.unlucky) then
+    elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         baseChance = baseChance - (10 * luckimpact)
     end
 
@@ -4062,10 +4090,10 @@ local function FearfulUpdate(player, playerdata)
         if player:hasTrait(CharacterTrait.COWARDLY) then
             chance = chance + 1
         end
-        if player:hasTrait(ToadTraitsRegistries.lucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "lucky") then
             chance = chance - luckimpact
         end
-        if player:hasTrait(ToadTraitsRegistries.unlucky) then
+        if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
             chance = chance + luckimpact
         end
 
@@ -4286,9 +4314,9 @@ end
 
 -- local traitModiifer = 0
 
--- if player:hasTrait(ToadTraitsRegistries.lucky) and ZombRand(100) <= 10 then
+-- if MTBaseOrToadTraitsHasTrait(player, "lucky") and ZombRand(100) <= 10 then
 --     traitModiifer = 0.25 * luckimpact
--- elseif player:hasTrait(ToadTraitsRegistries.unlucky) and ZombRand(100) <= 10 then
+-- elseif MTBaseOrToadTraitsHasTrait(player, "unlucky") and ZombRand(100) <= 10 then
 --     traitModiifer = -0.25 * luckimpact
 -- end
 
@@ -4582,10 +4610,10 @@ local function NoodleLegs(player)
     if player:hasTrait(CharacterTrait.CLUMSY) then
         tripChance = tripChance * 0.8
     end
-    if player:hasTrait(ToadTraitsRegistries.lucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "lucky") then
         tripChance = tripChance * (1.05 * luckimpact)
     end
-    if player:hasTrait(ToadTraitsRegistries.unlucky) then
+    if MTBaseOrToadTraitsHasTrait(player, "unlucky") then
         tripChance = tripChance * (0.95 * luckimpact)
     end
 
