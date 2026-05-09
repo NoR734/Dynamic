@@ -182,20 +182,20 @@ function DTEMpillsTraitsDevelopment(player)
     -- Earn the traits (only after the first week of survival)
     if player:getHoursSurvived() > 168 then
         --print("DT Logger: player has survived more than a week")
-        if player:getModData().DTEMisMelancholic == false and player:getMoodles():getMoodleLevel(MoodleType.Unhappy) ~= 0 then
-            local range = player:getHoursSurvived() / player:getMoodles():getMoodleLevel(MoodleType.Unhappy)
+        if player:getModData().DTEMisMelancholic == false and player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) ~= 0 then
+            local range = player:getHoursSurvived() / player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY)
             --print("Hours survived: " .. player:getHoursSurvived());
-            --print("Unhappy moodle level: " .. player:getMoodles():getMoodleLevel(MoodleType.Unhappy));
+            --print("Unhappy moodle level: " .. player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY));
             --print("Range: " .. range);
             if ZombRand(range) == 0 then
                 player:getModData().DTEMisMelancholic = true
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Melancholic"), true, HaloTextHelper.getColorRed())
             end
         end
-        if player:getModData().DTEMisNervousWreck == false and player:getMoodles():getMoodleLevel(MoodleType.Stress) ~= 0 then
-            local range = player:getHoursSurvived() / player:getMoodles():getMoodleLevel(MoodleType.Stress)
+        if player:getModData().DTEMisNervousWreck == false and player:getMoodles():getMoodleLevel(MoodleType.STRESS) ~= 0 then
+            local range = player:getHoursSurvived() / player:getMoodles():getMoodleLevel(MoodleType.STRESS)
             --print("Hours survived: " .. player:getHoursSurvived());
-            --print("Stress moodle level: " .. player:getMoodles():getMoodleLevel(MoodleType.Stress));
+            --print("Stress moodle level: " .. player:getMoodles():getMoodleLevel(MoodleType.STRESS));
             --print("Range: " .. range);
             if ZombRand(range) == 0 then
                 player:getModData().DTEMisNervousWreck = true

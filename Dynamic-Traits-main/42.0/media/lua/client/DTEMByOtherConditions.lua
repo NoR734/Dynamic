@@ -303,25 +303,25 @@ function DTEManorexyTrait(player)
     --print("DT Logger: running anorexyTrait function");
     if DTEMHasTrait(player, "Emaciated") or DTEMHasTrait(player, "Very Underweight") then
         -- Based on the Unhapyness the rate to obtain Anorexia is lower/higher.
-        if player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 1 then
+        if player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) == 1 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 2;
-        elseif player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 2 then
+        elseif player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) == 2 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 3;
-        elseif player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 3 then
+        elseif player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) == 3 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 4;
-        elseif player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 4 then
+        elseif player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) == 4 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 5;
         else
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 1;
         end
         -- Based on the Stress the rate to obtain Anorexia is lower/higher.
-        if player:getMoodles():getMoodleLevel(MoodleType.Stress) == 1 then
+        if player:getMoodles():getMoodleLevel(MoodleType.STRESS) == 1 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 2;
-        elseif player:getMoodles():getMoodleLevel(MoodleType.Stress) == 2 then
+        elseif player:getMoodles():getMoodleLevel(MoodleType.STRESS) == 2 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 3;
-        elseif player:getMoodles():getMoodleLevel(MoodleType.Stress) == 3 then
+        elseif player:getMoodles():getMoodleLevel(MoodleType.STRESS) == 3 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 4;
-        elseif player:getMoodles():getMoodleLevel(MoodleType.Stress) == 4 then
+        elseif player:getMoodles():getMoodleLevel(MoodleType.STRESS) == 4 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 5;
         else
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 1;
@@ -331,7 +331,7 @@ function DTEManorexyTrait(player)
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + DTEMluckyUnluckyModifier(player, 7);
         end
     elseif DTEMHasTrait(player, "Underweight") then
-        if player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 0 and player:getMoodles():getMoodleLevel(MoodleType.Stress) == 0 then
+        if player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) == 0 and player:getMoodles():getMoodleLevel(MoodleType.STRESS) == 0 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + 2;
         else
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + 1;
@@ -341,7 +341,7 @@ function DTEManorexyTrait(player)
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + DTEMluckyUnluckyModifier(player, 7);
         end
     else
-        if player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 0 and player:getMoodles():getMoodleLevel(MoodleType.Stress) == 0 then
+        if player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) == 0 and player:getMoodles():getMoodleLevel(MoodleType.STRESS) == 0 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + 3;
         else
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + 2;
@@ -370,28 +370,28 @@ end
 
 function DTEManorexyTraitHungerSymptoms(player)
     --print("DT Logger: running anorexyTraitHungerSymptoms function");
-    if player:getMoodles():getMoodleLevel(MoodleType.FoodEaten) == 1 then
+    if player:getMoodles():getMoodleLevel(MoodleType.FOOD_EATEN) == 1 then
         -- UNHAPPYNESS
         DTEMincreaseUnhappiness(player, 0, 0.5);
         -- STRESS
         DTEMincreaseStress(player, 0, 0.05);
         -- POISON
         DTEMincreaseFoodSickness(player, ZombRand(8), ZombRand(10));
-    elseif player:getMoodles():getMoodleLevel(MoodleType.FoodEaten) == 2 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.FOOD_EATEN) == 2 then
         -- UNHAPPYNESS
         DTEMincreaseUnhappiness(player, 0, 0.6);
         -- STRESS
         DTEMincreaseStress(player, 0, 0.06);
         -- POISON
         DTEMincreaseFoodSickness(player, ZombRand(7), ZombRand(15));
-    elseif player:getMoodles():getMoodleLevel(MoodleType.FoodEaten) == 3 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.FOOD_EATEN) == 3 then
         -- UNHAPPYNESS
         DTEMincreaseUnhappiness(player, 0, 0.7);
         -- STRESS
         DTEMincreaseStress(player, 0, 0.07);
         -- POISON
         DTEMincreaseFoodSickness(player, ZombRand(6), ZombRand(20));
-    elseif player:getMoodles():getMoodleLevel(MoodleType.FoodEaten) == 4 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.FOOD_EATEN) == 4 then
         -- UNHAPPYNESS
         DTEMincreaseUnhappiness(player, 0, 0.8);
         -- STRESS

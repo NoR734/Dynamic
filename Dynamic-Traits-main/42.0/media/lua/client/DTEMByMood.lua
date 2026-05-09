@@ -1,7 +1,7 @@
 function DTEMtraitsByMoods(player)
     --print("DT Logger: running traitsByMoods function");
-    if player:getMoodles():getMoodleLevel(MoodleType.Bored) == 0 and player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 0 and
-    player:getMoodles():getMoodleLevel(MoodleType.Stress) == 0 and player:getMoodles():getMoodleLevel(MoodleType.Hungry) == 0 then
+    if player:getMoodles():getMoodleLevel(MoodleType.BORED) == 0 and player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) == 0 and
+    player:getMoodles():getMoodleLevel(MoodleType.STRESS) == 0 and player:getMoodles():getMoodleLevel(MoodleType.HUNGRY) == 0 then
         if not DTEMHasTrait(player, "NeedsLessSleep") then
             DTEMAddTrait(player, "NeedsLessSleep");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_LessSleep"), true, HaloTextHelper.getColorGreen());
@@ -13,7 +13,7 @@ function DTEMtraitsByMoods(player)
         end
     end
     -- Gain trait "Needs More Sleep" when Bored Moodle is Lv2 or more and remove it otherwise.
-    if player:getMoodles():getMoodleLevel(MoodleType.Bored) >= 2 then
+    if player:getMoodles():getMoodleLevel(MoodleType.BORED) >= 2 then
         if not DTEMHasTrait(player, "NeedsMoreSleep") then
             DTEMAddTrait(player, "NeedsMoreSleep");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_MoreSleep"), true, HaloTextHelper.getColorRed());
@@ -25,7 +25,7 @@ function DTEMtraitsByMoods(player)
         end
     end
     -- Gain trait "Insomniac" when Unhappy or Hungry Moodles are at Lv3 or more and remove it otherwise.
-    if player:getMoodles():getMoodleLevel(MoodleType.Unhappy) >= 3 or player:getMoodles():getMoodleLevel(MoodleType.Hungry) >= 3 then
+    if player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) >= 3 or player:getMoodles():getMoodleLevel(MoodleType.HUNGRY) >= 3 then
         if not DTEMHasTrait(player, "Insomniac") then
             DTEMAddTrait(player, "Insomniac");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Insomniac"), true, HaloTextHelper.getColorRed());
@@ -37,7 +37,7 @@ function DTEMtraitsByMoods(player)
         end
     end
     -- Gain trait "Nightmares" when Stress Moodle is Lv3 or more and remove it otherwise.
-    if player:getMoodles():getMoodleLevel(MoodleType.Stress) >= 3 and not DTEMHasTrait(player, "Desensitized") then
+    if player:getMoodles():getMoodleLevel(MoodleType.STRESS) >= 3 and not DTEMHasTrait(player, "Desensitized") then
         if not DTEMHasTrait(player, "Nightmares") then
             DTEMAddTrait(player, "Nightmares");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Nightmares"), true, HaloTextHelper.getColorRed());
@@ -49,7 +49,7 @@ function DTEMtraitsByMoods(player)
         end
     end
     -- Gain trait "Hearty Appitite" when Stress or Unhappy Moodles are Lv3 or more and remove it otherise.
-    if player:getMoodles():getMoodleLevel(MoodleType.Stress) >= 3 or player:getMoodles():getMoodleLevel(MoodleType.Unhappy) >= 3 then
+    if player:getMoodles():getMoodleLevel(MoodleType.STRESS) >= 3 or player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) >= 3 then
         if not DTEMHasTrait(player, "HeartyAppitite") then
             if DTEMHasTrait(player, "LightEater") then
                 DTEMRemoveTrait(player, "LightEater");

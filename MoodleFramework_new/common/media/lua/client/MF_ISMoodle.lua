@@ -437,7 +437,7 @@ function MF.ISMoodle:getXYPosition()
         for i = 0, numMoodles-1 do--vanilla moodles first
             local moodleType = MoodleType.FromIndex(i)
             local moodleLevel = self.char:getMoodles():getMoodleLevel(moodleType)
-            if moodleLevel ~= 0 and moodleType ~= MoodleType.FoodEaten or moodleLevel >= 3 then
+            if (moodleLevel ~= 0 and moodleType ~= MoodleType.FOOD_EATEN) or moodleLevel >= 3 then
                 y = y + distY;
             end
         end

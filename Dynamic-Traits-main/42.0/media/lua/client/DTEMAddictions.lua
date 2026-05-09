@@ -41,7 +41,7 @@ end
 -- ALCOHOLIC TRAIT
 function DTEMalcoholicTrait(player)
     --print("DT Logger: running DTEMalcoholicTrait function");
-    if player:getMoodles():getMoodleLevel(MoodleType.Drunk) == 0 then
+    if player:getMoodles():getMoodleLevel(MoodleType.DRUNK) == 0 then
         player:getModData().DTEMalcoholicTrait = player:getModData().DTEMalcoholicTrait + 1;
         player:getModData().DTEMtimeSinceLastDrink = player:getModData().DTEMtimeSinceLastDrink + 1;
         -- Checks if the player has the Alcoholic trait
@@ -72,7 +72,7 @@ function DTEMalcoholicTrait(player)
             end
         end
     else
-        player:getModData().DTEMalcoholicTrait = player:getModData().DTEMalcoholicTrait - (player:getMoodles():getMoodleLevel(MoodleType.Drunk) * 3);
+        player:getModData().DTEMalcoholicTrait = player:getModData().DTEMalcoholicTrait - (player:getMoodles():getMoodleLevel(MoodleType.DRUNK) * 3);
         player:getModData().DTEMtimeSinceLastDrink = 0;
     end
     if ZombRand(30) == 0 then

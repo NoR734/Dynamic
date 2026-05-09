@@ -81,8 +81,8 @@ function DTEMhandleVeryUnderweightTraits(player)
     if DTEMHasTrait(player, "Strong") or DTEMHasTrait(player, "Stout") then
         DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
     else
-        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
-        player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
+        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.STRESS) < 3 and
+        player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) < 3 then
             DTEMaddTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
         end
     end
@@ -117,8 +117,8 @@ end
 function DTEMhandleUnderweightTraits(player)
     DTEMremoveTrait(player, "Frail", "UI_trait_Frail", HaloTextHelper.getColorGreen())
 
-    if DTEMHasTrait(player, "HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
-    player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
+    if DTEMHasTrait(player, "HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.STRESS) < 3 and
+    player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) < 3 then
         DTEMremoveTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorGreen())
     end
 
@@ -133,8 +133,8 @@ function DTEMhandleUnderweightTraits(player)
     if DTEMHasTrait(player, "Strong") or DTEMHasTrait(player, "Stout") then
         DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
     else
-        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
-        player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
+        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.STRESS) < 3 and
+        player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) < 3 then
             DTEMaddTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorGreen())
         end
     end
@@ -202,8 +202,8 @@ function DTEMhandleHealthyCharacterTraits(player)
     DTEMremoveTrait(player, "SlowHealer", "UI_trait_SlowHealer", HaloTextHelper.getColorGreen())
 
     if DTEMHasTrait(player, "Weak") or DTEMHasTrait(player, "Feeble") then
-        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
-        player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
+        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.STRESS) < 3 and
+        player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) < 3 then
             DTEMremoveTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorGreen())
             DTEMaddTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorGreen())
         end
@@ -214,8 +214,8 @@ function DTEMhandleHealthyCharacterTraits(player)
         end
     else
         DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
-        if DTEMHasTrait(player, "HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
-        player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
+        if DTEMHasTrait(player, "HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.STRESS) < 3 and
+        player:getMoodles():getMoodleLevel(MoodleType.UNHAPPY) < 3 then
             DTEMremoveTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorGreen())
         end
     end

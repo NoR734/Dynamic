@@ -176,17 +176,17 @@ function DTEMonPlayerHittingAZombie(player, target, weapon, damage)
             if target:getHealth() <= 0 then
 			    target:update();
 		    end
-            if player:getMoodles():getMoodleLevel(MoodleType.Angry) ~= 0 then
+            if player:getMoodles():getMoodleLevel(MoodleType.ANGRY) ~= 0 then
                 local currentWeaponCondition = weapon:getCondition();
                 --print("DT Logger: current weapon condition: " .. currentWeaponCondition);
                 local range = 0;
-                if player:getMoodles():getMoodleLevel(MoodleType.Angry) == 1 then
+                if player:getMoodles():getMoodleLevel(MoodleType.ANGRY) == 1 then
                     range = 40;
-                elseif player:getMoodles():getMoodleLevel(MoodleType.Angry) == 2 then
+                elseif player:getMoodles():getMoodleLevel(MoodleType.ANGRY) == 2 then
                     range = 30;
-                elseif player:getMoodles():getMoodleLevel(MoodleType.Angry) == 3 then
+                elseif player:getMoodles():getMoodleLevel(MoodleType.ANGRY) == 3 then
                     range = 20;
-                elseif player:getMoodles():getMoodleLevel(MoodleType.Angry) == 4 then
+                elseif player:getMoodles():getMoodleLevel(MoodleType.ANGRY) == 4 then
                     range = 10;
                 end
                 range = range + player:getPerkLevel(Perks.Maintenance) + weapon:getConditionLowerChance() + DTEMluckyUnluckyModifier(player, 15);

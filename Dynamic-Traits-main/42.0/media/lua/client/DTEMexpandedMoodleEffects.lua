@@ -4,7 +4,7 @@ function DTEMfracturesIfHeavyLoad(player)
     --print("DT Logger: running DTEMfracturesIfHeavyLoad function");
 
     -- The player has Heavy Load and is not in a vehicle
-    if player:getMoodles():getMoodleLevel(MoodleType.HeavyLoad) == 4 and player:getVehicle() == nil then
+    if player:getMoodles():getMoodleLevel(MoodleType.HEAVY_LOAD) == 4 and player:getVehicle() == nil then
         --print("Heavy load is Lv4, running chances");
         local baseChance = 15000;
         --print("baseChance: " .. baseChance);
@@ -83,14 +83,14 @@ end
 -- ADDITIONAL EFFECTS TO WETNESS MOODLE
 function DTEMexpandedWetnessMoodle(player)
     --print("DT Logger: running DTEMexpandedWetnessMoodle function");
-    if player:getMoodles():getMoodleLevel(MoodleType.Wet) == 1 then
+    if player:getMoodles():getMoodleLevel(MoodleType.WET) == 1 then
         player:getModData().DTEMgenerateAColdChance = player:getModData().DTEMgenerateAColdChance + 1;
-    elseif player:getMoodles():getMoodleLevel(MoodleType.Wet) == 2 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.WET) == 2 then
         player:getModData().DTEMgenerateAColdChance = player:getModData().DTEMgenerateAColdChance + 2;
-    elseif player:getMoodles():getMoodleLevel(MoodleType.Wet) == 3 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.WET) == 3 then
         player:getModData().DTEMgenerateAColdChance = player:getModData().DTEMgenerateAColdChance + 3;
         DTEMgenerateACold(player, 500, ZombRand(25, 50));
-    elseif player:getMoodles():getMoodleLevel(MoodleType.Wet) == 4 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.WET) == 4 then
         player:getModData().DTEMgenerateAColdChance = player:getModData().DTEMgenerateAColdChance + 4;
         DTEMgenerateACold(player, 300, ZombRand(25, 50));
     else
@@ -104,22 +104,22 @@ end
 -- ADDITIONAL EFFECTS TO HASACOLD MOODLE
 function DTEMexpandedHasAColdMoodle(player)
     --print("DT Logger: running DTEMexpandedHasAColdMoodle function");
-    if player:getMoodles():getMoodleLevel(MoodleType.HasACold) == 1 then
+    if player:getMoodles():getMoodleLevel(MoodleType.HAS_A_COLD) == 1 then
         -- HEADACHE
         DTEMapplyPain(player, ZombRand(20), "Head", ZombRand(30));
-    elseif player:getMoodles():getMoodleLevel(MoodleType.HasACold) == 2 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.HAS_A_COLD) == 2 then
         -- HEADACHE
         DTEMapplyPain(player, ZombRand(15), "Head", ZombRand(45));
         -- FATIGUE
         DTEMincreaseFatigue(player, ZombRand(15), 0.05);
-    elseif player:getMoodles():getMoodleLevel(MoodleType.HasACold) == 3 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.HAS_A_COLD) == 3 then
         -- HEADACHE
         DTEMapplyPain(player, ZombRand(10), "Head", ZombRand(60));
         -- FATIGUE
         DTEMincreaseFatigue(player, ZombRand(13), 0.10);
         -- POISON
         DTEMincreaseFoodSickness(player, ZombRand(7), ZombRand(15));
-    elseif player:getMoodles():getMoodleLevel(MoodleType.HasACold) == 4 then
+    elseif player:getMoodles():getMoodleLevel(MoodleType.HAS_A_COLD) == 4 then
         -- HEADACHE
         DTEMapplyPain(player, ZombRand(5), "Head", ZombRand(75));
         -- FATIGUE
@@ -199,8 +199,8 @@ function DTEMexpandedMoodlesCheckStats(player)
     DTEMincreaseWetness(player, ZombRand(30), currentStress * 10);
 
     -- PASSING OUT MECHANIC
-    if player:getMoodles():getMoodleLevel(MoodleType.Tired) == 4 and player:getMoodles():getMoodleLevel(MoodleType.Panic) == 0 and
-            not player:isAsleep() and player:getMoodles():getMoodleLevel(MoodleType.Hypothermia) < 3 then
+    if player:getMoodles():getMoodleLevel(MoodleType.TIRED) == 4 and player:getMoodles():getMoodleLevel(MoodleType.PANIC) == 0 and
+            not player:isAsleep() and player:getMoodles():getMoodleLevel(MoodleType.HYPOTHERMIA) < 3 then
         if (ZombRand(3)) == 0 then
             player:getModData().DTEMpassingOut = player:getModData().DTEMpassingOut + ZombRand(3) + (DTEMluckyUnluckyModifier(player, 3) * -1) + 1;
         end
@@ -229,7 +229,7 @@ function DTEMexpandedMoodlesCheckStats(player)
         end
     else
         --print("player:getModData().DTEMpassingOut: " .. player:getModData().DTEMpassingOut);
-        player:getModData().DTEMpassingOut = player:getModData().DTEMpassingOut - 1 - player:getMoodles():getMoodleLevel(MoodleType.Panic);
+        player:getModData().DTEMpassingOut = player:getModData().DTEMpassingOut - 1 - player:getMoodles():getMoodleLevel(MoodleType.PANIC);
         if player:getModData().DTEMpassingOut < 0 then
             player:getModData().DTEMpassingOut = 0;
         end
