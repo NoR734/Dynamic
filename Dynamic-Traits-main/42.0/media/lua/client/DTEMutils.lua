@@ -1,5 +1,38 @@
 -- Helper functions to add and remove traits
 
+function DTEMHasTrait(player, trait)
+    if not player or not trait then
+        return false
+    end
+
+    local traits = player.getTraits and player:getTraits() or nil
+    if traits and traits.contains then
+        local ok, result = pcall(function()
+            return traits:contains(trait)
+        end)
+        if ok then
+            return result == true
+        end
+    end
+
+    local ok, result = pcall(function()
+        return player:HasTrait(trait)
+    end)
+    return ok and result == true
+end
+
+function DTEMGetModDataNumber(player, key, defaultValue)
+    local value = player and player:getModData() and player:getModData()[key] or nil
+    value = tonumber(value)
+    if value == nil then
+        value = defaultValue or 0
+        if player and player:getModData() then
+            player:getModData()[key] = value
+        end
+    end
+    return value
+end
+
 --[[
     Adds a trait to the player if they do not already have it, and performs specific actions based on the trait added.
     
@@ -21,7 +54,7 @@
     - getText(text): Retrieves the localized text for the given key.
 ]]
 function DTEMaddTrait(player, trait, text, color)
-    if not player:HasTrait(trait) then
+    if not DTEMHasTrait(player, trait) then
         player:getTraits():add(trait)
         HaloTextHelper.addTextWithArrow(player, getText(text), true, color)
         if trait == "Flimsy" then
@@ -78,7 +111,7 @@ end
 ]]
 
 function DTEMremoveTrait(player, trait, text, color)
-    if player:HasTrait(trait) then
+    if DTEMHasTrait(player, trait) then
         player:getTraits():remove(trait)
         HaloTextHelper.addTextWithArrow(player, getText(text), false, color)
         if trait == "Flimsy" or trait == "Frail" then
@@ -99,10 +132,10 @@ end
 
 function DTEMluckyUnluckyModifier(player, randomRange)
     --print("DT Logger: running DTEMluckyUnluckyModifier function");
-    if player:HasTrait("Lucky") then
+    if DTEMHasTrait(player, "Lucky") then
         print("Player has Lucky")
         return ZombRand(randomRange)
-    elseif player:HasTrait("Unlucky") then
+    elseif DTEMHasTrait(player, "Unlucky") then
         print("Player has Unlucky")
         return (ZombRand(randomRange) * -1)
     else

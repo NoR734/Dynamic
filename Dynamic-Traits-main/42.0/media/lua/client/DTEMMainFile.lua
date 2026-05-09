@@ -1,5 +1,39 @@
 -- MAIN FILE WHERE ALL THE DIFFERENT FUNCTIONS WILL BE CALLED BASED ON THE DIFFERENT EVENTS
 
+local function DTEMMainHasTrait(player, trait)
+    if DTEMHasTrait then
+        return DTEMHasTrait(player, trait)
+    end
+
+    local traits = player and player.getTraits and player:getTraits() or nil
+    if traits and traits.contains then
+        local ok, result = pcall(function()
+            return traits:contains(trait)
+        end)
+        if ok then
+            return result == true
+        end
+    end
+
+    if player then
+        local ok, result = pcall(function()
+            return player:HasTrait(trait)
+        end)
+        if ok then
+            return result == true
+        end
+    end
+
+    return false
+end
+
+local function DTEMGetSandboxOption(optionName, defaultValue)
+    if SandboxVars and SandboxVars.DTEM and SandboxVars.DTEM[optionName] ~= nil then
+        return SandboxVars.DTEM[optionName]
+    end
+    return defaultValue
+end
+
 -- OnPlayerUpdate Main Method to call others
 function DTEMOnPlayerUpdateMain(player)
     -- INITIALIZATIONS FOR AN EXISTING CHARACTER
@@ -11,7 +45,7 @@ Events.OnPlayerUpdate.Add(DTEMOnPlayerUpdateMain);
 function DTEMEveryOneMinuteMain()
 
     -- SANDBOX
-    local overdoseMechanic = SandboxVars.DTEM.EnableOverdoseMechanic
+    local overdoseMechanic = DTEMGetSandboxOption("EnableOverdoseMechanic", true)
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
@@ -31,12 +65,12 @@ function DTEMEveryOneMinuteMain()
         DTEMtraitsByMoods(player);
         DTEMtraitsByRecipes(player);
 
-        if not player:HasTrait("Dextrous") or not player:HasTrait("Organized") then
+        if not DTEMMainHasTrait(player, "Dextrous") or not DTEMMainHasTrait(player, "Organized") then
             DTEMtraitsByMovingObjects(player);
         end
         DTEMrainTraits(player);
 
-        if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
+        if DTEMMainHasTrait(player, "Agoraphobic") or DTEMMainHasTrait(player, "Claustophobic") then
             DTEMagoraphobicClaustrophobicTraits(player);
         end
 
@@ -69,16 +103,17 @@ Events.EveryOneMinute.Add(DTEMEveryOneMinuteMain);
 function DTEMEveryTenMinutesMain()
 
     -- SANDBOX
-    local overdoseMechanic = SandboxVars.DTEM.EnableOverdoseMechanic
+    local overdoseMechanic = DTEMGetSandboxOption("EnableOverdoseMechanic", true)
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
         if player ~= nil then
             -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryTenMinutes EVENT
-            if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
+            if type(DTEMluckyUnluckyEffectsForAgoraClaustroTraits) == "function" and
+                    (DTEMMainHasTrait(player, "Agoraphobic") or DTEMMainHasTrait(player, "Claustophobic")) then
                 DTEMluckyUnluckyEffectsForAgoraClaustroTraits(player);
             end
-            if player:HasTrait("Anorexy") then
+            if DTEMMainHasTrait(player, "Anorexy") then
                 DTEManorexyTraitHungerSymptoms(player);
             end
             DTEMactiveSedentaryTraits(player);
@@ -93,11 +128,11 @@ function DTEMEveryTenMinutesMain()
                 DTEMoverdoseMoodleEffects(player)
             end
 
-            if player:HasTrait("Smoker") then
+            if DTEMMainHasTrait(player, "Smoker") then
                 DTEMsmokerCough(player);
             end
 
-            if player:HasTrait("Bloodlust") then
+            if DTEMMainHasTrait(player, "Bloodlust") then
                 DTEMbloodlustTraitEffects(player);
             end
         end
@@ -109,19 +144,19 @@ Events.EveryTenMinutes.Add(DTEMEveryTenMinutesMain);
 function DTEMEveryHoursMain()
 
     -- SANDBOX
-    local overdoseMechanic = SandboxVars.DTEM.EnableOverdoseMechanic
-    local pillsTraitsDevelopment = SandboxVars.DTEM.EnablePillsTraitsDevelopmentInGame
+    local overdoseMechanic = DTEMGetSandboxOption("EnableOverdoseMechanic", true)
+    local pillsTraitsDevelopment = DTEMGetSandboxOption("EnablePillsTraitsDevelopmentInGame", true)
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
         if player ~= nil then
             -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryHours EVENT
-            if player:HasTrait("Smoker") then
+            if DTEMMainHasTrait(player, "Smoker") then
                 DTEMsmokerTrait(player);
             end
 
             DTEManorexyTrait(player);
-            if player:HasTrait("Anorexy") then
+            if DTEMMainHasTrait(player, "Anorexy") then
                 DTEManorexyTraitPassiveSymptoms(player);
             end
 
@@ -129,7 +164,7 @@ function DTEMEveryHoursMain()
                 DTEMexerciseMultiplierIfMaxRegularity(player);
             end
 
-            if player:HasTrait("Bloodlust") then
+            if DTEMMainHasTrait(player, "Bloodlust") then
                 DTEMbloodlustTrait(player);
             end
 
@@ -155,7 +190,9 @@ function DTEMEveryDaysMain()
         local player = getSpecificPlayer(playerIndex);
 
         -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryDays EVENT
-        DTEMemotionalIntelligenceRecipes(player);
+        if player ~= nil then
+            DTEMemotionalIntelligenceRecipes(player);
+        end
     end
 end
 Events.EveryDays.Add(DTEMEveryDaysMain);
@@ -166,10 +203,10 @@ function DTEMOnZombieDeadMain(zombie)
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
         -- CALL TO OTHER METHODS THAT RUNS BASED ON THE OnZombieDead EVENT
-        if not player:HasTrait("Bloodlust") then
+        if player ~= nil and not DTEMMainHasTrait(player, "Bloodlust") then
             DTEMtraitsGainsByKills(player);
         end
-        if player:HasTrait("Bloodlust") then
+        if player ~= nil and DTEMMainHasTrait(player, "Bloodlust") then
             DTEMbloodlustTraitOnZombieKill(player);
         end
     end

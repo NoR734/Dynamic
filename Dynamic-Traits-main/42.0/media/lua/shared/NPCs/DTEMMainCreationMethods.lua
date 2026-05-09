@@ -1413,14 +1413,26 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoNewCharacterInitializations function")
     local player = getSpecificPlayer(playernum);
     local function hasTrait(traitName)
-        if player and player.HasTrait then
-            return player:HasTrait(traitName)
-        end
-        if player and player.hasTrait then
-            return player:hasTrait(traitName)
-        end
         local traits = player and player.getTraits and player:getTraits() or nil
-        return traits and traits.contains and traits:contains(traitName) or false
+        if traits and traits.contains then
+            local ok, result = pcall(function()
+                return traits:contains(traitName)
+            end)
+            if ok then
+                return result == true
+            end
+        end
+
+        if player then
+            local ok, result = pcall(function()
+                return player:HasTrait(traitName)
+            end)
+            if ok then
+                return result == true
+            end
+        end
+
+        return false
     end
 
     -- TRAITS CHANGE
@@ -1747,14 +1759,26 @@ end
 DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(player)
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations function")
     local function hasTrait(traitName)
-        if player and player.HasTrait then
-            return player:HasTrait(traitName)
-        end
-        if player and player.hasTrait then
-            return player:hasTrait(traitName)
-        end
         local traits = player and player.getTraits and player:getTraits() or nil
-        return traits and traits.contains and traits:contains(traitName) or false
+        if traits and traits.contains then
+            local ok, result = pcall(function()
+                return traits:contains(traitName)
+            end)
+            if ok then
+                return result == true
+            end
+        end
+
+        if player then
+            local ok, result = pcall(function()
+                return player:HasTrait(traitName)
+            end)
+            if ok then
+                return result == true
+            end
+        end
+
+        return false
     end
     -- NPC MOD COMPATIBILITY
     if (player:getModData().DTEMKillsPath == nil or player:getModData().DTEMKillscheck2 == nil or
