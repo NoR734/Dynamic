@@ -1,8 +1,10 @@
+require "DTEMB42Compat"
+
 -- On_Eat function for to detect if there are mushrooms on it
 -- MUSHROOMS (NO RECIPE)
 function OnEat_Mushroom(food, player)
     --print("DT Logger: running OnEat_Mushroom function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -11,7 +13,7 @@ end
 -- BERRIES (NO RECIPES)
 function OnEat_Berry(food, player)
     --print("DT Logger: running OnEat_Berry function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -72,7 +74,7 @@ end
 -- SALADS
 function OnEat_Salad(food, player)
     --print("DT Logger: running OnEat_Salad function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -87,7 +89,7 @@ end
 -- STEWS
 function OnEat_PotOfStew(food, player)
     --print("DT Logger: running OnEat_PotOfStew function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -102,7 +104,7 @@ end
 -- SOUPS
 function OnEat_PotOfSoup(food, player)
     --print("DT Logger: running OnEat_PotOfSoup function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -117,7 +119,7 @@ end
 -- STIR FRIES
 function OnEat_StirFry(food, player)
     --print("DT Logger: running OnEat_StirFry function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -130,7 +132,7 @@ function OnEat_StirFry(food, player)
 end
 function OnEat_StirFry2(food, player)
     --print("DT Logger: running OnEat_StirFry2 function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -145,7 +147,7 @@ end
 -- PASTA
 function OnEat_PastaPot(food, player)
     --print("DT Logger: running OnEat_PastaPot function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -158,7 +160,7 @@ function OnEat_PastaPot(food, player)
 end
 function OnEat_PastaPan(food, player)
     --print("DT Logger: running OnEat_PastaPan function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -173,7 +175,7 @@ end
 -- RICE
 function OnEat_RicePot(food, player)
     --print("DT Logger: running OnEat_RicePot function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -186,7 +188,7 @@ function OnEat_RicePot(food, player)
 end
 function OnEat_RicePan(food, player)
     --print("DT Logger: running OnEat_RicePan function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -198,10 +200,10 @@ function OnEat_RicePan(food, player)
     end
 end
 
--- ROASTED VEGETABLES 
+-- ROASTED VEGETABLES
 function OnEat_RoastedVegetables(food, player)
     --print("DT Logger: running OnEat_RoastedVegetables function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -216,7 +218,7 @@ end
 -- OMELETTE
 function OnEat_OmeletteRecipe(food, player)
     --print("DT Logger: running OnEat_OmeletteRecipe function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -231,7 +233,7 @@ end
 -- SANDWICH
 function OnEat_Sandwich(food, player)
     --print("DT Logger: running OnEat_Sandwich function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -246,7 +248,7 @@ end
 -- BURGER
 function OnEat_Burger(food, player)
     --print("DT Logger: running OnEat_Burger function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         local ingredients = food:getExtraItems();
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
@@ -264,7 +266,7 @@ end
 function OnEat_FruitSalad(food, player)
     --print("DT Logger: running OnEat_FruitSalad function")
     local ingredients = food:getExtraItems();
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
             if string.find(ingredients:get(i), "Berry") then
@@ -279,7 +281,7 @@ end
 function OnEat_CakeRaw(food, player)
     --print("DT Logger: running OnEat_CakeRaw function")
     local ingredients = food:getExtraItems();
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
             if string.find(ingredients:get(i), "Berry") then
@@ -290,11 +292,11 @@ function OnEat_CakeRaw(food, player)
     end
 end
 
--- PANCAKES 
+-- PANCAKES
 function OnEat_Pancakes(food, player)
     --print("DT Logger: running OnEat_Pancakes function")
     local ingredients = food:getExtraItems();
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
             if string.find(ingredients:get(i), "Berry") then
@@ -305,11 +307,11 @@ function OnEat_Pancakes(food, player)
     end
 end
 
--- WAFFLES 
+-- WAFFLES
 function OnEat_Waffles(food, player)
     --print("DT Logger: running OnEat_Waffles function")
     local ingredients = food:getExtraItems();
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         --print(ingredients)
         for i = 0, ingredients:size() - 1 do
             if string.find(ingredients:get(i), "Berry") then
@@ -323,7 +325,7 @@ end
 -- VIOLETS
 function OnEat_Violets(food, player)
     --print("DT Logger: running OnEat_Violets function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -331,7 +333,7 @@ end
 -- SUNFLOWER SEEDS
 function OnEat_SunFlowerSeeds(food, player)
     --print("DT Logger: running OnEat_SunFlowerSeeds function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -339,7 +341,7 @@ end
 -- GRAPE LEAVES
 function OnEat_GrapeLeaves(food, player)
     --print("DT Logger: running OnEat_GrapeLeaves function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -347,7 +349,7 @@ end
 -- ROSEHIPS
 function OnEat_Rosehips(food, player)
     --print("DT Logger: running OnEat_Rosehips function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -355,7 +357,7 @@ end
 -- ACORNS
 function OnEat_Acorns(food, player)
     --print("DT Logger: running OnEat_Acorns function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -363,7 +365,7 @@ end
 -- DANDELIONS
 function OnEat_Dandelions(food, player)
     --print("DT Logger: running OnEat_Dandelions function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -371,7 +373,7 @@ end
 -- NETTLES
 function OnEat_Nettles(food, player)
     --print("DT Logger: running OnEat_Nettles function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -379,7 +381,7 @@ end
 -- THISTLE
 function OnEat_Thistle(food, player)
     --print("DT Logger: running OnEat_Thistle function")
-    if player:HasTrait("WildPlantsAllergy") then
+    if DTEMHasTrait(player, "WildPlantsAllergy") then
         DTEMallergyIncrease(player, food:getHungerChange() * 100 * -1);
     end
 end
@@ -388,11 +390,10 @@ end
 function OnEat_Gum(food, player, percent)
     --print("DT Logger: running OnEat_Gum function")
     local stats = player:getStats()
-    if player:HasTrait("Smoker") then
+    if DTEMHasTrait(player, "Smoker") then
         stats:setStressFromCigarettes(0);
         if stats:getStress() > 0 then
             stats:setStress(stats:getStress() / 2)
         end
     end
 end
-

@@ -1,34 +1,13 @@
 require "MF_ISMoodle"
+require "DTEMB42Compat"
+
 MF.createMoodle("dtemoverdose");
 MF.createMoodle("dtembloodlust");
 MF.createMoodle("dtemcaffeine");
 MF.createMoodle("dtemallergy");
 
 local function DTEMMoodleHasTrait(player, trait)
-    if DTEMHasTrait then
-        return DTEMHasTrait(player, trait)
-    end
-
-    local traits = player and player.getTraits and player:getTraits() or nil
-    if traits and traits.contains then
-        local ok, result = pcall(function()
-            return traits:contains(trait)
-        end)
-        if ok then
-            return result == true
-        end
-    end
-
-    if player then
-        local ok, result = pcall(function()
-            return player:HasTrait(trait)
-        end)
-        if ok then
-            return result == true
-        end
-    end
-
-    return false
+    return DTEMHasTrait(player, trait)
 end
 
 -- OVERDOSE MOODLE

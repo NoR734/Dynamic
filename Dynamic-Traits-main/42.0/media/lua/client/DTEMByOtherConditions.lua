@@ -20,33 +20,33 @@ function DTEMoutdoorsmanTrait(player)
         end
 
         -- BUFFS/DEBUFFS BY OTHER TRAITS
-        if player:HasTrait("Pluviophile") then
+        if DTEMHasTrait(player, "Pluviophile") then
             --print("Buff by Pluviophile");
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait + (rainIntensity * 10);
-        elseif player:HasTrait("Pluviophobia") then
+        elseif DTEMHasTrait(player, "Pluviophobia") then
             --print("Debuff by Pluviophobe");
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - (rainIntensity * 10);
         end
-        if player:HasTrait("Hiker") then
+        if DTEMHasTrait(player, "Hiker") then
             --print("Buff by Hiker");
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait + (snowIntensity * 10);
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait + (windIntensity * 10);
         end
-        if player:HasTrait("Formerscout") then
+        if DTEMHasTrait(player, "Formerscout") then
             --print("Buff by Formerscout");
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait + 5;
         end
 
         -- EXTRA POINTS WHEN BEING OUTSIDE AND HAVING ONE OF THE NEXT PROFESSIONS
-        if player:getDescriptor():getProfession() == "parkranger" then
+        if DTEMHasProfession(player, "parkranger") then
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait + 5;
-        elseif player:getDescriptor():getProfession() == "farmer" or player:getDescriptor():getProfession() == "fisherman" then
+        elseif DTEMHasProfession(player, "farmer") or DTEMHasProfession(player, "fisherman") then
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait + 3;
-        elseif player:getDescriptor():getProfession() == "lumberjack" then
+        elseif DTEMHasProfession(player, "lumberjack") then
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait + 1;
         end
 
-        if player:HasTrait("Outdoorsman") then
+        if DTEMHasTrait(player, "Outdoorsman") then
             --print("Player has Outdoorsman, decreasing stress, unhappiness and anger");
             -- IF THE TRAIT IS PRESENT WHILE THE PLAYER IS OUTSIDE AND NOT IN A VEHICLE THE STRESS, UNHAPPINESS AND ANGER DECREASES WITH RAIN AND SNOW.
             DTEMdecreaseStress(player, rainIntensity / 100);
@@ -62,22 +62,22 @@ function DTEMoutdoorsmanTrait(player)
         if not player:isAsleep() then
             --print("Player is either inside or in a vehicle and not sleeping, removing Outdoorsman");
             player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - 1;
-            if player:HasTrait("Outdoorsman") then
+            if DTEMHasTrait(player, "Outdoorsman") then
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - rainIntensity;
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - snowIntensity;
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - windIntensity;
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - fogIntensity;
             end
-            if player:HasTrait("Pluviophile") and rainIntensity > 0 then
+            if DTEMHasTrait(player, "Pluviophile") and rainIntensity > 0 then
                 --print("Player is either inside or in a vehicle and it is raining, removing Outdoorsman");
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - rainIntensity;
             end
-            if player:HasTrait("Hiker") then
+            if DTEMHasTrait(player, "Hiker") then
                 --print("Debuff by Hiker");
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - snowIntensity;
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - windIntensity;
             end
-            if player:HasTrait("Formerscout") then
+            if DTEMHasTrait(player, "Formerscout") then
                 --print("Debuff by Formerscout");
                 player:getModData().DTOutdoorsmanTrait = player:getModData().DTOutdoorsmanTrait - 1;
             end
@@ -90,11 +90,11 @@ function DTEMoutdoorsmanTrait(player)
         player:getModData().DTOutdoorsmanTrait = 0;
     end
     -- CHECK IF THE PLAYER ACHIEVED THE NECESSARY TO WIN OUTDOORSMAN
-    if not player:HasTrait("Outdoorsman") and player:getModData().DTOutdoorsmanTrait >= 500000 then
-        player:getTraits():add("Outdoorsman");
+    if not DTEMHasTrait(player, "Outdoorsman") and player:getModData().DTOutdoorsmanTrait >= 500000 then
+        DTEMAddTrait(player, "Outdoorsman");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_outdoorsman"), true, HaloTextHelper.getColorGreen());
-    elseif player:HasTrait("Outdoorsman") and player:getModData().DTOutdoorsmanTrait < 500000 then
-        player:getTraits():remove("Outdoorsman");
+    elseif DTEMHasTrait(player, "Outdoorsman") and player:getModData().DTOutdoorsmanTrait < 500000 then
+        DTEMRemoveTrait(player, "Outdoorsman");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_outdoorsman"), false, HaloTextHelper.getColorRed());
     end
     --print("DT Logger: DTOutdoorsCounter value is " .. player:getModData().DTOutdoorsmanTrait);
@@ -110,18 +110,18 @@ function DTEMcatsEyes(player)
         local lightLevel = playerSquare:getLightLevel(player:getPlayerNum());
         --print("Square light level: " .. lightLevel);
         if lightLevel <= 0.5 then
-            if player:getDescriptor():getProfession() == "securityguard" then
+            if DTEMHasProfession(player, "securityguard") then
                 player:getModData().DTEMCatsEyesTrait = player:getModData().DTEMCatsEyesTrait + 5 + (lightLevel * 4);
-            elseif player:getDescriptor():getProfession() == "burglar" then
+            elseif DTEMHasProfession(player, "burglar") then
                 player:getModData().DTEMCatsEyesTrait = player:getModData().DTEMCatsEyesTrait + 4 + (lightLevel * 3);
-            elseif player:getDescriptor():getProfession() == "fireofficer" or player:getDescriptor():getProfession() == "policeofficer" then
+            elseif DTEMHasProfession(player, "fireofficer") or DTEMHasProfession(player, "policeofficer") then
                 player:getModData().DTEMCatsEyesTrait = player:getModData().DTEMCatsEyesTrait + 3 + (lightLevel * 2);
             else
                 player:getModData().DTEMCatsEyesTrait = player:getModData().DTEMCatsEyesTrait + 2 + lightLevel;
             end
         else
             player:getModData().DTEMCatsEyesTrait = player:getModData().DTEMCatsEyesTrait - 0.3;
-            if player:HasTrait("NightVision") then
+            if DTEMHasTrait(player, "NightVision") then
                 player:getModData().DTEMCatsEyesTrait = player:getModData().DTEMCatsEyesTrait - (0.3 * lightLevel);
             end
         end
@@ -133,11 +133,11 @@ function DTEMcatsEyes(player)
         player:getModData().DTEMCatsEyesTrait = 0;
     end
     -- CHECK IF THE PLAYER ACHIEVED THE NECESSARY TO WIN CATS EYES
-    if not player:HasTrait("NightVision") and player:getModData().DTEMCatsEyesTrait >= 100000 then
-        player:getTraits():add("NightVision");
+    if not DTEMHasTrait(player, "NightVision") and player:getModData().DTEMCatsEyesTrait >= 100000 then
+        DTEMAddTrait(player, "NightVision");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_NightVision"), true, HaloTextHelper.getColorGreen());
-    elseif player:HasTrait("NightVision") and player:getModData().DTEMCatsEyesTrait < 100000 then
-        player:getTraits():remove("NightVision");
+    elseif DTEMHasTrait(player, "NightVision") and player:getModData().DTEMCatsEyesTrait < 100000 then
+        DTEMRemoveTrait(player, "NightVision");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_NightVision"), false, HaloTextHelper.getColorRed());
     end
     --print("DT Logger: DTCatsEyesCounter value is " .. player:getModData().DTEMCatsEyesTrait);
@@ -152,9 +152,9 @@ function DTEMrainTraits(player)
     if player:isOutside() and player:getVehicle() == nil and rainIntensity > 0 then
         -- THE PLAYER NEEDS TO BE OUTSIDE, NOT IN A VEHICLE AND IT MUST BE RAINING
 
-        if player:HasTrait("Pluviophile") then
+        if DTEMHasTrait(player, "Pluviophile") then
             DTEMpluviophileTrait(player, rainIntensity / 100, rainIntensity, rainIntensity / 100);
-        elseif player:HasTrait("Pluviophobia") then
+        elseif DTEMHasTrait(player, "Pluviophobia") then
             DTEMpluviophobiaTrait(player, rainIntensity / 100, rainIntensity, rainIntensity / 100);
             player:getModData().DTEMRainTraits = player:getModData().DTEMRainTraits + (rainIntensity * 10);
         else
@@ -162,25 +162,25 @@ function DTEMrainTraits(player)
         end
 
         -- IF THE PLAYER HAVEN'T OBTAINED PLUVIOPHILE, THEN SOME EXTRA POINTS ARE ADDED IF "Outdoorsman", "Former Scout" AND/OR "Hiker" ARE PRESENT
-        if not player:HasTrait("Pluviophile") then
-            if player:HasTrait("Outdoorsman") then
+        if not DTEMHasTrait(player, "Pluviophile") then
+            if DTEMHasTrait(player, "Outdoorsman") then
                 player:getModData().DTEMRainTraits = player:getModData().DTEMRainTraits + 3;
             end
-            if player:HasTrait("Formerscout") then
+            if DTEMHasTrait(player, "Formerscout") then
                 player:getModData().DTEMRainTraits = player:getModData().DTEMRainTraits + 3;
             end
-            if player:HasTrait("Hiker") then
+            if DTEMHasTrait(player, "Hiker") then
                 player:getModData().DTEMRainTraits = player:getModData().DTEMRainTraits + 3;
             end
         end
     end
 
     -- CHECK IF THE PLAYER ACHIEVED THE REQUIREMENTS TO REMOVE/GAIN THE TRAITS
-    if player:getModData().DTEMRainTraits >= 0 and player:HasTrait("Pluviophobia") then
-        player:getTraits():remove("Pluviophobia");
+    if player:getModData().DTEMRainTraits >= 0 and DTEMHasTrait(player, "Pluviophobia") then
+        DTEMRemoveTrait(player, "Pluviophobia");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Pluviophobia"), false, HaloTextHelper.getColorGreen());
-    elseif player:getModData().DTEMRainTraits >= 40000 and not player:HasTrait("Pluviophile") then
-        player:getTraits():add("Pluviophile");
+    elseif player:getModData().DTEMRainTraits >= 40000 and not DTEMHasTrait(player, "Pluviophile") then
+        DTEMAddTrait(player, "Pluviophile");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Pluviophile"), true, HaloTextHelper.getColorGreen());
     end
     --print("DT Logger: DTRainTraits value is " .. player:getModData().DTEMRainTraits);
@@ -215,7 +215,7 @@ function DTEMpluviophileTrait(player, stress, unhappyness, anger)
         end
     else
         if wearingPoncho == true then
-            -- Medium protection. 
+            -- Medium protection.
             DTEMdecreaseStress(player, stress / 2);
             DTEMdecreaseStressFromCigarettes(player, 1);
             DTEMdecreaseUnhappiness(player, unhappyness / 2);
@@ -258,7 +258,7 @@ function DTEMpluviophobiaTrait(player, stress, unhappyness, anger)
         end
     else
         if wearingPoncho == true then
-            -- Medium protection. 
+            -- Medium protection.
             DTEMincreaseStress(player, 0, stress / 2);
             DTEMincreaseUnhappiness(player, 0, unhappyness / 2);
             DTEMincreaseAnger(player, 0, anger / 2);
@@ -274,18 +274,18 @@ end
 -- CLAUSTROPHOBIC AND AGORAPHOBIC TRAITS
 function DTEMagoraphobicClaustrophobicTraits(player)
     --print("DT Logger: running agoraphobicClaustrophobicTraits function");
-    if player:isOutside() and player:HasTrait("Agoraphobic") then
+    if player:isOutside() and DTEMHasTrait(player, "Agoraphobic") then
         player:getModData().DTEMagoraphobicClaustrophobicTraits = player:getModData().DTEMagoraphobicClaustrophobicTraits + 1;
-    elseif not player:isOutside() and player:HasTrait("Claustophobic") then
+    elseif not player:isOutside() and DTEMHasTrait(player, "Claustophobic") then
         player:getModData().DTEMagoraphobicClaustrophobicTraits = player:getModData().DTEMagoraphobicClaustrophobicTraits + 1;
     end
     -- CHECK IF THE PLAYER ACHIEVED THE NECESSARY TO REMOVE CLAUSTROPHOBIC OR AGORAPHOBIC TRAITS
     if player:getModData().DTEMagoraphobicClaustrophobicTraits >= 175000 then
-        if player:HasTrait("Agoraphobic") then
-            player:getTraits():remove("Agoraphobic");
+        if DTEMHasTrait(player, "Agoraphobic") then
+            DTEMRemoveTrait(player, "Agoraphobic");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_agoraphobic"), false, HaloTextHelper.getColorGreen());
-        elseif player:HasTrait("Claustophobic") then
-            player:getTraits():remove("Claustophobic");
+        elseif DTEMHasTrait(player, "Claustophobic") then
+            DTEMRemoveTrait(player, "Claustophobic");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_claustro"), false, HaloTextHelper.getColorGreen());
         end
     end
@@ -301,7 +301,7 @@ end
 -- ANOREXIA TRAIT
 function DTEManorexyTrait(player)
     --print("DT Logger: running anorexyTrait function");
-    if player:HasTrait("Emaciated") or player:HasTrait("Very Underweight") then
+    if DTEMHasTrait(player, "Emaciated") or DTEMHasTrait(player, "Very Underweight") then
         -- Based on the Unhapyness the rate to obtain Anorexia is lower/higher.
         if player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 1 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait - 2;
@@ -330,7 +330,7 @@ function DTEManorexyTrait(player)
         if ZombRand(10) == 0 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + DTEMluckyUnluckyModifier(player, 7);
         end
-    elseif player:HasTrait("Underweight") then
+    elseif DTEMHasTrait(player, "Underweight") then
         if player:getMoodles():getMoodleLevel(MoodleType.Unhappy) == 0 and player:getMoodles():getMoodleLevel(MoodleType.Stress) == 0 then
             player:getModData().DTEManorexyTrait = player:getModData().DTEManorexyTrait + 2;
         else
@@ -358,11 +358,11 @@ function DTEManorexyTrait(player)
         player:getModData().DTEManorexyTrait = 1080;
     end
     -- CHECK IF THE PLAYER ACHIEVED THE REQUIREMENTS TO OBTAIN OR REMOVE ANOREXIA TRAIT
-    if player:getModData().DTEManorexyTrait >= 720 and player:HasTrait("Anorexy") then
-        player:getTraits():remove("Anorexy");
+    if player:getModData().DTEManorexyTrait >= 720 and DTEMHasTrait(player, "Anorexy") then
+        DTEMRemoveTrait(player, "Anorexy");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Anorexy"), false, HaloTextHelper.getColorGreen());
-    elseif player:getModData().DTEManorexyTrait <= -720 and not player:HasTrait("Anorexy") then
-        player:getTraits():add("Anorexy");
+    elseif player:getModData().DTEManorexyTrait <= -720 and not DTEMHasTrait(player, "Anorexy") then
+        DTEMAddTrait(player, "Anorexy");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Anorexy"), true, HaloTextHelper.getColorRed());
     end
     --print("DT Logger: DTthresholdToObtainLoseAnorexy value is " .. player:getModData().DTEManorexyTrait);
@@ -410,7 +410,7 @@ function DTEManorexyTraitPassiveSymptoms(player)
         -- ENDURANCE
         DTEMdecreaseEndurance(player, ZombRand(3), 0.10);
         -- IF ANOREXIA AND MORE THAN 65KG's
-        if not player:HasTrait("Emaciated") and not player:HasTrait("Very Underweight") then
+        if not DTEMHasTrait(player, "Emaciated") and not DTEMHasTrait(player, "Very Underweight") then
             -- UNHAPPYNESS
             DTEMincreaseUnhappiness(player, ZombRand(5), 10);
             -- STRESS
@@ -422,25 +422,25 @@ end
 -- PHYSICALLY ACTIVE AND SEDENTARY TRAITS
 function DTEMactiveSedentaryTraits(player)
     --print("DT Logger: running activeSedentaryTraits function");
-    player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits - 0.5;
+    player:getModData().DTEMphysicallyActiveSedentaryTraits = DTEMGetModDataNumber(player, "DTEMphysicallyActiveSedentaryTraits", 0) - 0.5;
     if player:getModData().DTEMphysicallyActiveSedentaryTraits < -70000 then
         player:getModData().DTEMphysicallyActiveSedentaryTraits = -70000;
     end
     -- CHECK IF THE PLAYER ACHIEVED THE NECESSARY TO OBTAIN/REMOVE THE TRAITS
-    if player:getModData().DTEMphysicallyActiveSedentaryTraits <= -20000 and not player:HasTrait("Sedentary") then
-        player:getTraits():add("Sedentary");
+    if player:getModData().DTEMphysicallyActiveSedentaryTraits <= -20000 and not DTEMHasTrait(player, "Sedentary") then
+        DTEMAddTrait(player, "Sedentary");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Sedentary"), true, HaloTextHelper.getColorRed());
     elseif player:getModData().DTEMphysicallyActiveSedentaryTraits > -20000 and player:getModData().DTEMphysicallyActiveSedentaryTraits < 40000 and
-            (player:HasTrait("PhysicallyActive") or player:HasTrait("Sedentary")) then
-        if player:HasTrait("PhysicallyActive") then
-            player:getTraits():remove("PhysicallyActive");
+            (DTEMHasTrait(player, "PhysicallyActive") or DTEMHasTrait(player, "Sedentary")) then
+        if DTEMHasTrait(player, "PhysicallyActive") then
+            DTEMRemoveTrait(player, "PhysicallyActive");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_PhysicallyActive"), false, HaloTextHelper.getColorRed());
-        elseif player:HasTrait("Sedentary") then
-            player:getTraits():remove("Sedentary");
+        elseif DTEMHasTrait(player, "Sedentary") then
+            DTEMRemoveTrait(player, "Sedentary");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Sedentary"), false, HaloTextHelper.getColorGreen());
         end
-    elseif player:getModData().DTEMphysicallyActiveSedentaryTraits >= 40000 and not player:HasTrait("PhysicallyActive") then
-        player:getTraits():add("PhysicallyActive");
+    elseif player:getModData().DTEMphysicallyActiveSedentaryTraits >= 40000 and not DTEMHasTrait(player, "PhysicallyActive") then
+        DTEMAddTrait(player, "PhysicallyActive");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_PhysicallyActive"), true, HaloTextHelper.getColorGreen());
     end
     --print("DT Logger: DTObtainLoseActiveSedentary value is " .. player:getModData().DTEMphysicallyActiveSedentaryTraits);

@@ -6,19 +6,19 @@ function DTEMonHitTree(player, weapon)
 	if weapon:getCategories():contains("Axe") then
 		player:getXp():AddXP(Perks.Axe, 1);
 	end
-	if player:HasTrait("Prodigy") then
+	if DTEMHasTrait(player, "Prodigy") then
 		player:getXp():AddXP(Perks.Fitness, 1);
 		player:getXp():AddXP(Perks.Strength, 1);
 	end
 	-- If the player has the trait "Active" the negative moods are reduced when chopping trees
-	if player:HasTrait("PhysicallyActive") then
+	if DTEMHasTrait(player, "PhysicallyActive") then
 		DTEMdecreaseStress(player, 0.03);
         DTEMdecreaseStressFromCigarettes(player, 0.03);
         DTEMdecreaseBoredom(player, 3);
         DTEMdecreaseUnhappiness(player, 3);
         DTEMdecreaseAnger(player, 0.03);
 	-- If the player has the trait "Sedentary" little pain is given to the player when chopping trees
-	elseif player:HasTrait("Sedentary") then
+	elseif DTEMHasTrait(player, "Sedentary") then
 		DTEMapplyPain(player, ZombRand(10), "ForeArm_L", ZombRand(15));
 		DTEMapplyPain(player, ZombRand(10), "ForeArm_R", ZombRand(15));
 		DTEMapplyPain(player, ZombRand(10), "UpperArm_L", ZombRand(15));
@@ -35,11 +35,11 @@ function DTEMonSwingWeapon(player, weapon)
     --print("DT Logger: running DTEMonSwingWeapon function");
 	-- If the player has the trait "Prodigy" extra XP is given to the player for Strength and Fitness
 	if weapon:getCategories():contains("Axe") or weapon:getCategories():contains("Blunt") then
-		if player:HasTrait("Prodigy") then 
+		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.80);
 			player:getXp():AddXP(Perks.Strength, 0.80);
 		end
-		if player:HasTrait("Sedentary") then
+		if DTEMHasTrait(player, "Sedentary") then
 			DTEMapplyPain(player, ZombRand(10), "ForeArm_L", ZombRand(15));
 			DTEMapplyPain(player, ZombRand(10), "ForeArm_R", ZombRand(15));
 			DTEMapplyPain(player, ZombRand(10), "UpperArm_L", ZombRand(15));
@@ -47,11 +47,11 @@ function DTEMonSwingWeapon(player, weapon)
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 4;
 	elseif weapon:getCategories():contains("Spear") or weapon:getCategories():contains("LongBlade")then
-		if player:HasTrait("Prodigy") then 
+		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.70);
 			player:getXp():AddXP(Perks.Strength, 0.70);
 		end
-		if player:HasTrait("Sedentary") then
+		if DTEMHasTrait(player, "Sedentary") then
 			DTEMapplyPain(player, ZombRand(10), "ForeArm_L", ZombRand(10));
 			DTEMapplyPain(player, ZombRand(10), "ForeArm_R", ZombRand(10));
 			DTEMapplyPain(player, ZombRand(10), "UpperArm_L", ZombRand(10));
@@ -59,11 +59,11 @@ function DTEMonSwingWeapon(player, weapon)
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 3;
 	elseif weapon:getCategories():contains("SmallBlunt") then
-		if player:HasTrait("Prodigy") then 
+		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.60);
 			player:getXp():AddXP(Perks.Strength, 0.60);
 		end
-		if player:HasTrait("Sedentary") then
+		if DTEMHasTrait(player, "Sedentary") then
 			DTEMapplyPain(player, ZombRand(12), "ForeArm_L", ZombRand(10));
 			DTEMapplyPain(player, ZombRand(12), "ForeArm_R", ZombRand(10));
 			DTEMapplyPain(player, ZombRand(12), "UpperArm_L", ZombRand(10));
@@ -71,11 +71,11 @@ function DTEMonSwingWeapon(player, weapon)
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 2;
 	elseif weapon:getCategories():contains("SmallBlade") then
-		if player:HasTrait("Prodigy") then 
+		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.50);
 			player:getXp():AddXP(Perks.Strength, 0.50);
 		end
-		if player:HasTrait("Sedentary") then
+		if DTEMHasTrait(player, "Sedentary") then
 			DTEMapplyPain(player, ZombRand(15), "ForeArm_L", ZombRand(8));
 			DTEMapplyPain(player, ZombRand(15), "ForeArm_R", ZombRand(8));
 			DTEMapplyPain(player, ZombRand(15), "UpperArm_L", ZombRand(8));
@@ -83,14 +83,14 @@ function DTEMonSwingWeapon(player, weapon)
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 1;
 	elseif weapon:getCategories():contains("Unarmed") then
-		if player:HasTrait("Prodigy") then 
+		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.25);
 			player:getXp():AddXP(Perks.Strength, 0.25);
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 1;
 	end
 	-- If the player has the trait "Active" the negative moods are reduced when when fighting
-	if player:HasTrait("PhysicallyActive") then
+	if DTEMHasTrait(player, "PhysicallyActive") then
 		DTEMdecreaseStress(player, 0.01);
         DTEMdecreaseStressFromCigarettes(player, 0.01);
         DTEMdecreaseBoredom(player, 1);
@@ -105,51 +105,51 @@ end
 
 function DTEMonPlayerMoving(player)
     --print("DT Logger: running DTEMonPlayerMoving function");
-    -- Player is walking 
+    -- Player is walking
     if player:isPlayerMoving() and not player:isRunning() and not player:isSprinting() then
         --print("Player is walking");
-        if player:HasTrait("PhysicallyActive") then
+        if DTEMHasTrait(player, "PhysicallyActive") then
             DTEMdecreaseStress(player, 0.003);
             DTEMdecreaseStressFromCigarettes(player, 0.003);
             DTEMdecreaseBoredom(player, 0.3);
             DTEMdecreaseUnhappiness(player, 0.3);
             DTEMdecreaseAnger(player, 0.003);
         end
-        -- Player is running 
-    elseif player:isRunning() then 
+        -- Player is running
+    elseif player:isRunning() then
         --print("Player is running");
-        if player:HasTrait("PhysicallyActive") then
+        if DTEMHasTrait(player, "PhysicallyActive") then
             DTEMdecreaseStress(player, 0.01);
             DTEMdecreaseStressFromCigarettes(player, 0.01);
             DTEMdecreaseBoredom(player, 1);
             DTEMdecreaseUnhappiness(player, 1);
             DTEMdecreaseAnger(player, 0.01);
-        elseif player:HasTrait("Sedentary") then
+        elseif DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, ZombRand(3), "UpperLeg_L", ZombRand(7));
             DTEMapplyPain(player, ZombRand(3), "UpperLeg_R", ZombRand(7));
             DTEMapplyPain(player, ZombRand(3), "LowerLeg_L", ZombRand(7));
             DTEMapplyPain(player, ZombRand(3), "LowerLeg_R", ZombRand(7));
         end
-        if player:HasTrait("Prodigy") then 
+        if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 3);
 		end
         player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 1;
         -- Player is sprinting
-    elseif player:isSprinting() then 
+    elseif player:isSprinting() then
         --print("Player is sprinting");
-        if player:HasTrait("PhysicallyActive") then
+        if DTEMHasTrait(player, "PhysicallyActive") then
             DTEMdecreaseStress(player, 0.015);
             DTEMdecreaseStressFromCigarettes(player, 0.015);
             DTEMdecreaseBoredom(player, 1.5);
             DTEMdecreaseUnhappiness(player, 1.5);
             DTEMdecreaseAnger(player, 0.015);
-        elseif player:HasTrait("Sedentary") then
+        elseif DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, ZombRand(3), "UpperLeg_L", ZombRand(10));
             DTEMapplyPain(player, ZombRand(3), "UpperLeg_R", ZombRand(10));
             DTEMapplyPain(player, ZombRand(3), "LowerLeg_L", ZombRand(10));
             DTEMapplyPain(player, ZombRand(3), "LowerLeg_R", ZombRand(10));
         end
-        if player:HasTrait("Prodigy") then 
+        if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 5);
 		end
         player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 2;
@@ -219,38 +219,38 @@ function ISFitnessAction:exeLooped()
     -- If the player has the trait "Physically Active" the negative moods are reduced when doing exercise
     -- If the player has the trait "Sedentary" extra pain is added the the bodyparts based on the exercise
     if self.exercise == "squats" then
-        if player:HasTrait("Prodigy") then
+        if DTEMHasTrait(player, "Prodigy") then
             player:getXp():AddXP(Perks.Fitness, (self.exeData.xpMod * 3));
         end
-        if player:HasTrait("Sedentary") then
+        if DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, 0, "UpperLeg_L", ZombRand(7));
             DTEMapplyPain(player, 0, "UpperLeg_R", ZombRand(7));
             DTEMapplyPain(player, 0, "LowerLeg_L", ZombRand(7));
             DTEMapplyPain(player, 0, "LowerLeg_R", ZombRand(7));
         end
     elseif self.exercise == "pushups" then
-        if player:HasTrait("Prodigy") then
+        if DTEMHasTrait(player, "Prodigy") then
             player:getXp():AddXP(Perks.Strength, (self.exeData.xpMod * 3));
         end
-        if player:HasTrait("Sedentary") then
+        if DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, 0, "ForeArm_L", ZombRand(7));
             DTEMapplyPain(player, 0, "ForeArm_R", ZombRand(7));
             DTEMapplyPain(player, 0, "UpperArm_L", ZombRand(7));
             DTEMapplyPain(player, 0, "UpperArm_R", ZombRand(7));
         end
     elseif self.exercise == "situp" then
-        if player:HasTrait("Prodigy") then
+        if DTEMHasTrait(player, "Prodigy") then
             player:getXp():AddXP(Perks.Fitness, (self.exeData.xpMod * 3));
         end
-        if player:HasTrait("Sedentary") then
+        if DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, 0, "Torso_Lower", ZombRand(15));
         end
     elseif self.exercise == "burpees" then
-        if player:HasTrait("Prodigy") then
+        if DTEMHasTrait(player, "Prodigy") then
             player:getXp():AddXP(Perks.Fitness, (self.exeData.xpMod * 3));
             player:getXp():AddXP(Perks.Strength, (self.exeData.xpMod * 3));
         end
-        if player:HasTrait("Sedentary") then
+        if DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, 0, "UpperLeg_L", ZombRand(5));
             DTEMapplyPain(player, 0, "UpperLeg_R", ZombRand(5));
             DTEMapplyPain(player, 0, "LowerLeg_L", ZombRand(5));
@@ -261,30 +261,30 @@ function ISFitnessAction:exeLooped()
             DTEMapplyPain(player, 0, "UpperArm_R", ZombRand(5));
         end
     elseif self.exercise == "barbellcurl" then
-        if player:HasTrait("Prodigy") then
+        if DTEMHasTrait(player, "Prodigy") then
             player:getXp():AddXP(Perks.Strength, (self.exeData.xpMod * 3));
         end
-        if player:HasTrait("Sedentary") then
+        if DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, 0, "ForeArm_L", ZombRand(10));
             DTEMapplyPain(player, 0, "ForeArm_R", ZombRand(10));
             DTEMapplyPain(player, 0, "UpperArm_L", ZombRand(10));
             DTEMapplyPain(player, 0, "UpperArm_R", ZombRand(10));
         end
     elseif self.exercise == "dumbbellpress" then
-        if player:HasTrait("Prodigy") then
+        if DTEMHasTrait(player, "Prodigy") then
             player:getXp():AddXP(Perks.Strength, (self.exeData.xpMod * 3));
         end
-        if player:HasTrait("Sedentary") then
+        if DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, 0, "ForeArm_L", ZombRand(10));
             DTEMapplyPain(player, 0, "ForeArm_R", ZombRand(10));
             DTEMapplyPain(player, 0, "UpperArm_L", ZombRand(13));
             DTEMapplyPain(player, 0, "UpperArm_R", ZombRand(13));
         end
     elseif self.exercise == "bicepscurl" then
-        if player:HasTrait("Prodigy") then
+        if DTEMHasTrait(player, "Prodigy") then
             player:getXp():AddXP(Perks.Strength, (self.exeData.xpMod * 3));
         end
-        if player:HasTrait("Sedentary") then
+        if DTEMHasTrait(player, "Sedentary") then
             DTEMapplyPain(player, 0, "ForeArm_L", ZombRand(10));
             DTEMapplyPain(player, 0, "ForeArm_R", ZombRand(10));
             DTEMapplyPain(player, 0, "UpperArm_L", ZombRand(13));
@@ -294,10 +294,10 @@ function ISFitnessAction:exeLooped()
     if getActivatedMods():contains("FWOBenchPress&Treadmill") then
         if self.exercise == "treadmill" then
             --print("DT Logger: FWO treadmill exercise");
-            if player:HasTrait("Prodigy") then
+            if DTEMHasTrait(player, "Prodigy") then
                 player:getXp():AddXP(Perks.Fitness, (self.exeData.xpMod * 3));
             end
-            if player:HasTrait("Sedentary") then
+            if DTEMHasTrait(player, "Sedentary") then
                 DTEMapplyPain(player, 0, "UpperLeg_L", ZombRand(3));
                 DTEMapplyPain(player, 0, "UpperLeg_R", ZombRand(3));
                 DTEMapplyPain(player, 0, "LowerLeg_L", ZombRand(3));
@@ -306,10 +306,10 @@ function ISFitnessAction:exeLooped()
             end
         elseif self.exercise == "benchpress" then
             --print("DT Logger: FWO benchpress exercise");
-            if player:HasTrait("Prodigy") then
+            if DTEMHasTrait(player, "Prodigy") then
                 player:getXp():AddXP(Perks.Strength, (self.exeData.xpMod * 3));
             end
-            if player:HasTrait("Sedentary") then
+            if DTEMHasTrait(player, "Sedentary") then
                 DTEMapplyPain(player, 0, "ForeArm_L", ZombRand(3));
                 DTEMapplyPain(player, 0, "ForeArm_R", ZombRand(3));
                 DTEMapplyPain(player, 0, "UpperArm_L", ZombRand(3));
@@ -318,14 +318,14 @@ function ISFitnessAction:exeLooped()
         end
     end
     -- IMPROVE THE MOODLE IF PHYSICALLY ACTIVE IS PRESENT
-    if player:HasTrait("PhysicallyActive") then
+    if DTEMHasTrait(player, "PhysicallyActive") then
         DTEMdecreaseStress(player, 0.05);
         DTEMdecreaseStressFromCigarettes(player, 0.05);
         DTEMdecreaseUnhappiness(player, 5);
         DTEMdecreaseBoredom(player, 5);
         DTEMdecreaseAnger(player, 0.05);
         -- GIVE BOREDOM IF SEDENTARY IS PRESENT
-    elseif player:HasTrait("Sedentary") then
+    elseif DTEMHasTrait(player, "Sedentary") then
         DTEMincreaseBoredom(player, 3, 7);
     end
     player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 10;
@@ -336,7 +336,7 @@ function ISFitnessAction:exeLooped()
     if ZombRand(10) == 0 then
         --print("Roll is success while doing excercise")
         -- SMOKER
-        if player:HasTrait("Smoker") then
+        if DTEMHasTrait(player, "Smoker") then
             player:getModData().DTEMdaysSinceLastSmoke = player:getModData().DTEMdaysSinceLastSmoke + ZombRand(7);
         end
         -- ALCOHOLIC

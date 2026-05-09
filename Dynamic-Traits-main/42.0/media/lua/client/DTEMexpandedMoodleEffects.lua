@@ -2,7 +2,7 @@
 -- If the player is with a Heavy Load there are minimum chances of getting a fracture.
 function DTEMfracturesIfHeavyLoad(player)
     --print("DT Logger: running DTEMfracturesIfHeavyLoad function");
-	
+
     -- The player has Heavy Load and is not in a vehicle
     if player:getMoodles():getMoodleLevel(MoodleType.HeavyLoad) == 4 and player:getVehicle() == nil then
         --print("Heavy load is Lv4, running chances");
@@ -10,61 +10,61 @@ function DTEMfracturesIfHeavyLoad(player)
         --print("baseChance: " .. baseChance);
 
         -- Increase the fracture chance if Flimsy or Frail are present
-        if player:HasTrait("Flimsy") then
+        if DTEMHasTrait(player, "Flimsy") then
             baseChance = baseChance - 1000;
-        elseif player:HasTrait("Frail") then
+        elseif DTEMHasTrait(player, "Frail") then
             baseChance = baseChance - 2000;
         end
         --print("baseChance: " .. baseChance);
 
-        -- Increase the fracture chance if Anorexia is present 
-        if player:HasTrait("Anorexy") then 
+        -- Increase the fracture chance if Anorexia is present
+        if DTEMHasTrait(player, "Anorexy") then
             baseChance = baseChance - 2000;
         end
         --print("baseChance: " .. baseChance);
 
         -- Increase/Decrease the fracture chance based on the Strength trait present
-        if player:HasTrait("Weak") then 
+        if DTEMHasTrait(player, "Weak") then
             baseChance = baseChance - 2000;
-        elseif player:HasTrait("Feeble") then 
+        elseif DTEMHasTrait(player, "Feeble") then
             baseChance = baseChance - 1000;
-        elseif player:HasTrait("Stout") then 
+        elseif DTEMHasTrait(player, "Stout") then
             baseChance = baseChance + 1000;
-        elseif player:HasTrait("Strong") then 
+        elseif DTEMHasTrait(player, "Strong") then
             baseChance = baseChance + 2000;
         end
         --print("baseChance: " .. baseChance);
 
-        -- Decrease/Increase the fracture chance if Lucky/Unlucky are present 
-        if player:HasTrait("Lucky") then
+        -- Decrease/Increase the fracture chance if Lucky/Unlucky are present
+        if DTEMHasTrait(player, "Lucky") then
             baseChance = baseChance + 1000;
-        elseif player:HasTrait("Unlucky") then
+        elseif DTEMHasTrait(player, "Unlucky") then
             baseChance = baseChance - 1000;
         end
         --print("baseChance: " .. baseChance);
 
         -- Decrease the fracture chance if Strong back or Metal strong back from Snake's modpack are present
         if getActivatedMods():contains("AliceSPack") then
-            if player:HasTrait("Strongback") or player:HasTrait("Strongback2") then 
+            if DTEMHasTrait(player, "Strongback") or DTEMHasTrait(player, "Strongback2") then
                 baseChance = baseChance + 1000;
-            elseif player:HasTrait("Metalstrongback") or player:HasTrait("Metalstrongback2") then 
+            elseif DTEMHasTrait(player, "Metalstrongback") or DTEMHasTrait(player, "Metalstrongback2") then
                 baseChance = baseChance + 2000;
             end
         end
         --print("baseChance: " .. baseChance);
 
-        -- Increase the fracture chance if the player is moving, running or sprinting 
+        -- Increase the fracture chance if the player is moving, running or sprinting
         if player:isPlayerMoving() and not player:isRunning() and not player:isSprinting() then
             --print("Player is walking");
-            -- Player is walking 
+            -- Player is walking
             baseChance = baseChance - 500;
-        elseif player:isRunning() then 
+        elseif player:isRunning() then
             --print("Player is running");
-            -- Player is running 
+            -- Player is running
             baseChance = baseChance - 1000;
-        elseif player:isSprinting() then 
+        elseif player:isSprinting() then
             --print("Player is sprinting");
-            -- Player is sprinting 
+            -- Player is sprinting
             baseChance = baseChance - 2000;
         end
         --print("baseChance: " .. baseChance);
@@ -184,7 +184,7 @@ function DTEMexpandedMoodlesCheckStats(player)
     local currentAnger = player:getStats():getAnger();
     local currentPanic = player:getStats():getPanic();
     local currentStress = player:getStats():getStress();
-    
+
     -- INCREASING ANGRY WHEN BEING DRUNK
     DTEMincreaseAnger(player, ZombRand(30), currentDrunkeness / 100);
 

@@ -21,7 +21,7 @@ function DTEMsmokerTrait(player)
     if player:getModData().DTEMdaysSinceLastSmoke >= 1080 then
         player:setTimeSinceLastSmoke(0);
         player:getStats():setStressFromCigarettes(0);
-        player:getTraits():remove("Smoker");
+        DTEMRemoveTrait(player, "Smoker");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Smoker"), false, HaloTextHelper.getColorGreen());
     end
     --print("DT Logger: DTdaysSinceLastSmoke value is " .. player:getModData().DTEMdaysSinceLastSmoke);
@@ -45,7 +45,7 @@ function DTEMalcoholicTrait(player)
         player:getModData().DTEMalcoholicTrait = player:getModData().DTEMalcoholicTrait + 1;
         player:getModData().DTEMtimeSinceLastDrink = player:getModData().DTEMtimeSinceLastDrink + 1;
         -- Checks if the player has the Alcoholic trait
-        if player:HasTrait("Alcoholic") then
+        if DTEMHasTrait(player, "Alcoholic") then
             -- Checks if the player haven't drink for at least 24 hours
             if player:getModData().DTEMtimeSinceLastDrink > 1440 then
                 --print("Apply effects for more than 24 hours")
@@ -89,11 +89,11 @@ function DTEMalcoholicTrait(player)
         player:getModData().DTEMalcoholicTrait = -50000;
     end
     -- Checks if the player achieved the requirements to remove/obtain Alcoholic
-    if player:HasTrait("Alcoholic") and player:getModData().DTEMalcoholicTrait > 44640 then
-        player:getTraits():remove("Alcoholic");
+    if DTEMHasTrait(player, "Alcoholic") and player:getModData().DTEMalcoholicTrait > 44640 then
+        DTEMRemoveTrait(player, "Alcoholic");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Alcoholic"), false, HaloTextHelper.getColorGreen());
-    elseif not player:HasTrait("Alcoholic") and player:getModData().DTEMalcoholicTrait < -44640 then
-        player:getTraits():add("Alcoholic");
+    elseif not DTEMHasTrait(player, "Alcoholic") and player:getModData().DTEMalcoholicTrait < -44640 then
+        DTEMAddTrait(player, "Alcoholic");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Alcoholic"), true, HaloTextHelper.getColorRed());
     end
     --print("DT Logger: DTEMalcoholicTrait value is " .. player:getModData().DTEMalcoholicTrait);
@@ -110,7 +110,7 @@ function DTEMaddictedToCaffeineTrait(player)
         --print("Caffeine on body")
         player:getModData().DTEMaddictedToCaffeineTrait = player:getModData().DTEMaddictedToCaffeineTrait - 1;
         -- Caffeine on body and the trait is present, decreasing stress, anger and fatigue.
-        if player:HasTrait("AddictedToCaffeine") then
+        if DTEMHasTrait(player, "AddictedToCaffeine") then
             --print("The trait is present, positively affecting the player")
             DTEMdecreaseStress(player, 0.01);
             DTEMdecreaseAnger(player, 0.01);
@@ -121,7 +121,7 @@ function DTEMaddictedToCaffeineTrait(player)
         --print("More than 24 hours without caffeine")
         player:getModData().DTEMaddictedToCaffeineTrait = player:getModData().DTEMaddictedToCaffeineTrait + 1;
         -- 24 hours without caffeine and the trait is present, increasing stress, anger and fatigue.
-        if player:HasTrait("AddictedToCaffeine") then
+        if DTEMHasTrait(player, "AddictedToCaffeine") then
             --print("Trait is present, negatively affecting the player")
             DTEMincreaseStress(player, ZombRand(90),0.15);
             DTEMincreaseAnger(player, ZombRand(90),0.15);
@@ -136,7 +136,7 @@ function DTEMaddictedToCaffeineTrait(player)
     end
 
     -- Between 24 and 120 hours without caffeine being an addicted. During the night the fatigue decreases (Insomnia).
-    if player:HasTrait("AddictedToCaffeine") then
+    if DTEMHasTrait(player, "AddictedToCaffeine") then
         if (getGameTime():getHour() <= 6 or getGameTime():getHour() >= 20) and
         player:getModData().DTEMtimeSinceLastCaffeine > 1440 and player:getModData().DTEMtimeSinceLastCaffeine < 7200 then
             --print("Night hour, decreasing fatigue")
@@ -160,11 +160,11 @@ function DTEMaddictedToCaffeineTrait(player)
     end
 
     -- Checks the values to see if the player can obtain or remove the trait
-    if player:HasTrait("AddictedToCaffeine") and player:getModData().DTEMaddictedToCaffeineTrait > 20160 then
-        player:getTraits():remove("AddictedToCaffeine");
+    if DTEMHasTrait(player, "AddictedToCaffeine") and player:getModData().DTEMaddictedToCaffeineTrait > 20160 then
+        DTEMRemoveTrait(player, "AddictedToCaffeine");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_AddictedToCaffeine"), false, HaloTextHelper.getColorGreen());
-    elseif not player:HasTrait("AddictedToCaffeine") and player:getModData().DTEMaddictedToCaffeineTrait < -20160 then
-        player:getTraits():add("AddictedToCaffeine");
+    elseif not DTEMHasTrait(player, "AddictedToCaffeine") and player:getModData().DTEMaddictedToCaffeineTrait < -20160 then
+        DTEMAddTrait(player, "AddictedToCaffeine");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_AddictedToCaffeine"), true, HaloTextHelper.getColorRed());
     end
 

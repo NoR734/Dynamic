@@ -72,22 +72,22 @@ function DTEMhandleVeryUnderweightTraits(player)
     DTEMremoveTrait(player, "Flimsy", "UI_trait_Flimsy", HaloTextHelper.getColorGreen())
     DTEMaddTrait(player, "Frail", "UI_trait_Frail", HaloTextHelper.getColorRed())
 
-    if player:HasTrait("Athletic") then
+    if DTEMHasTrait(player, "Athletic") then
         DTEMremoveTrait(player, "Asthmatic", "UI_trait_Asthmatic", HaloTextHelper.getColorGreen())
     else
         DTEMaddTrait(player, "Asthmatic", "UI_trait_Asthmatic", HaloTextHelper.getColorRed())
     end
 
-    if player:HasTrait("Strong") or player:HasTrait("Stout") then
+    if DTEMHasTrait(player, "Strong") or DTEMHasTrait(player, "Stout") then
         DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
     else
-        if not player:HasTrait("LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
+        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
         player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
             DTEMaddTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
         end
     end
 
-    if player:HasTrait("Athletic") or player:HasTrait("Fit") then
+    if DTEMHasTrait(player, "Athletic") or DTEMHasTrait(player, "Fit") then
         DTEMremoveTrait(player, "LowThirst", "UI_trait_LowThirst", HaloTextHelper.getColorRed())
     else
         DTEMaddTrait(player, "LowThirst", "UI_trait_LowThirst", HaloTextHelper.getColorRed())
@@ -102,7 +102,7 @@ end
     Description: Handles the traits for a player with the Underweight condition. This function removes and adds specific traits based on the player's current traits and moodles.
     Parameters:
     player (IsoPlayer): The player object whose traits are being managed.
-    
+
     Trait Handling:
     - Removes the "Frail" trait.
     - If the player has the "HeartyAppitite" trait and their Stress and Unhappy moodles are less than level 3, removes the "HeartyAppitite" trait.
@@ -117,7 +117,7 @@ end
 function DTEMhandleUnderweightTraits(player)
     DTEMremoveTrait(player, "Frail", "UI_trait_Frail", HaloTextHelper.getColorGreen())
 
-    if player:HasTrait("HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
+    if DTEMHasTrait(player, "HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
     player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
         DTEMremoveTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorGreen())
     end
@@ -128,31 +128,31 @@ function DTEMhandleUnderweightTraits(player)
     DTEMremoveTrait(player, "ThickSkinned", "UI_trait_thickskinned", HaloTextHelper.getColorRed())
 
     DTEMaddTrait(player, "Flimsy", "UI_trait_Flimsy", HaloTextHelper.getColorRed())
-    
 
-    if player:HasTrait("Strong") or player:HasTrait("Stout") then
+
+    if DTEMHasTrait(player, "Strong") or DTEMHasTrait(player, "Stout") then
         DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
     else
-        if not player:HasTrait("LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
+        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
         player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
             DTEMaddTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorGreen())
         end
     end
 
-    if player:HasTrait("Athletic") or player:HasTrait("Fit") then
+    if DTEMHasTrait(player, "Athletic") or DTEMHasTrait(player, "Fit") then
         DTEMremoveTrait(player, "LowThirst", "UI_trait_LowThirst", HaloTextHelper.getColorRed())
     else
         DTEMaddTrait(player, "LowThirst", "UI_trait_LowThirst", HaloTextHelper.getColorGreen())
     end
 
-    if player:HasTrait("Athletic") or player:HasTrait("Fit") then
+    if DTEMHasTrait(player, "Athletic") or DTEMHasTrait(player, "Fit") then
         DTEMremoveTrait(player, "SlowHealer", "UI_trait_SlowHealer", HaloTextHelper.getColorRed())
         DTEMremoveTrait(player, "FastHealer", "UI_trait_FastHealer", HaloTextHelper.getColorRed())
     else
         DTEMaddTrait(player, "SlowHealer", "UI_trait_SlowHealer", HaloTextHelper.getColorRed())
     end
 
-    if player:HasTrait("Athletic") then
+    if DTEMHasTrait(player, "Athletic") then
         DTEMremoveTrait(player, "ProneToIllness", "UI_trait_pronetoillness", HaloTextHelper.getColorRed())
         DTEMremoveTrait(player, "Resilient", "UI_trait_resilient", HaloTextHelper.getColorRed())
     else
@@ -164,7 +164,7 @@ end
     Description: Handles the dynamic traits for a healthy character based on their current traits and moodles.
     Parameters:
     player (IsoPlayer): The player character whose traits are being managed.
-    -- 
+    --
     The function performs the following actions:
     1. Removes the traits "Flimsy", "Flabby", "ProneToIllness", and "SlowHealer" from the player.
     2. If the player has the "Weak" or "Feeble" trait and does not have the "LightEater" trait, and their stress and unhappiness moodles are below level 3:
@@ -201,32 +201,32 @@ function DTEMhandleHealthyCharacterTraits(player)
     DTEMremoveTrait(player, "ProneToIllness", "UI_trait_pronetoillness", HaloTextHelper.getColorGreen())
     DTEMremoveTrait(player, "SlowHealer", "UI_trait_SlowHealer", HaloTextHelper.getColorGreen())
 
-    if player:HasTrait("Weak") or player:HasTrait("Feeble") then
-        if not player:HasTrait("LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
+    if DTEMHasTrait(player, "Weak") or DTEMHasTrait(player, "Feeble") then
+        if not DTEMHasTrait(player, "LightEater") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
         player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
             DTEMremoveTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorGreen())
             DTEMaddTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorGreen())
         end
-    elseif player:HasTrait("Strong") then
-        if not player:HasTrait("HeartyAppitite") then
+    elseif DTEMHasTrait(player, "Strong") then
+        if not DTEMHasTrait(player, "HeartyAppitite") then
             DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorGreen())
             DTEMaddTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorRed())
         end
     else
         DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
-        if player:HasTrait("HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
+        if DTEMHasTrait(player, "HeartyAppitite") and player:getMoodles():getMoodleLevel(MoodleType.Stress) < 3 and
         player:getMoodles():getMoodleLevel(MoodleType.Unhappy) < 3 then
             DTEMremoveTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorGreen())
         end
     end
 
-    if player:HasTrait("Unfit") or player:HasTrait("Out of Shape") then
-        if not player:HasTrait("LowThirst") then
+    if DTEMHasTrait(player, "Unfit") or DTEMHasTrait(player, "Out of Shape") then
+        if not DTEMHasTrait(player, "LowThirst") then
             DTEMremoveTrait(player, "HighThirst", "UI_trait_HighThirst", HaloTextHelper.getColorGreen())
             DTEMaddTrait(player, "LowThirst", "UI_trait_LowThirst", HaloTextHelper.getColorGreen())
         end
-    elseif player:HasTrait("Athletic") then
-        if not player:HasTrait("HighThirst") then
+    elseif DTEMHasTrait(player, "Athletic") then
+        if not DTEMHasTrait(player, "HighThirst") then
             DTEMremoveTrait(player, "LowThirst", "UI_trait_LowThirst", HaloTextHelper.getColorGreen())
             DTEMaddTrait(player, "HighThirst", "UI_trait_HighThirst", HaloTextHelper.getColorRed())
         end
@@ -235,19 +235,19 @@ function DTEMhandleHealthyCharacterTraits(player)
         DTEMremoveTrait(player, "HighThirst", "UI_trait_HighThirst", HaloTextHelper.getColorGreen())
     end
 
-    if player:HasTrait("Strong") then
+    if DTEMHasTrait(player, "Strong") then
         DTEMaddTrait(player, "ThickSkinned", "UI_trait_thickskinned", HaloTextHelper.getColorGreen())
     else
         DTEMremoveTrait(player, "ThickSkinned", "UI_trait_thickskinned", HaloTextHelper.getColorRed())
     end
 
-    if player:HasTrait("Athletic") then
+    if DTEMHasTrait(player, "Athletic") then
         DTEMaddTrait(player, "Resilient", "UI_trait_resilient", HaloTextHelper.getColorGreen())
     else
         DTEMremoveTrait(player, "Resilient", "UI_trait_resilient", HaloTextHelper.getColorRed())
     end
 
-    if player:HasTrait("Athletic") or player:HasTrait("Fit") then
+    if DTEMHasTrait(player, "Athletic") or DTEMHasTrait(player, "Fit") then
         DTEMaddTrait(player, "FastHealer", "UI_trait_FastHealer", HaloTextHelper.getColorGreen())
     else
         DTEMremoveTrait(player, "FastHealer", "UI_trait_FastHealer", HaloTextHelper.getColorRed())
@@ -256,11 +256,11 @@ end
 
 --[[
     Handles the traits for a player with the Overweight condition.
-    
+
     This function adjusts the player's traits based on their current traits and the Overweight condition.
-    
+
     @param player The player object whose traits are being managed.
-    
+
     The function performs the following actions:
     - Removes the "BrittleKnees" trait.
     - Removes the "LightEater" trait.
@@ -269,20 +269,20 @@ end
     - Adds the "Flabby" trait.
     - Adds the "HeartyAppitite" trait.
     - Adds the "HighThirst" trait.
-    
+
     Additionally, it checks for specific traits and adjusts accordingly:
     - If the player has the "Athletic" or "Fit" trait:
         - Removes the "SlowHealer" trait.
         - Removes the "FastHealer" trait.
     - Otherwise:
         - Adds the "SlowHealer" trait.
-    
+
     - If the player has the "Athletic" trait:
         - Removes the "ProneToIllness" trait.
         - Removes the "Resilient" trait.
     - Otherwise:
         - Adds the "ProneToIllness" trait.
-    
+
     - If the player has the "Strong" trait:
         - Adds the "ThickSkinned" trait.
     - Otherwise:
@@ -291,33 +291,33 @@ end
 -- Handle traits for Overweight condition
 function DTEMhandleOverweightTraits(player)
     DTEMremoveTrait(player, "BrittleKnees", "UI_trait_BrittleKnees", HaloTextHelper.getColorGreen())
-    
+
 
     DTEMremoveTrait(player, "LightEater", "UI_trait_lighteater", HaloTextHelper.getColorRed())
     DTEMremoveTrait(player, "LowThirst", "UI_trait_LowThirst", HaloTextHelper.getColorRed())
     DTEMremoveTrait(player, "Asthmatic", "UI_trait_Asthmatic", HaloTextHelper.getColorGreen())
 
     DTEMaddTrait(player, "Flabby", "UI_trait_Flabby", HaloTextHelper.getColorRed())
-    
+
 
     DTEMaddTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorRed())
     DTEMaddTrait(player, "HighThirst", "UI_trait_HighThirst", HaloTextHelper.getColorRed())
 
-    if player:HasTrait("Athletic") or player:HasTrait("Fit") then
+    if DTEMHasTrait(player, "Athletic") or DTEMHasTrait(player, "Fit") then
         DTEMremoveTrait(player, "SlowHealer", "UI_trait_SlowHealer", HaloTextHelper.getColorRed())
         DTEMremoveTrait(player, "FastHealer", "UI_trait_FastHealer", HaloTextHelper.getColorRed())
     else
         DTEMaddTrait(player, "SlowHealer", "UI_trait_SlowHealer", HaloTextHelper.getColorRed())
     end
 
-    if player:HasTrait("Athletic") then
+    if DTEMHasTrait(player, "Athletic") then
         DTEMremoveTrait(player, "ProneToIllness", "UI_trait_pronetoillness", HaloTextHelper.getColorRed())
         DTEMremoveTrait(player, "Resilient", "UI_trait_resilient", HaloTextHelper.getColorRed())
     else
         DTEMaddTrait(player, "ProneToIllness", "UI_trait_pronetoillness", HaloTextHelper.getColorRed())
     end
 
-    if player:HasTrait("Strong") then
+    if DTEMHasTrait(player, "Strong") then
         DTEMaddTrait(player, "ThickSkinned", "UI_trait_thickskinned", HaloTextHelper.getColorGreen())
     else
         DTEMremoveTrait(player, "ThickSkinned", "UI_trait_thickskinned", HaloTextHelper.getColorRed())
@@ -326,7 +326,7 @@ end
 
 --[[
     Handles the traits for a player with the Obese condition.
-    
+
     This function performs the following actions:
     - Removes the "Flabby" trait from the player.
     - Adds the "BrittleKnees" trait to the player.
@@ -336,29 +336,29 @@ end
     - Adds the "SlowHealer" trait to the player.
     - If the player has the "Athletic" trait, removes the "Asthmatic" trait; otherwise, adds the "Asthmatic" trait.
     - If the player has the "Strong" trait, adds the "ThickSkinned" trait; otherwise, removes the "ThickSkinned" trait.
-    
+
     @param player The player object whose traits are being handled.
 ]]
 -- Handle traits for Obese condition
 function DTEMhandleObeseTraits(player)
     DTEMremoveTrait(player, "Flabby", "UI_trait_Flabby", HaloTextHelper.getColorGreen())
-    
+
 
     DTEMaddTrait(player, "BrittleKnees", "UI_trait_BrittleKnees", HaloTextHelper.getColorRed())
-    
+
 
     DTEMaddTrait(player, "HeartyAppitite", "UI_trait_heartyappetite", HaloTextHelper.getColorRed())
     DTEMaddTrait(player, "HighThirst", "UI_trait_HighThirst", HaloTextHelper.getColorRed())
     DTEMaddTrait(player, "ProneToIllness", "UI_trait_pronetoillness", HaloTextHelper.getColorRed())
     DTEMaddTrait(player, "SlowHealer", "UI_trait_SlowHealer", HaloTextHelper.getColorRed())
 
-    if player:HasTrait("Athletic") then
+    if DTEMHasTrait(player, "Athletic") then
         DTEMremoveTrait(player, "Asthmatic", "UI_trait_Asthmatic", HaloTextHelper.getColorGreen())
     else
         DTEMaddTrait(player, "Asthmatic", "UI_trait_Asthmatic", HaloTextHelper.getColorRed())
     end
 
-    if player:HasTrait("Strong") then
+    if DTEMHasTrait(player, "Strong") then
         DTEMaddTrait(player, "ThickSkinned", "UI_trait_thickskinned", HaloTextHelper.getColorGreen())
     else
         DTEMremoveTrait(player, "ThickSkinned", "UI_trait_thickskinned", HaloTextHelper.getColorRed())
@@ -376,24 +376,22 @@ end
     Returns: None
 --]]
 function DTEMtraitsGainsByBodyConditions(player)
-    if player:HasTrait("Emaciated") then
+    if DTEMHasTrait(player, "Emaciated") then
         DTEMhandleEmaciatedTraits(player)
-    elseif player:HasTrait("Very Underweight") then
+    elseif DTEMHasTrait(player, "Very Underweight") then
         DTEMhandleVeryUnderweightTraits(player)
-    elseif player:HasTrait("Underweight") then
+    elseif DTEMHasTrait(player, "Underweight") then
         DTEMhandleUnderweightTraits(player)
-    elseif not player:HasTrait("Emaciated") and not player:HasTrait("Very Underweight") and
-           not player:HasTrait("Underweight") and not player:HasTrait("Overweight") and
-           not player:HasTrait("Obese") then
+    elseif not DTEMHasTrait(player, "Emaciated") and not DTEMHasTrait(player, "Very Underweight") and
+           not DTEMHasTrait(player, "Underweight") and not DTEMHasTrait(player, "Overweight") and
+           not DTEMHasTrait(player, "Obese") then
         DTEMhandleHealthyCharacterTraits(player)
-    elseif player:HasTrait("Overweight") then
+    elseif DTEMHasTrait(player, "Overweight") then
         DTEMhandleOverweightTraits(player)
-    elseif player:HasTrait("Obese") then
+    elseif DTEMHasTrait(player, "Obese") then
         DTEMhandleObeseTraits(player)
     end
 end
-
-
 
 
 

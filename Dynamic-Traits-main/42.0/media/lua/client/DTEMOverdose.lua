@@ -1,4 +1,6 @@
 -- OVERDOSE FUNCTIONS
+require "DTEMB42Compat"
+
 local function DTEMOverdoseSandboxEnabled()
 	if SandboxVars and SandboxVars.DTEM and SandboxVars.DTEM.EnableOverdoseMechanic ~= nil then
 		return SandboxVars.DTEM.EnableOverdoseMechanic
@@ -7,23 +9,14 @@ local function DTEMOverdoseSandboxEnabled()
 end
 
 local function DTEMOverdoseHasTrait(player, trait)
-	if DTEMHasTrait then
-		return DTEMHasTrait(player, trait)
-	end
-	if player then
-		local ok, result = pcall(function()
-			return player:HasTrait(trait)
-		end)
-		return ok and result == true
-	end
-	return false
+	return DTEMHasTrait(player, trait)
 end
 
 function DTEMoverdoseIncrease(player, overdose)
 	-- Overdose Sandbox
 	local overdoseMechanic = DTEMOverdoseSandboxEnabled()
 
-	if overdoseMechanic then 
+	if overdoseMechanic then
 		--print("Overdose Sandbox is enabled")
 		--print("DT Logger: running DTEMoverdoseIncrease function");
 		--print("overdose: " .. overdose)
@@ -39,7 +32,7 @@ function DTEMoverdoseIncrease(player, overdose)
 			player:getModData().DTEMoverdose = 100;
 		end
 	end
-	
+
 	--print("DT Logger: DTEMoverdose value is " .. player:getModData().DTEMoverdose)
 end
 

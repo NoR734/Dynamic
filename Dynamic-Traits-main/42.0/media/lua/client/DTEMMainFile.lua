@@ -1,30 +1,9 @@
 -- MAIN FILE WHERE ALL THE DIFFERENT FUNCTIONS WILL BE CALLED BASED ON THE DIFFERENT EVENTS
 
+require "DTEMB42Compat"
+
 local function DTEMMainHasTrait(player, trait)
-    if DTEMHasTrait then
-        return DTEMHasTrait(player, trait)
-    end
-
-    local traits = player and player.getTraits and player:getTraits() or nil
-    if traits and traits.contains then
-        local ok, result = pcall(function()
-            return traits:contains(trait)
-        end)
-        if ok then
-            return result == true
-        end
-    end
-
-    if player then
-        local ok, result = pcall(function()
-            return player:HasTrait(trait)
-        end)
-        if ok then
-            return result == true
-        end
-    end
-
-    return false
+    return DTEMHasTrait(player, trait)
 end
 
 local function DTEMGetSandboxOption(optionName, defaultValue)
@@ -53,7 +32,7 @@ function DTEMEveryOneMinuteMain()
             -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryOneMinute EVENT
 
         -- MOODLE DISPLAY MANAGEMENT
-        if overdoseMechanic then 
+        if overdoseMechanic then
             --print("Overdose Sandbox is enabled")
             DTEMoverdoseMoodleUpdate(player)
         end
@@ -118,12 +97,12 @@ function DTEMEveryTenMinutesMain()
             end
             DTEMactiveSedentaryTraits(player);
             DTEMnightmaresTrait(player);
-               
+
             DTEMexpandedWetnessMoodle(player);
             DTEMexpandedHasAColdMoodle(player);
             DTEMexpandedSicknessMoodle(player);
 
-            if overdoseMechanic then 
+            if overdoseMechanic then
                 --print("Overdose Sandbox is enabled")
                 DTEMoverdoseMoodleEffects(player)
             end
@@ -170,12 +149,12 @@ function DTEMEveryHoursMain()
 
             DTEMmelancholicTrait(player)
             DTEMnervousWreckTrait(player)
-            
+
             if pillsTraitsDevelopment then
                 DTEMpillsTraitsDevelopment(player)
             end
 
-            if overdoseMechanic then 
+            if overdoseMechanic then
                 --print("Overdose Sandbox is enabled")
                 DTEMoverdoseDecrease(player)
             end

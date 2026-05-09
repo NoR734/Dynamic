@@ -10,29 +10,29 @@ function DTEMincreaseFoodSickness(player, chance, poison)
             player:playEmote("dtsmellgag");
         end
 
-        if player:HasTrait("SlowHealer") then
+        if DTEMHasTrait(player, "SlowHealer") then
             poison = poison * 1.1;
             --print("DT Logger: player has trait SlowHealer");
             --print("DT Logger: Poison: " .. poison);
-        elseif player:HasTrait("FastHealer") then
+        elseif DTEMHasTrait(player, "FastHealer") then
             poison = poison * 0.9;
             --print("DT Logger: player has trait FastHealer");
             --print("DT Logger: Poison: " .. poison);
         end
-        if player:HasTrait("WeakStomach") then
+        if DTEMHasTrait(player, "WeakStomach") then
             poison = poison * 1.2;
             --print("DT Logger: player has trait WeakStomach");
             --print("DT Logger: Poison: " .. poison);
-        elseif player:HasTrait("IronGut") then
+        elseif DTEMHasTrait(player, "IronGut") then
             poison = poison * 0.8;
             --print("DT Logger: player has trait IronGut");
             --print("DT Logger: Poison: " .. poison);
         end
-        if player:HasTrait("ProneToIllness") then
+        if DTEMHasTrait(player, "ProneToIllness") then
             poison = poison * 1.3;
             --print("DT Logger: player has trait ProneToIllness");
             --print("DT Logger: Poison: " .. poison);
-        elseif player:HasTrait("Resilient") then
+        elseif DTEMHasTrait(player, "Resilient") then
             poison = poison * 0.7;
             --print("DT Logger: player has trait Resilient");
             --print("DT Logger: Poison: " .. poison);
@@ -58,21 +58,21 @@ function DTEMincreaseFoodSicknessByWounds(player, chance, poison)
             player:playEmote("dtsmellgag");
         end
 
-        if player:HasTrait("Thinskinned") then
+        if DTEMHasTrait(player, "Thinskinned") then
             poison = poison * 1.2;
             --print("DT Logger: player has trait Thinskinned");
             --print("DT Logger: Poison: " .. poison);
-        elseif player:HasTrait("ThickSkinned") then
+        elseif DTEMHasTrait(player, "ThickSkinned") then
             poison = poison * 0.8;
             --print("DT Logger: player has trait ThickSkinned");
             --print("DT Logger: Poison: " .. poison);
         end
 
-        if player:HasTrait("ProneToIllness") then
+        if DTEMHasTrait(player, "ProneToIllness") then
             poison = poison * 1.3;
             --print("DT Logger: player has trait ProneToIllness");
             --print("DT Logger: Poison: " .. poison);
-        elseif player:HasTrait("Resilient") then
+        elseif DTEMHasTrait(player, "Resilient") then
             poison = poison * 0.7;
             --print("DT Logger: player has trait Resilient");
             --print("DT Logger: Poison: " .. poison);
@@ -99,7 +99,7 @@ function DTEMincreaseStress(player, chance, stress)
                 stress = stress * 0.7;
             end
             -- If Nervous Wreck trait is present the stress gained increases in 30%.
-            if player:HasTrait("NervousWreck") then
+            if DTEMHasTrait(player, "NervousWreck") then
                 player:getStats():setStress(currentStress + (stress * 1.3));
             else
                 player:getStats():setStress(currentStress + stress);
@@ -142,7 +142,7 @@ function DTEMincreaseUnhappiness(player, chance, unhappyness)
                 unhappyness = unhappyness * 0.7;
             end
             -- If Melancholic trait is present the Unhappyness gained increases in 30%.
-            if player:HasTrait("Melancholic") then
+            if DTEMHasTrait(player, "Melancholic") then
                 player:getBodyDamage():setUnhappynessLevel(currentUnhappyness + (unhappyness * 1.3));
             else
                 player:getBodyDamage():setUnhappynessLevel(currentUnhappyness + unhappyness);
@@ -320,14 +320,14 @@ function DTEMgenerateACold(player, baseRange, coldStrength)
     local currentColdStrength = player:getBodyDamage():getColdStrength();
     local auxRange = baseRange;
     -- Increases the range if Outdoorsman is present
-    if player:HasTrait("Outdoorsman") then
+    if DTEMHasTrait(player, "Outdoorsman") then
         auxRange = auxRange * 1.3;
     end
     -- Increases the range if Resilient is present
-    if player:HasTrait("Resilient") then
+    if DTEMHasTrait(player, "Resilient") then
         auxRange = auxRange * 1.5;
     -- Decreases the range if ProneToIllness is present
-    elseif player:HasTrait("ProneToIllness") then
+    elseif DTEMHasTrait(player, "ProneToIllness") then
         auxRange = auxRange * 0.5;
     end
     local range = auxRange - player:getModData().DTEMgenerateAColdChance;

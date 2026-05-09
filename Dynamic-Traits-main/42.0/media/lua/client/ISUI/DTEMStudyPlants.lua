@@ -1,8 +1,11 @@
 -- All Credit for this goes to Snake
+require "DTEMB42Compat"
+
 DTEMStudyPlants = {};
 
 DTEMStudyPlants.doMenu = function(player, context, items)
-    if getSpecificPlayer(player):HasTrait("Herbalist") or getSpecificPlayer(player):HasTrait("Herbalist2") then
+    local playerObj = getSpecificPlayer(player)
+    if DTEMHasTrait(playerObj, "Herbalist") or DTEMHasTrait(playerObj, "Herbalist2") then
         return
     end
     local Plant = nil

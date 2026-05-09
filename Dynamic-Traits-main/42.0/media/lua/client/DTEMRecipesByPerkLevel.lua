@@ -2,12 +2,12 @@
 function DTEMtraitsByRecipes(player)
     --print("DT Logger: running DTEMtraitsByRecipes function");
     local playerRecipes = player:getKnownRecipes();
-    if playerRecipes:contains("Herbalist") and not player:HasTrait("Herbalist") and not player:HasTrait("Herbalist2") then
-        player:getTraits():add("Herbalist");
+    if playerRecipes:contains("Herbalist") and not DTEMHasTrait(player, "Herbalist") and not DTEMHasTrait(player, "Herbalist2") then
+        DTEMAddTrait(player, "Herbalist");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Herbalist"), true, HaloTextHelper.getColorGreen());
     end
-    if playerRecipes:contains("Generator") and not player:HasTrait("AmateurElectrician") and not player:HasTrait("AmateurElectrician2") then
-        player:getTraits():add("AmateurElectrician");
+    if playerRecipes:contains("Generator") and not DTEMHasTrait(player, "AmateurElectrician") and not DTEMHasTrait(player, "AmateurElectrician2") then
+        DTEMAddTrait(player, "AmateurElectrician");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_AmateurElectrician"), true, HaloTextHelper.getColorGreen());
     end
 end

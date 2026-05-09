@@ -1,4 +1,6 @@
 ---@diagnostic disable: undefined-global
+require "DTEMB42Compat"
+
 DTEMBaseGameCharacterDetails = {}
 
 ------------------------------------------------------------
@@ -8,7 +10,7 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     print("DT Logger: DTEMBaseGameCharacterDetails.DoTraits function");
 
     if not TraitFactory or not TraitFactory.addTrait then
-        print("DT Logger: TraitFactory is not available, skipping DoTraits.")
+        print("DT Logger: B42 CharacterTraitDefinition mode detected; script trait definitions are used.")
         return
     end
 
@@ -244,7 +246,7 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     handy:getFreeRecipes():add("SheetMetalWeapon")
     handy:getFreeRecipes():add("MakeSpadeHeadCudgel")
     handy:getFreeRecipes():add("MakeScrewdriver")
-    
+
     local mason = TraitFactory.addTrait("Mason", getText("UI_trait_Mason"), 2, getText("UI_trait_MasonDesc"), false);
 	mason:addXPBoost(Perks.Masonry, 2)
     mason:getFreeRecipes():add("Construct_Advanced_Forge")
@@ -397,16 +399,16 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     TraitFactory.addTrait("KeenHearing", getText("UI_trait_keenhearing"), 6, getText("UI_trait_keenhearingdesc"), false)
     TraitFactory.addTrait("EagleEyed", getText("UI_trait_eagleeyed"), 4, getText("UI_trait_eagleeyeddesc"), false)
 
-    -- LUCKY 
+    -- LUCKY
     TraitFactory.addTrait("Lucky", getText("UI_trait_lucky"), 3, getText("UI_trait_luckydesc"), false)
     TraitFactory.addTrait("Unlucky", getText("UI_trait_unlucky"), -3, getText("UI_trait_unluckydesc"), false)
 
-    -- READING 
+    -- READING
     TraitFactory.addTrait("FastReader", getText("UI_trait_FastReader"), 1, getText("UI_trait_FastReaderDesc"), false)
     TraitFactory.addTrait("SlowReader", getText("UI_trait_SlowReader"), -1, getText("UI_trait_SlowReaderDesc"), false)
     TraitFactory.addTrait("Illiterate", getText("UI_trait_Illiterate"), -12, getText("UI_trait_IlliterateDesc"), false)
 
-    -- LEARNING 
+    -- LEARNING
     TraitFactory.addTrait("FastLearner", getText("UI_trait_FastLearner"), 6, getText("UI_trait_FastLearnerDesc"), false)
     TraitFactory.addTrait("SlowLearner", getText("UI_trait_SlowLearner"), -6, getText("UI_trait_SlowLearnerDesc"), false)
     TraitFactory.addTrait("Pacifist", getText("UI_trait_Pacifist"), -4, getText("UI_trait_PacifistDesc"), false)
@@ -455,7 +457,7 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     TraitFactory.addTrait("Asthmatic", getText("UI_trait_Asthmatic"), 0, getText("UI_trait_AsthmaticDesc"), true)
     TraitFactory.addTrait("ThickSkinned", getText("UI_trait_thickskinned"), 0, getText("UI_trait_thickskinneddesc"), true)
     TraitFactory.addTrait("ThinSkinned", getText("UI_trait_ThinSkinned"), 0, getText("UI_trait_ThinSkinnedDesc"), true)
-    
+
 
     -- NEW TRAITS
     TraitFactory.addTrait("Flimsy", getText("UI_trait_Flimsy"), 0, getText("UI_trait_FlimsyDesc"), true);
@@ -678,7 +680,7 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
 
     -- TRAITS THAT CAN'T BE PICKED WITH "PhysicallyActive" TRAIT.
     TraitFactory.setMutualExclusive("PhysicallyActive", "PhysicallyActive2");
-    
+
     --TraitFactory.setMutualExclusive("PhysicallyActive", "Underweight");
     --TraitFactory.setMutualExclusive("PhysicallyActive", "Very Underweight");
     TraitFactory.setMutualExclusive("PhysicallyActive", "Overweight");
@@ -687,7 +689,7 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     --TraitFactory.setMutualExclusive("PhysicallyActive", "Weak");
     --TraitFactory.setMutualExclusive("PhysicallyActive", "Out of Shape");
     --TraitFactory.setMutualExclusive("PhysicallyActive", "Unfit");
-    
+
     --TraitFactory.setMutualExclusive("PhysicallyActive2", "Underweight");
     --TraitFactory.setMutualExclusive("PhysicallyActive2", "Very Underweight");
     TraitFactory.setMutualExclusive("PhysicallyActive2", "Overweight");
@@ -696,7 +698,7 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     --TraitFactory.setMutualExclusive("PhysicallyActive2", "Weak");
     --TraitFactory.setMutualExclusive("PhysicallyActive2", "Out of Shape");
     --TraitFactory.setMutualExclusive("PhysicallyActive2", "Unfit");
-    
+
     -- "Desensitized" && "Pacifist" EXCLUSION.
     TraitFactory.setMutualExclusive("Desensitized", "Pacifist");
 
@@ -717,7 +719,7 @@ DTEMBaseGameCharacterDetails.DoTraits = function()
     TraitFactory.setMutualExclusive("Dextrous2", "AllThumbs");
 
     -- MORE SIMPLE TRAITS EXCLUSIONS
-    -- Sneaky	
+    -- Sneaky
 	TraitFactory.setMutualExclusive("Sneaky", "Conspicuous");
 	-- Lightfooted
 	TraitFactory.setMutualExclusive("Lightfooted", "Clumsy");
@@ -736,7 +738,7 @@ DTEMBaseGameCharacterDetails.DoProfessions = function()
     print("DT Logger: DTEMBaseGameCharacterDetails.DoProfessions function");
 
     if not ProfessionFactory or not ProfessionFactory.addProfession then
-        print("DT Logger: ProfessionFactory is not available, skipping DoProfessions.")
+        print("DT Logger: B42 CharacterProfessionDefinition mode detected; script profession definitions are used.")
         return
     end
 
@@ -770,7 +772,7 @@ DTEMBaseGameCharacterDetails.DoProfessions = function()
         print("DT Logger: WPA detected, running DoTrait function");
         WPABaseGameCharacterDetails.DoTraits();
     end
-    
+
     -- PROFFESIONS REBALANCE AND REWORK
 
     -- FIRE OFFICER PROFESSION REBALANCE
@@ -1234,7 +1236,7 @@ DTEMBaseGameCharacterDetails.DoProfessions = function()
         burger:getFreeRecipes():add("MakeOatmealCookieDough");
         burger:getFreeRecipes():add("MakeShortbreadCookieDough");
         burger:getFreeRecipes():add("MakeSugarCookieDough");
-    else    
+    else
         local burger = ProfessionFactory.addProfession("burgerflipper", getText("UI_prof_BurgerFlipper"), "profession_burgerflipper", 0);
         burger:addXPBoost(Perks.Cooking, 2);
         burger:addXPBoost(Perks.Maintenance, 1);
@@ -1411,42 +1413,27 @@ end
 ----------------------------------------------
 DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum, character)
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoNewCharacterInitializations function")
-    local player = getSpecificPlayer(playernum);
+    local player = character or getSpecificPlayer(playernum);
+    if not player then
+        return
+    end
+
     local function hasTrait(traitName)
-        local traits = player and player.getTraits and player:getTraits() or nil
-        if traits and traits.contains then
-            local ok, result = pcall(function()
-                return traits:contains(traitName)
-            end)
-            if ok then
-                return result == true
-            end
-        end
-
-        if player then
-            local ok, result = pcall(function()
-                return player:HasTrait(traitName)
-            end)
-            if ok then
-                return result == true
-            end
-        end
-
-        return false
+        return DTEMHasTrait(player, traitName)
     end
 
     -- TRAITS CHANGE
     if hasTrait("PhysicallyActive2") then
-        player:getTraits():remove("PhysicallyActive2");
-        player:getTraits():add("PhysicallyActive");
+        DTEMRemoveTrait(player, "PhysicallyActive2");
+        DTEMAddTrait(player, "PhysicallyActive");
     end
     if hasTrait("Handy2") then
-        player:getTraits():remove("Handy2");
-        player:getTraits():add("Handy");
+        DTEMRemoveTrait(player, "Handy2");
+        DTEMAddTrait(player, "Handy");
     end
     if hasTrait("Dextrous2") then
-        player:getTraits():remove("Dextrous2");
-        player:getTraits():add("Dextrous");
+        DTEMRemoveTrait(player, "Dextrous2");
+        DTEMAddTrait(player, "Dextrous");
     end
 
     -- INITIALIZATION FOR KILLS PATH
@@ -1468,11 +1455,11 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     -- INITIALIZATION FOR DEXTROUS/ALLTHUMBS
     if player:getModData().DTEMallThumbsDextrousTraits == nil then
         if hasTrait("AllThumbs") then
-            if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                 player:getModData().DTEMallThumbsDextrousTraits = -125000;
-            elseif player:getDescriptor():getProfession() == "burglar" then
+            elseif DTEMHasProfession(player, "burglar") then
                 player:getModData().DTEMallThumbsDextrousTraits = -150000;
-            elseif player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" then
+            elseif DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") then
                 player:getModData().DTEMallThumbsDextrousTraits = -175000;
             else
                 player:getModData().DTEMallThumbsDextrousTraits = -200000;
@@ -1480,11 +1467,11 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         elseif hasTrait("Dextrous") then
             player:getModData().DTEMallThumbsDextrousTraits = 200000;
         else
-            if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                 player:getModData().DTEMallThumbsDextrousTraits = 75000;
-            elseif player:getDescriptor():getProfession() == "burglar" then
+            elseif DTEMHasProfession(player, "burglar") then
                 player:getModData().DTEMallThumbsDextrousTraits = 50000;
-            elseif player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" then
+            elseif DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") then
                 player:getModData().DTEMallThumbsDextrousTraits = 35000;
             else
                 player:getModData().DTEMallThumbsDextrousTraits = 0;
@@ -1495,11 +1482,11 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     -- INITIALIZATION FOR ORGANIZED/DISORGANIZED TRAITS
     if player:getModData().DTEMdisorganizedOrganizedTraits == nil then
         if hasTrait("Disorganized") then
-            if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                 player:getModData().DTEMdisorganizedOrganizedTraits = -200000;
-            elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
-            player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" or 
-            player:getDescriptor():getProfession() == "metalworker" or player:getDescriptor():getProfession() == "mechanics" then
+            elseif DTEMHasProfession(player, "carpenter") or DTEMHasProfession(player, "chef") or
+            DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") or
+            DTEMHasProfession(player, "metalworker") or DTEMHasProfession(player, "mechanics") then
                 player:getModData().DTEMdisorganizedOrganizedTraits = -250000;
             else
                 player:getModData().DTEMdisorganizedOrganizedTraits = -300000;
@@ -1507,11 +1494,11 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         elseif hasTrait("Organized") then
             player:getModData().DTEMdisorganizedOrganizedTraits = 300000;
         else
-            if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                 player:getModData().DTEMdisorganizedOrganizedTraits = 100000;
-            elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
-            player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" or 
-            player:getDescriptor():getProfession() == "metalworker" or player:getDescriptor():getProfession() == "mechanics" then
+            elseif DTEMHasProfession(player, "carpenter") or DTEMHasProfession(player, "chef") or
+            DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") or
+            DTEMHasProfession(player, "metalworker") or DTEMHasProfession(player, "mechanics") then
                 player:getModData().DTEMdisorganizedOrganizedTraits = 50000;
             else
                 player:getModData().DTEMdisorganizedOrganizedTraits = 0;
@@ -1523,11 +1510,11 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         if hasTrait("Outdoorsman") then
             player:getModData().DTOutdoorsmanTrait = 600000;
         else
-            if player:getDescriptor():getProfession() == "parkranger" then
+            if DTEMHasProfession(player, "parkranger") then
                 player:getModData().DTOutdoorsmanTrait = 200000;
-            elseif player:getDescriptor():getProfession() == "farmer" or player:getDescriptor():getProfession() == "fisherman" then
+            elseif DTEMHasProfession(player, "farmer") or DTEMHasProfession(player, "fisherman") then
                 player:getModData().DTOutdoorsmanTrait = 100000;
-            elseif player:getDescriptor():getProfession() == "lumberjack" then
+            elseif DTEMHasProfession(player, "lumberjack") then
                 player:getModData().DTOutdoorsmanTrait = 50000;
             else
                 player:getModData().DTOutdoorsmanTrait = 0;
@@ -1539,11 +1526,11 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         if hasTrait("NightVision") then
             player:getModData().DTEMCatsEyesTrait = 150000;
         else
-            if player:getDescriptor():getProfession() == "securityguard" then
+            if DTEMHasProfession(player, "securityguard") then
                 player:getModData().DTEMCatsEyesTrait = 75000;
-            elseif player:getDescriptor():getProfession() == "burglar" then
+            elseif DTEMHasProfession(player, "burglar") then
                 player:getModData().DTEMCatsEyesTrait = 50000;
-            elseif player:getDescriptor():getProfession() == "fireofficer" or player:getDescriptor():getProfession() == "policeofficer" then
+            elseif DTEMHasProfession(player, "fireofficer") or DTEMHasProfession(player, "policeofficer") then
                 player:getModData().DTEMCatsEyesTrait = 25000;
             else
                 player:getModData().DTEMCatsEyesTrait = 0;
@@ -1626,12 +1613,12 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         player:getModData().DTEMkeenHearingHardOfHearingTraits = total;
         -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE HARD OF HEARING OR OBTAIN KEEN HEARING
         if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and hasTrait("HardOfHearing") then
-            player:getTraits():remove("HardOfHearing");
+            DTEMRemoveTrait(player, "HardOfHearing");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_hardhear"), false, HaloTextHelper.getColorGreen());
         end
         if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not hasTrait("KeenHearing") and
             not hasTrait("Deaf") then
-            player:getTraits():add("KeenHearing");
+            DTEMAddTrait(player, "KeenHearing");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_keenhearing"), true,
                 HaloTextHelper.getColorGreen());
         end
@@ -1656,12 +1643,12 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
         player:getModData().DTEMslowFastLearnerTraits = total;
         -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE SLOW LEARNER OR OBTAIN FAST LEARNER
         if player:getModData().DTEMslowFastLearnerTraits >= 30 and hasTrait("SlowLearner") then
-            player:getTraits():remove("SlowLearner");
+            DTEMRemoveTrait(player, "SlowLearner");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_SlowLearner"), false,
                 HaloTextHelper.getColorGreen());
         end
         if player:getModData().DTEMslowFastLearnerTraits >= 50 and not hasTrait("FastLearner") then
-            player:getTraits():add("FastLearner");
+            DTEMAddTrait(player, "FastLearner");
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_FastLearner"), true,
                 HaloTextHelper.getColorGreen());
         end
@@ -1698,7 +1685,7 @@ DTEMBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum,
     if player:getModData().DTEMrecentlyConsumedAntidepressants == nil then
         player:getModData().DTEMrecentlyConsumedAntidepressants = 0
     end
-    -- INITIALIZATION FOR OVERDOSE 
+    -- INITIALIZATION FOR OVERDOSE
     if player:getModData().DTEMoverdose == nil then
         player:getModData().DTEMoverdose = 0;
     end
@@ -1758,27 +1745,12 @@ end
 ----------------------------------------------------
 DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(player)
     --print("DT Logger: running DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations function")
+    if not player then
+        return
+    end
+
     local function hasTrait(traitName)
-        local traits = player and player.getTraits and player:getTraits() or nil
-        if traits and traits.contains then
-            local ok, result = pcall(function()
-                return traits:contains(traitName)
-            end)
-            if ok then
-                return result == true
-            end
-        end
-
-        if player then
-            local ok, result = pcall(function()
-                return player:HasTrait(traitName)
-            end)
-            if ok then
-                return result == true
-            end
-        end
-
-        return false
+        return DTEMHasTrait(player, traitName)
     end
     -- NPC MOD COMPATIBILITY
     if (player:getModData().DTEMKillsPath == nil or player:getModData().DTEMKillscheck2 == nil or
@@ -1789,30 +1761,30 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         player:getModData().DTEMtimeSinceLastKill == nil or player:getModData().DTEMalcoholicTrait == nil or
         player:getModData().DTEMtimeSinceLastDrink == nil or player:getModData().DTEManorexyTrait == nil or
         player:getModData().DTEMphysicallyActiveSedentaryTraits == nil or player:getModData().DTEMkeenHearingHardOfHearingTraits == nil or
-        player:getModData().DTEMslowFastLearnerTraits == nil or player:getModData().DTEMgenerateAColdChance == nil or 
-        player:getModData().DTEMisNervousWreck == nil or player:getModData().DTEMisMelancholic == nil or 
-        player:getModData().DTEMnervousWreckTrait == nil or player:getModData().DTEMmelancholicTrait == nil or 
-        player:getModData().DTEMrecentlyConsumedBetaBlockers == nil or player:getModData().DTEMrecentlyConsumedAntidepressants == nil or 
-        player:getModData().DTEMoverdose == nil or player:getModData().DTEMstressIntelligence == nil or 
+        player:getModData().DTEMslowFastLearnerTraits == nil or player:getModData().DTEMgenerateAColdChance == nil or
+        player:getModData().DTEMisNervousWreck == nil or player:getModData().DTEMisMelancholic == nil or
+        player:getModData().DTEMnervousWreckTrait == nil or player:getModData().DTEMmelancholicTrait == nil or
+        player:getModData().DTEMrecentlyConsumedBetaBlockers == nil or player:getModData().DTEMrecentlyConsumedAntidepressants == nil or
+        player:getModData().DTEMoverdose == nil or player:getModData().DTEMstressIntelligence == nil or
         player:getModData().DTEMunhappynessIntelligence == nil or player:getModData().DTEMboredomIntelligence == nil or
         player:getModData().DTEMangerIntelligence == nil or player:getModData().DTEMplantsKnowledge == nil or
-        player:getModData().DTEMallergy == nil or player:getModData().DTEMpassingOut == nil or 
-        player:getModData().DTEMpassingOutQuietTime == nil or player:getModData().DTEMcurrentStrXPLevel == nil or 
-        player:getModData().DTEMcurrentFitXPLevel == nil or player:getModData().DTEMaddictedToCaffeineTrait == nil or 
+        player:getModData().DTEMallergy == nil or player:getModData().DTEMpassingOut == nil or
+        player:getModData().DTEMpassingOutQuietTime == nil or player:getModData().DTEMcurrentStrXPLevel == nil or
+        player:getModData().DTEMcurrentFitXPLevel == nil or player:getModData().DTEMaddictedToCaffeineTrait == nil or
         player:getModData().DTEMtimeSinceLastCaffeine == nil or player:getModData().DTEMcaffeineOnBody == nil) then
 
         -- TRAITS CHANGE
         if hasTrait("PhysicallyActive2") then
-            player:getTraits():remove("PhysicallyActive2");
-            player:getTraits():add("PhysicallyActive");
+            DTEMRemoveTrait(player, "PhysicallyActive2");
+            DTEMAddTrait(player, "PhysicallyActive");
         end
         if hasTrait("Handy2") then
-            player:getTraits():remove("Handy2");
-            player:getTraits():add("Handy");
+            DTEMRemoveTrait(player, "Handy2");
+            DTEMAddTrait(player, "Handy");
         end
         if hasTrait("Dextrous2") then
-            player:getTraits():remove("Dextrous2");
-            player:getTraits():add("Dextrous");
+            DTEMRemoveTrait(player, "Dextrous2");
+            DTEMAddTrait(player, "Dextrous");
         end
 
         -- INITIALIZATION FOR KILLS PATH
@@ -1834,11 +1806,11 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         -- INITIALIZATION FOR DEXTROUS/ALLTHUMBS
         if player:getModData().DTEMallThumbsDextrousTraits == nil then
             if hasTrait("AllThumbs") then
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMallThumbsDextrousTraits = -125000;
-                elseif player:getDescriptor():getProfession() == "burglar" then
+                elseif DTEMHasProfession(player, "burglar") then
                     player:getModData().DTEMallThumbsDextrousTraits = -150000;
-                elseif player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" then
+                elseif DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") then
                     player:getModData().DTEMallThumbsDextrousTraits = -175000;
                 else
                     player:getModData().DTEMallThumbsDextrousTraits = -200000;
@@ -1846,11 +1818,11 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             elseif hasTrait("Dextrous") then
                 player:getModData().DTEMallThumbsDextrousTraits = 200000;
             else
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMallThumbsDextrousTraits = 75000;
-                elseif player:getDescriptor():getProfession() == "burglar" then
+                elseif DTEMHasProfession(player, "burglar") then
                     player:getModData().DTEMallThumbsDextrousTraits = 50000;
-                elseif player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" then
+                elseif DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") then
                     player:getModData().DTEMallThumbsDextrousTraits = 35000;
                 else
                     player:getModData().DTEMallThumbsDextrousTraits = 0;
@@ -1861,11 +1833,11 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         -- INITIALIZATION FOR ORGANIZED/DISORGANIZED TRAITS
         if player:getModData().DTEMdisorganizedOrganizedTraits == nil then
             if hasTrait("Disorganized") then
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = -200000;
-                elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
-                player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" or 
-                player:getDescriptor():getProfession() == "metalworker" or player:getDescriptor():getProfession() == "mechanics" then
+                elseif DTEMHasProfession(player, "carpenter") or DTEMHasProfession(player, "chef") or
+                DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") or
+                DTEMHasProfession(player, "metalworker") or DTEMHasProfession(player, "mechanics") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = -250000;
                 else
                     player:getModData().DTEMdisorganizedOrganizedTraits = -300000;
@@ -1873,11 +1845,11 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             elseif hasTrait("Organized") then
                 player:getModData().DTEMdisorganizedOrganizedTraits = 300000;
             else
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = 100000;
-                elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
-                player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" or 
-                player:getDescriptor():getProfession() == "metalworker" or player:getDescriptor():getProfession() == "mechanics" then
+                elseif DTEMHasProfession(player, "carpenter") or DTEMHasProfession(player, "chef") or
+                DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") or
+                DTEMHasProfession(player, "metalworker") or DTEMHasProfession(player, "mechanics") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = 50000;
                 else
                     player:getModData().DTEMdisorganizedOrganizedTraits = 0;
@@ -1889,11 +1861,11 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             if hasTrait("Outdoorsman") then
                 player:getModData().DTOutdoorsmanTrait = 600000;
             else
-                if player:getDescriptor():getProfession() == "parkranger" then
+                if DTEMHasProfession(player, "parkranger") then
                     player:getModData().DTOutdoorsmanTrait = 200000;
-                elseif player:getDescriptor():getProfession() == "farmer" or player:getDescriptor():getProfession() == "fisherman" then
+                elseif DTEMHasProfession(player, "farmer") or DTEMHasProfession(player, "fisherman") then
                     player:getModData().DTOutdoorsmanTrait = 100000;
-                elseif player:getDescriptor():getProfession() == "lumberjack" then
+                elseif DTEMHasProfession(player, "lumberjack") then
                     player:getModData().DTOutdoorsmanTrait = 50000;
                 else
                     player:getModData().DTOutdoorsmanTrait = 0;
@@ -1905,11 +1877,11 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             if hasTrait("NightVision") then
                 player:getModData().DTEMCatsEyesTrait = 150000;
             else
-                if player:getDescriptor():getProfession() == "securityguard" then
+                if DTEMHasProfession(player, "securityguard") then
                     player:getModData().DTEMCatsEyesTrait = 75000;
-                elseif player:getDescriptor():getProfession() == "burglar" then
+                elseif DTEMHasProfession(player, "burglar") then
                     player:getModData().DTEMCatsEyesTrait = 50000;
-                elseif player:getDescriptor():getProfession() == "fireofficer" or player:getDescriptor():getProfession() == "policeofficer" then
+                elseif DTEMHasProfession(player, "fireofficer") or DTEMHasProfession(player, "policeofficer") then
                     player:getModData().DTEMCatsEyesTrait = 25000;
                 else
                     player:getModData().DTEMCatsEyesTrait = 0;
@@ -1992,13 +1964,13 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             player:getModData().DTEMkeenHearingHardOfHearingTraits = total;
             -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE HARD OF HEARING OR OBTAIN KEEN HEARING
             if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and hasTrait("HardOfHearing") then
-                player:getTraits():remove("HardOfHearing");
+                DTEMRemoveTrait(player, "HardOfHearing");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_hardhear"), false,
                     HaloTextHelper.getColorGreen());
             end
             if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not hasTrait("KeenHearing") and
                 not hasTrait("Deaf") then
-                player:getTraits():add("KeenHearing");
+                DTEMAddTrait(player, "KeenHearing");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_keenhearing"), true,
                     HaloTextHelper.getColorGreen());
             end
@@ -2023,12 +1995,12 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
             player:getModData().DTEMslowFastLearnerTraits = total;
             -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE SLOW LEARNER OR OBTAIN FAST LEARNER
             if player:getModData().DTEMslowFastLearnerTraits >= 30 and hasTrait("SlowLearner") then
-                player:getTraits():remove("SlowLearner");
+                DTEMRemoveTrait(player, "SlowLearner");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_SlowLearner"), false,
                     HaloTextHelper.getColorGreen());
             end
             if player:getModData().DTEMslowFastLearnerTraits >= 50 and not hasTrait("FastLearner") then
-                player:getTraits():add("FastLearner");
+                DTEMAddTrait(player, "FastLearner");
                 HaloTextHelper.addTextWithArrow(player, getText("UI_trait_FastLearner"), true,
                     HaloTextHelper.getColorGreen());
             end
@@ -2065,7 +2037,7 @@ DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations = function(playe
         if player:getModData().DTEMrecentlyConsumedAntidepressants == nil then
             player:getModData().DTEMrecentlyConsumedAntidepressants = 0
         end
-        -- INITIALIZATION FOR OVERDOSE 
+        -- INITIALIZATION FOR OVERDOSE
         if player:getModData().DTEMoverdose == nil then
             player:getModData().DTEMoverdose = 0;
         end

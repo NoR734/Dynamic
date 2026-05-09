@@ -1,20 +1,20 @@
 function DTEMallergyIncrease(player, allergy)
     --print("DT Logger: running DTEMallergyIncrease function")
 	--print("allergy: " .. allergy)
-	if player:HasTrait("WeakStomach") then
+	if DTEMHasTrait(player, "WeakStomach") then
 		allergy = allergy * 1.1
 		--print("DT Logger: player has trait WeakStomach");
 		--print("DT Logger: allergy: " .. allergy);
-	elseif player:HasTrait("IronGut") then
+	elseif DTEMHasTrait(player, "IronGut") then
 		allergy = allergy * 0.9
 		--print("DT Logger: player has trait IronGut");
 		--print("DT Logger: allergy: " .. allergy);
 	end
-	if player:HasTrait("ProneToIllness") then
+	if DTEMHasTrait(player, "ProneToIllness") then
 		allergy = allergy * 1.3
 		--print("DT Logger: player has trait ProneToIllness");
 		--print("DT Logger: allergy: " .. allergy);
-	elseif player:HasTrait("Resilient") then
+	elseif DTEMHasTrait(player, "Resilient") then
 		allergy = allergy * 0.7
 		--print("DT Logger: player has trait Resilient");
 		--print("DT Logger: allergy: " .. allergy);
@@ -31,20 +31,20 @@ function DTEMallergyDecrease(player)
 	if ZombRand(5) == 0 then
 		local decrease = ZombRand(5)
 		--print("decrease: " .. decrease)
-		if player:HasTrait("WeakStomach") then
+		if DTEMHasTrait(player, "WeakStomach") then
 			decrease = decrease * 0.9
 			--("DT Logger: player has trait WeakStomach");
 			--print("DT Logger: decrease: " .. decrease);
-		elseif player:HasTrait("IronGut") then
+		elseif DTEMHasTrait(player, "IronGut") then
 			decrease = decrease * 1.1
 			--print("DT Logger: player has trait IronGut");
 			--print("DT Logger: decrease: " .. decrease);
 		end
-		if player:HasTrait("SlowHealer") then
+		if DTEMHasTrait(player, "SlowHealer") then
 			decrease = decrease * 0.8
 			--print("DT Logger: player has trait SlowHealer");
 			--print("DT Logger: decrease: " .. decrease);
-		elseif player:HasTrait("FastHealer") then
+		elseif DTEMHasTrait(player, "FastHealer") then
 			decrease = decrease * 1.2
 			--print("DT Logger: player has trait FastHealer");
 			--print("DT Logger: decrease: " .. decrease);

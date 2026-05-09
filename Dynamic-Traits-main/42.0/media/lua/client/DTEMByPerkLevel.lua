@@ -5,7 +5,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
     if player:getModData().DTEMslowFastLearnerTraits == nil or player:getModData().DTEMkeenHearingHardOfHearingTraits == nil then
         DTEMBaseGameCharacterDetails.DoExistingCharacterInitializations(player);
     end
-    
+
     if perk == Perks.Sprinting then
 
     elseif perk == Perks.Sneak then
@@ -30,7 +30,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
         player:getModData().DTEMkeenHearingHardOfHearingTraits = player:getModData().DTEMkeenHearingHardOfHearingTraits + 1;
     elseif perk == Perks.SmallBlade then
         player:getModData().DTEMkeenHearingHardOfHearingTraits = player:getModData().DTEMkeenHearingHardOfHearingTraits + 1;
-    elseif perk == Perks.Spear then 
+    elseif perk == Perks.Spear then
         player:getModData().DTEMkeenHearingHardOfHearingTraits = player:getModData().DTEMkeenHearingHardOfHearingTraits + 1;
     elseif perk == Perks.Woodwork then
         player:getModData().DTEMslowFastLearnerTraits = player:getModData().DTEMslowFastLearnerTraits + 1;
@@ -57,7 +57,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
         player:getModData().DTEMslowFastLearnerTraits = player:getModData().DTEMslowFastLearnerTraits + 1;
     end
 
-    if player:getDescriptor():getProfession() == "unemployed" then
+    if DTEMHasProfession(player, "unemployed") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -96,7 +96,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
         elseif perk == Perks.SmallBlade then
             DTEMaddHunterTrait(player, 7, 7, 7, 7);
             DTEMaddPiercerTrait(player, 6);
-        elseif perk == Perks.Spear then 
+        elseif perk == Perks.Spear then
             DTEMaddSpearmanTrait(player, 7);
         elseif perk == Perks.Woodwork then
             DTEMaddCarpentryTrait(player, 7);
@@ -133,7 +133,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "fireofficer" then
+    elseif DTEMHasProfession(player, "fireofficer") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 5);
         elseif perk == Perks.Sneak then
@@ -208,7 +208,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "policeofficer" then
+    elseif DTEMHasProfession(player, "policeofficer") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 4);
         elseif perk == Perks.Sneak then
@@ -284,7 +284,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "parkranger" then
+    elseif DTEMHasProfession(player, "parkranger") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 5);
         elseif perk == Perks.Sneak then
@@ -360,7 +360,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 3, 6);
             DTEMaddForagerTrait(player, 5);
         end
-    elseif player:getDescriptor():getProfession() == "constructionworker" then
+    elseif DTEMHasProfession(player, "constructionworker") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -436,7 +436,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "securityguard" then
+    elseif DTEMHasProfession(player, "securityguard") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 4);
         elseif perk == Perks.Sneak then
@@ -512,7 +512,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "carpenter" then
+    elseif DTEMHasProfession(player, "carpenter") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -587,7 +587,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "burglar" then
+    elseif DTEMHasProfession(player, "burglar") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 4);
         elseif perk == Perks.Sneak then
@@ -660,7 +660,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "chef" then
+    elseif DTEMHasProfession(player, "chef") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -735,7 +735,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "repairman" then
+    elseif DTEMHasProfession(player, "repairman") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -811,7 +811,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "farmer" then
+    elseif DTEMHasProfession(player, "farmer") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -887,7 +887,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 3, 6);
             DTEMaddForagerTrait(player, 5);
         end
-    elseif player:getDescriptor():getProfession() == "fisherman" then
+    elseif DTEMHasProfession(player, "fisherman") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -963,7 +963,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 3, 6);
             DTEMaddForagerTrait(player, 5);
         end
-    elseif player:getDescriptor():getProfession() == "doctor" then
+    elseif DTEMHasProfession(player, "doctor") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1039,7 +1039,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "veteran" then
+    elseif DTEMHasProfession(player, "veteran") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 5);
         elseif perk == Perks.Sneak then
@@ -1115,7 +1115,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 4, 7);
             DTEMaddForagerTrait(player, 6);
         end
-    elseif player:getDescriptor():getProfession() == "nurse" then
+    elseif DTEMHasProfession(player, "nurse") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1191,7 +1191,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "lumberjack" then
+    elseif DTEMHasProfession(player, "lumberjack") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1266,7 +1266,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 4, 7);
             DTEMaddForagerTrait(player, 6);
         end
-    elseif player:getDescriptor():getProfession() == "fitnessInstructor" then
+    elseif DTEMHasProfession(player, "fitnessInstructor") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 4);
         elseif perk == Perks.Sneak then
@@ -1341,7 +1341,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "burgerflipper" then
+    elseif DTEMHasProfession(player, "burgerflipper") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1417,7 +1417,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "electrician" then
+    elseif DTEMHasProfession(player, "electrician") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1492,7 +1492,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "engineer" then
+    elseif DTEMHasProfession(player, "engineer") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1568,7 +1568,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "metalworker" then
+    elseif DTEMHasProfession(player, "metalworker") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1644,7 +1644,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
             DTEMaddHikerTrait(player, 5, 8);
             DTEMaddForagerTrait(player, 7);
         end
-    elseif player:getDescriptor():getProfession() == "mechanics" then
+    elseif DTEMHasProfession(player, "mechanics") then
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
         elseif perk == Perks.Sneak then
@@ -1723,7 +1723,7 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
     else
         if perk == Perks.Sprinting then
             DTEMaddJoggerTrait(player, 6);
-        elseif perk == Perks.Sneak then 
+        elseif perk == Perks.Sneak then
             DTEMaddHunterTrait(player, 7, 7, 7, 7);
             DTEMremoveConspicuousTrait(player, 7);
             DTEMaddSneakyTrait(player, 8);
@@ -1799,38 +1799,38 @@ function DTEMtraitsGainsByLevel(player, perk, perkLevel)
     end
 
     -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE SLOW LEARNER OR OBTAIN FAST LEARNER
-    if player:getModData().DTEMslowFastLearnerTraits >= 30 and player:HasTrait("SlowLearner") then
-        player:getTraits():remove("SlowLearner");
+    if player:getModData().DTEMslowFastLearnerTraits >= 30 and DTEMHasTrait(player, "SlowLearner") then
+        DTEMRemoveTrait(player, "SlowLearner");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_SlowLearner"), false, HaloTextHelper.getColorGreen());
     end
-    if player:getModData().DTEMslowFastLearnerTraits >= 50 and not player:HasTrait("FastLearner") then
-        player:getTraits():add("FastLearner");
+    if player:getModData().DTEMslowFastLearnerTraits >= 50 and not DTEMHasTrait(player, "FastLearner") then
+        DTEMAddTrait(player, "FastLearner");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_FastLearner"), true, HaloTextHelper.getColorGreen());
     end
     -- CHECKS IF THE PLAYER HAS THE NECESSARY TO REMOVE HARD OF HEARING OR OBTAIN KEEN HEARING
-    if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and player:HasTrait("HardOfHearing") then
-        player:getTraits():remove("HardOfHearing");
+    if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 30 and DTEMHasTrait(player, "HardOfHearing") then
+        DTEMRemoveTrait(player, "HardOfHearing");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_hardhear"), false, HaloTextHelper.getColorGreen());
     end
-    if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not player:HasTrait("KeenHearing") and not player:HasTrait("Deaf") then
-        player:getTraits():add("KeenHearing");
+    if player:getModData().DTEMkeenHearingHardOfHearingTraits >= 50 and not DTEMHasTrait(player, "KeenHearing") and not DTEMHasTrait(player, "Deaf") then
+        DTEMAddTrait(player, "KeenHearing");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_keenhearing"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddJoggerTrait(player, sprintingExpectedLevel)
-    if not player:HasTrait("Jogger") and player:getPerkLevel(Perks.Sprinting) >= sprintingExpectedLevel then
-        player:getTraits():add("Jogger");
+    if not DTEMHasTrait(player, "Jogger") and player:getPerkLevel(Perks.Sprinting) >= sprintingExpectedLevel then
+        DTEMAddTrait(player, "Jogger");
         DTEMapplyXPBoost(player, Perks.Sprinting, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Jogger"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddHunterTrait(player, sneakExpectedLevel, aimingExpectedLevel, trappingExpectedLevel, smallBladeExpectedLevel)
-    if not player:HasTrait("Hunter") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel and 
-    player:getPerkLevel(Perks.Aiming) >= aimingExpectedLevel and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel and 
+    if not DTEMHasTrait(player, "Hunter") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel and
+    player:getPerkLevel(Perks.Aiming) >= aimingExpectedLevel and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel and
     player:getPerkLevel(Perks.SmallBlade) >= smallBladeExpectedLevel then
-        player:getTraits():add("Hunter");
+        DTEMAddTrait(player, "Hunter");
         DTEMapplyXPBoost(player, Perks.Sneak, 1);
         DTEMapplyXPBoost(player, Perks.Aiming, 1);
         DTEMapplyXPBoost(player, Perks.Trapping, 1);
@@ -1840,45 +1840,45 @@ function DTEMaddHunterTrait(player, sneakExpectedLevel, aimingExpectedLevel, tra
 end
 
 function DTEMremoveConspicuousTrait(player, sneakExpectedLevel)
-    if player:HasTrait("Conspicuous") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel then
-        player:getTraits():remove("Conspicuous");
+    if DTEMHasTrait(player, "Conspicuous") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel then
+        DTEMRemoveTrait(player, "Conspicuous");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Conspicuous"), false, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddSneakyTrait(player, sneakExpectedLevel)
-    if not player:HasTrait("Sneaky") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel then
-        player:getTraits():add("Sneaky");
+    if not DTEMHasTrait(player, "Sneaky") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel then
+        DTEMAddTrait(player, "Sneaky");
         DTEMapplyXPBoost(player, Perks.Sneak, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_sneaky"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddInconspicuousTrait(player, sneakExpectedLevel)
-    if not player:HasTrait("Inconspicuous") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel then
-        player:getTraits():add("Inconspicuous");
+    if not DTEMHasTrait(player, "Inconspicuous") and player:getPerkLevel(Perks.Sneak) >= sneakExpectedLevel then
+        DTEMAddTrait(player, "Inconspicuous");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Inconspicuous"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMremoveClumsyTrait(player, lightfootExpectedLevel)
-    if player:HasTrait("Clumsy") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel then
-        player:getTraits():remove("Clumsy");
+    if DTEMHasTrait(player, "Clumsy") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel then
+        DTEMRemoveTrait(player, "Clumsy");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_clumsy"), false, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddLightfootedTrait(player, lightfootExpectedLevel)
-    if not player:HasTrait("Lightfooted") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel then
-        player:getTraits():add("Lightfooted");
+    if not DTEMHasTrait(player, "Lightfooted") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel then
+        DTEMAddTrait(player, "Lightfooted");
         DTEMapplyXPBoost(player, Perks.Lightfoot, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_lightfooted"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddGymnastTrait(player, lightfootExpectedLevel, nimbleExpectedLevel)
-    if not player:HasTrait("Gymnast") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel and player:getPerkLevel(Perks.Nimble) >= nimbleExpectedLevel then
-        player:getTraits():add("Gymnast");
+    if not DTEMHasTrait(player, "Gymnast") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel and player:getPerkLevel(Perks.Nimble) >= nimbleExpectedLevel then
+        DTEMAddTrait(player, "Gymnast");
         DTEMapplyXPBoost(player, Perks.Lightfoot, 1);
         DTEMapplyXPBoost(player, Perks.Nimble, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Gymnast"), true, HaloTextHelper.getColorGreen());
@@ -1886,40 +1886,40 @@ function DTEMaddGymnastTrait(player, lightfootExpectedLevel, nimbleExpectedLevel
 end
 
 function DTEMaddGracefulTrait(player, lightfootExpectedLevel)
-    if not player:HasTrait("Graceful") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel then
-        player:getTraits():add("Graceful");
+    if not DTEMHasTrait(player, "Graceful") and player:getPerkLevel(Perks.Lightfoot) >= lightfootExpectedLevel then
+        DTEMAddTrait(player, "Graceful");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_graceful"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddBurglarTrait(player, nimbleExpectedLevel, electricityExpectedLevel, mechanicsExpectedLevel)
-    if not player:HasTrait("Burglar") and player:getPerkLevel(Perks.Nimble) >= nimbleExpectedLevel and 
+    if not DTEMHasTrait(player, "Burglar") and player:getPerkLevel(Perks.Nimble) >= nimbleExpectedLevel and
     player:getPerkLevel(Perks.Electricity) >= electricityExpectedLevel and player:getPerkLevel(Perks.Mechanics) >= mechanicsExpectedLevel then
-        player:getTraits():add("Burglar");
+        DTEMAddTrait(player, "Burglar");
         HaloTextHelper.addTextWithArrow(player, getText("UI_prof_Burglar"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddNimbleTrait(player, nimbleExpectedLevel)
-    if not player:HasTrait("Nimble") and player:getPerkLevel(Perks.Nimble) >= nimbleExpectedLevel then
-        player:getTraits():add("Nimble");
+    if not DTEMHasTrait(player, "Nimble") and player:getPerkLevel(Perks.Nimble) >= nimbleExpectedLevel then
+        DTEMAddTrait(player, "Nimble");
         DTEMapplyXPBoost(player, Perks.Nimble, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_nimble"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddEagleEyeTrait(player, aimingExpectedLevel)
-    if not player:HasTrait("EagleEyed") and not player:HasTrait("ShortSighted") and 
+    if not DTEMHasTrait(player, "EagleEyed") and not DTEMHasTrait(player, "ShortSighted") and
     player:getPerkLevel(Perks.Aiming) >= aimingExpectedLevel then
-        player:getTraits():add("EagleEyed");
+        DTEMAddTrait(player, "EagleEyed");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_eagleeyed"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddGunFanTrait(player, aimingExpectedLevel, reloadingExpectedLevel)
-    if not player:HasTrait("Gunfan") and player:getPerkLevel(Perks.Aiming) >= aimingExpectedLevel and 
+    if not DTEMHasTrait(player, "Gunfan") and player:getPerkLevel(Perks.Aiming) >= aimingExpectedLevel and
     player:getPerkLevel(Perks.Reloading) >= reloadingExpectedLevel then
-        player:getTraits():add("Gunfan");
+        DTEMAddTrait(player, "Gunfan");
         DTEMapplyXPBoost(player, Perks.Aiming, 1);
 		DTEMapplyXPBoost(player, Perks.Reloading, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_gunfan"), true, HaloTextHelper.getColorGreen());
@@ -1927,25 +1927,25 @@ function DTEMaddGunFanTrait(player, aimingExpectedLevel, reloadingExpectedLevel)
 end
 
 function DTEMaddDurabileTrait(player, maintenanceExpectedLevel)
-    if not player:HasTrait("Durabile") and player:getPerkLevel(Perks.Maintenance) >= maintenanceExpectedLevel then
-        player:getTraits():add("Durabile");
+    if not DTEMHasTrait(player, "Durabile") and player:getPerkLevel(Perks.Maintenance) >= maintenanceExpectedLevel then
+        DTEMAddTrait(player, "Durabile");
         DTEMapplyXPBoost(player, Perks.Maintenance, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_durabile"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddCutterTrait(player, axeExpectedLevel)
-    if not player:HasTrait("Cutter") and player:getPerkLevel(Perks.Axe) >= axeExpectedLevel then
-        player:getTraits():add("Cutter");
+    if not DTEMHasTrait(player, "Cutter") and player:getPerkLevel(Perks.Axe) >= axeExpectedLevel then
+        DTEMAddTrait(player, "Cutter");
         DTEMapplyXPBoost(player, Perks.Axe, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_cutter"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddBrawlerTrait(player, axeExpectedLevel, longBluntExpectedLevel)
-    if not player:HasTrait("Brawler") and player:getPerkLevel(Perks.Axe) >= axeExpectedLevel and 
+    if not DTEMHasTrait(player, "Brawler") and player:getPerkLevel(Perks.Axe) >= axeExpectedLevel and
     player:getPerkLevel(Perks.Blunt) >= longBluntExpectedLevel then
-        player:getTraits():add("Brawler");
+        DTEMAddTrait(player, "Brawler");
         DTEMapplyXPBoost(player, Perks.Axe, 1);
         DTEMapplyXPBoost(player, Perks.Blunt, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_BarFighter"), true, HaloTextHelper.getColorGreen());
@@ -1953,64 +1953,64 @@ function DTEMaddBrawlerTrait(player, axeExpectedLevel, longBluntExpectedLevel)
 end
 
 function DTEMaddAxemanTrait(player, axeExpectedLevel)
-    if not player:HasTrait("Axeman") and player:getPerkLevel(Perks.Axe) >= axeExpectedLevel then
-        player:getTraits():add("Axeman");
+    if not DTEMHasTrait(player, "Axeman") and player:getPerkLevel(Perks.Axe) >= axeExpectedLevel then
+        DTEMAddTrait(player, "Axeman");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_axeman"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddBaseballPlayerTrait(player, longBluntExpectedLevel)
-    if not player:HasTrait("BaseballPlayer") and player:getPerkLevel(Perks.Blunt) >= longBluntExpectedLevel then
-        player:getTraits():add("BaseballPlayer");
+    if not DTEMHasTrait(player, "BaseballPlayer") and player:getPerkLevel(Perks.Blunt) >= longBluntExpectedLevel then
+        DTEMAddTrait(player, "BaseballPlayer");
         DTEMapplyXPBoost(player, Perks.Blunt, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_PlaysBaseball"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddCrusherTrait(player, shortBluntExpectedLevel)
-    if not player:HasTrait("Shortbluntfan") and player:getPerkLevel(Perks.SmallBlunt) >= shortBluntExpectedLevel then
-        player:getTraits():add("Shortbluntfan");
+    if not DTEMHasTrait(player, "Shortbluntfan") and player:getPerkLevel(Perks.SmallBlunt) >= shortBluntExpectedLevel then
+        DTEMAddTrait(player, "Shortbluntfan");
         DTEMapplyXPBoost(player, Perks.SmallBlunt, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_shortbluntfan"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddSwordsmanTrait(player, longBladeExpectedLevel)
-    if not player:HasTrait("Swordsman") and player:getPerkLevel(Perks.LongBlade) >= longBladeExpectedLevel then
-        player:getTraits():add("Swordsman");
+    if not DTEMHasTrait(player, "Swordsman") and player:getPerkLevel(Perks.LongBlade) >= longBladeExpectedLevel then
+        DTEMAddTrait(player, "Swordsman");
         DTEMapplyXPBoost(player, Perks.LongBlade, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_swordsman"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddPiercerTrait(player, smallBladeExpectedLevel)
-    if not player:HasTrait("Shortbladefan") and player:getPerkLevel(Perks.SmallBlade) >= smallBladeExpectedLevel then
-        player:getTraits():add("Shortbladefan");
+    if not DTEMHasTrait(player, "Shortbladefan") and player:getPerkLevel(Perks.SmallBlade) >= smallBladeExpectedLevel then
+        DTEMAddTrait(player, "Shortbladefan");
         DTEMapplyXPBoost(player, Perks.SmallBlade, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_shortbladefan"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddSpearmanTrait(player, spearExpectedLevel)
-    if not player:HasTrait("Spearman") and player:getPerkLevel(Perks.Spear) >= spearExpectedLevel then
-        player:getTraits():add("Spearman");
+    if not DTEMHasTrait(player, "Spearman") and player:getPerkLevel(Perks.Spear) >= spearExpectedLevel then
+        DTEMAddTrait(player, "Spearman");
         DTEMapplyXPBoost(player, Perks.Spear, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_spearman"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddCarpentryTrait(player, carpentryExpectedLevel)
-    if not player:HasTrait("AMCarpenter") and player:getPerkLevel(Perks.Woodwork) >= carpentryExpectedLevel then
-        player:getTraits():add("AMCarpenter");
+    if not DTEMHasTrait(player, "AMCarpenter") and player:getPerkLevel(Perks.Woodwork) >= carpentryExpectedLevel then
+        DTEMAddTrait(player, "AMCarpenter");
         DTEMapplyXPBoost(player, Perks.Woodwork, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_amcarpenter"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddHandyTrait(player, carpentryExpectedLevel)
-    if not player:HasTrait("Handy") and not player:HasTrait("Handy2") and 
+    if not DTEMHasTrait(player, "Handy") and not DTEMHasTrait(player, "Handy2") and
     player:getPerkLevel(Perks.Woodwork) >= carpentryExpectedLevel then
-        player:getTraits():add("Handy");
+        DTEMAddTrait(player, "Handy");
         DTEMapplyXPBoost(player, Perks.Woodwork, 1);
         DTEMapplyXPBoost(player, Perks.Maintenance, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_handy"), true, HaloTextHelper.getColorGreen());
@@ -2018,49 +2018,49 @@ function DTEMaddHandyTrait(player, carpentryExpectedLevel)
 end
 
 function DTEMaddScullionTrait(player, cookingExpectedLevel)
-    if not player:HasTrait("AMCook") and player:getPerkLevel(Perks.Cooking) >= cookingExpectedLevel then
-        player:getTraits():add("AMCook");
+    if not DTEMHasTrait(player, "AMCook") and player:getPerkLevel(Perks.Cooking) >= cookingExpectedLevel then
+        DTEMAddTrait(player, "AMCook");
         DTEMapplyXPBoost(player, Perks.Cooking, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_amcook"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddCookTrait(player, cookingExpectedLevel)
-    if not player:HasTrait("Cook") and player:getPerkLevel(Perks.Cooking) >= cookingExpectedLevel then
-        player:getTraits():add("Cook");
+    if not DTEMHasTrait(player, "Cook") and player:getPerkLevel(Perks.Cooking) >= cookingExpectedLevel then
+        DTEMAddTrait(player, "Cook");
         DTEMapplyXPBoost(player, Perks.Cooking, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Cook"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddNutritionistTrait(player, cookingExpectedLevel)
-    if not player:HasTrait("Nutritionist") and not player:HasTrait("Nutritionist2") and 
+    if not DTEMHasTrait(player, "Nutritionist") and not DTEMHasTrait(player, "Nutritionist2") and
     player:getPerkLevel(Perks.Cooking) >= cookingExpectedLevel then
-        player:getTraits():add("Nutritionist");
+        DTEMAddTrait(player, "Nutritionist");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_nutritionist"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddGardenerTrait(player, farmingExpectedLevel)
-    if not player:HasTrait("Gardener") and player:getPerkLevel(Perks.Farming) >= farmingExpectedLevel then
-        player:getTraits():add("Gardener");
+    if not DTEMHasTrait(player, "Gardener") and player:getPerkLevel(Perks.Farming) >= farmingExpectedLevel then
+        DTEMAddTrait(player, "Gardener");
         DTEMapplyXPBoost(player, Perks.Farming, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Gardener"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddFirstAidTrait(player, firstAidExpectedLevel)
-    if not player:HasTrait("FirstAid") and player:getPerkLevel(Perks.Doctor) >= firstAidExpectedLevel then
-        player:getTraits():add("FirstAid");
+    if not DTEMHasTrait(player, "FirstAid") and player:getPerkLevel(Perks.Doctor) >= firstAidExpectedLevel then
+        DTEMAddTrait(player, "FirstAid");
         DTEMapplyXPBoost(player, Perks.Doctor, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_FirstAid"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddAmateurElectricianTrait(player, electricityExpectedLevel)
-    if not player:HasTrait("AmateurElectrician") and not player:HasTrait("AmateurElectrician2") and 
+    if not DTEMHasTrait(player, "AmateurElectrician") and not DTEMHasTrait(player, "AmateurElectrician2") and
     player:getPerkLevel(Perks.Electricity) >= electricityExpectedLevel then
-        player:getTraits():add("AmateurElectrician");
+        DTEMAddTrait(player, "AmateurElectrician");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_AmateurElectrician"), true, HaloTextHelper.getColorGreen());
         local playerRecipes = player:getKnownRecipes();
         if not playerRecipes:contains("Generator") then
@@ -2070,57 +2070,57 @@ function DTEMaddAmateurElectricianTrait(player, electricityExpectedLevel)
 end
 
 function DTEMaddElectricalTechnicianTrait(player, electricityExpectedLevel)
-    if not player:HasTrait("AMElectrician") and player:getPerkLevel(Perks.Electricity) >= electricityExpectedLevel then
-        player:getTraits():add("AMElectrician");
+    if not DTEMHasTrait(player, "AMElectrician") and player:getPerkLevel(Perks.Electricity) >= electricityExpectedLevel then
+        DTEMAddTrait(player, "AMElectrician");
         DTEMapplyXPBoost(player, Perks.Electricity, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_amelectrician"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddMetalwelderTrait(player, metalweldingExpectedLevel)
-    if not player:HasTrait("AMMetalworker") and player:getPerkLevel(Perks.MetalWelding) >= metalweldingExpectedLevel then
-        player:getTraits():add("AMMetalworker");
+    if not DTEMHasTrait(player, "AMMetalworker") and player:getPerkLevel(Perks.MetalWelding) >= metalweldingExpectedLevel then
+        DTEMAddTrait(player, "AMMetalworker");
         DTEMapplyXPBoost(player, Perks.MetalWelding, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_ammetalworker"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddAutoMechanicTrait(player, mechanicsExpectedLevel)
-    if not player:HasTrait("AMMechanic") and player:getPerkLevel(Perks.Mechanics) >= mechanicsExpectedLevel then
-        player:getTraits():add("AMMechanic");
+    if not DTEMHasTrait(player, "AMMechanic") and player:getPerkLevel(Perks.Mechanics) >= mechanicsExpectedLevel then
+        DTEMAddTrait(player, "AMMechanic");
         DTEMapplyXPBoost(player, Perks.Mechanics, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_ammechanic"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddAmateurMechanicTrait(player, mechanicsExpectedLevel)
-    if not player:HasTrait("Mechanics") and player:getPerkLevel(Perks.Mechanics) >= mechanicsExpectedLevel then
-        player:getTraits():add("Mechanics");
+    if not DTEMHasTrait(player, "Mechanics") and player:getPerkLevel(Perks.Mechanics) >= mechanicsExpectedLevel then
+        DTEMAddTrait(player, "Mechanics");
         DTEMapplyXPBoost(player, Perks.Mechanics, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Mechanics"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddSewerTrait(player, tailoringExpectedLevel)
-    if not player:HasTrait("Tailor") and player:getPerkLevel(Perks.Tailoring) >= tailoringExpectedLevel then
-        player:getTraits():add("Tailor");
+    if not DTEMHasTrait(player, "Tailor") and player:getPerkLevel(Perks.Tailoring) >= tailoringExpectedLevel then
+        DTEMAddTrait(player, "Tailor");
         DTEMapplyXPBoost(player, Perks.Tailoring, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Tailor"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddAnglerTrait(player, fishingExpectedLevel)
-    if not player:HasTrait("Fishing") and player:getPerkLevel(Perks.Fishing) >= fishingExpectedLevel then
-        player:getTraits():add("Fishing");
+    if not DTEMHasTrait(player, "Fishing") and player:getPerkLevel(Perks.Fishing) >= fishingExpectedLevel then
+        DTEMAddTrait(player, "Fishing");
         DTEMapplyXPBoost(player, Perks.Fishing, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Fishing"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddFormerScoutTrait(player, trappingExpectedLevel, foragingExpectedLevel)
-    if not player:HasTrait("Formerscout") and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel and 
+    if not DTEMHasTrait(player, "Formerscout") and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel and
     player:getPerkLevel(Perks.PlantScavenging) >= foragingExpectedLevel then
-        player:getTraits():add("Formerscout");
+        DTEMAddTrait(player, "Formerscout");
         DTEMapplyXPBoost(player, Perks.Trapping, 1);
         DTEMapplyXPBoost(player, Perks.PlantScavenging, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Scout"), true, HaloTextHelper.getColorGreen());
@@ -2128,9 +2128,9 @@ function DTEMaddFormerScoutTrait(player, trappingExpectedLevel, foragingExpected
 end
 
 function DTEMaddHikerTrait(player, trappingExpectedLevel, foragingExpectedLevel)
-    if not player:HasTrait("Hiker") and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel and 
+    if not DTEMHasTrait(player, "Hiker") and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel and
     player:getPerkLevel(Perks.PlantScavenging) >= foragingExpectedLevel then
-        player:getTraits():add("Hiker");
+        DTEMAddTrait(player, "Hiker");
         DTEMapplyXPBoost(player, Perks.Trapping, 1);
         DTEMapplyXPBoost(player, Perks.PlantScavenging, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Hiker"), true, HaloTextHelper.getColorGreen());
@@ -2138,16 +2138,16 @@ function DTEMaddHikerTrait(player, trappingExpectedLevel, foragingExpectedLevel)
 end
 
 function DTEMaddTrapperTrait(player, trappingExpectedLevel)
-    if not player:HasTrait("AMTrapper") and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel then
-        player:getTraits():add("AMTrapper");
+    if not DTEMHasTrait(player, "AMTrapper") and player:getPerkLevel(Perks.Trapping) >= trappingExpectedLevel then
+        DTEMAddTrait(player, "AMTrapper");
         DTEMapplyXPBoost(player, Perks.Trapping, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_amtrapper"), true, HaloTextHelper.getColorGreen());
     end
 end
 
 function DTEMaddForagerTrait(player, foragingExpectedLevel)
-    if not player:HasTrait("AMForager") and player:getPerkLevel(Perks.PlantScavenging) >= foragingExpectedLevel then
-        player:getTraits():add("AMForager");
+    if not DTEMHasTrait(player, "AMForager") and player:getPerkLevel(Perks.PlantScavenging) >= foragingExpectedLevel then
+        DTEMAddTrait(player, "AMForager");
         DTEMapplyXPBoost(player, Perks.PlantScavenging, 1);
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_amforager"), true, HaloTextHelper.getColorGreen());
     end

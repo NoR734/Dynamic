@@ -33,15 +33,15 @@ function DTEMStudyPlantAction:perform()
 
 			self.character:getModData().DTEMplantsKnowledge = self.character:getModData().DTEMplantsKnowledge + ZombRand(5);
 
-			if self.character:getModData().DTEMplantsKnowledge > 175 and not self.character:HasTrait("Herbalist") and not self.character:HasTrait("Herbalist2") then
-				self.character:getTraits():add("Herbalist");
+			if self.character:getModData().DTEMplantsKnowledge > 175 and not DTEMHasTrait(self.character, "Herbalist") and not DTEMHasTrait(self.character, "Herbalist2") then
+				DTEMAddTrait(self.character, "Herbalist");
 				HaloTextHelper.addTextWithArrow(self.character, getText("UI_trait_Herbalist"), true, HaloTextHelper.getColorGreen());
 				local playerRecipes = self.character:getKnownRecipes();
 				if not playerRecipes:contains("Herbalist") then
 					playerRecipes:add("Herbalist");
 				end
 			end
-			
+
 			self.character:Say(getText("IGUI_PlayerText_PlantStudyDone"));
 			self.item:getModData().DTEMAlreadyStudied = true;
 		else

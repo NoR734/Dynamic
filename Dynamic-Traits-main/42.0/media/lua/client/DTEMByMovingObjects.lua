@@ -13,50 +13,50 @@ function ISInventoryTransferAction:perform()
     --print("The weight of the item is : " .. item:getActualWeight());
     --print("The initial value for DTatdTraits is: " .. player:getModData().DTEMallThumbsDextrousTraits);
     --print("The initial value for DTdoTraits is: " .. player:getModData().DTEMdisorganizedOrganizedTraits);
-    if not player:HasTrait("Dextrous") or not player:HasTrait("Organized") then
+    if not DTEMHasTrait(player, "Dextrous") or not DTEMHasTrait(player, "Organized") then
         -- CHECK IF THE PLAYER IS OBESE OR VERY UNDERWEIGHT
-        if player:HasTrait("Obese") or player:HasTrait("Very Underweight") or player:HasTrait("Emaciated") then
-            if not player:HasTrait("Dextrous") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED DEXTROUS YET, IF DON'T, THEN THE CODE IS EXECUTED
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+        if DTEMHasTrait(player, "Obese") or DTEMHasTrait(player, "Very Underweight") or DTEMHasTrait(player, "Emaciated") then
+            if not DTEMHasTrait(player, "Dextrous") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED DEXTROUS YET, IF DON'T, THEN THE CODE IS EXECUTED
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 1);
-                elseif player:getDescriptor():getProfession() == "burglar" then
+                elseif DTEMHasProfession(player, "burglar") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 0.9);
-                elseif player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" then
+                elseif DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 0.8);
                 else
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 0.7);
                 end
             end
-            if not player:HasTrait("Organized") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED ORGANIZED YET, IF DON'T, THEN THE CODE IS EXECUTED
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if not DTEMHasTrait(player, "Organized") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED ORGANIZED YET, IF DON'T, THEN THE CODE IS EXECUTED
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 1);
-                elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
-                player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" or 
-                player:getDescriptor():getProfession() == "metalworker" or player:getDescriptor():getProfession() == "mechanics" then
+                elseif DTEMHasProfession(player, "carpenter") or DTEMHasProfession(player, "chef") or
+                DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") or
+                DTEMHasProfession(player, "metalworker") or DTEMHasProfession(player, "mechanics") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 0.9);
                 else
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 0.8);
                 end
             end
         -- CHECK IF THE PLAYER IS OVERWEIGHT OR UNDERWEIGHT
-        elseif player:HasTrait("Overweight") or player:HasTrait("Underweight") then
-            if not player:HasTrait("Dextrous") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED DEXTROUS YET, IF DON'T, THEN THE CODE IS EXECUTED
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+        elseif DTEMHasTrait(player, "Overweight") or DTEMHasTrait(player, "Underweight") then
+            if not DTEMHasTrait(player, "Dextrous") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED DEXTROUS YET, IF DON'T, THEN THE CODE IS EXECUTED
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 3);
-                elseif player:getDescriptor():getProfession() == "burglar" then
+                elseif DTEMHasProfession(player, "burglar") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 2);
-                elseif player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" then
+                elseif DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 1);
                 else
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 0.9);
                 end
             end
-            if not player:HasTrait("Organized") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED ORGANIZED YET, IF DON'T, THEN THE CODE IS EXECUTED
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if not DTEMHasTrait(player, "Organized") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED ORGANIZED YET, IF DON'T, THEN THE CODE IS EXECUTED
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 3);
-                elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
-                player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" or 
-                player:getDescriptor():getProfession() == "metalworker" or player:getDescriptor():getProfession() == "mechanics" then
+                elseif DTEMHasProfession(player, "carpenter") or DTEMHasProfession(player, "chef") or
+                DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") or
+                DTEMHasProfession(player, "metalworker") or DTEMHasProfession(player, "mechanics") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 2);
                 else
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 1);
@@ -64,23 +64,23 @@ function ISInventoryTransferAction:perform()
             end
         -- THE PLAYER DOESN'T HAVE WEIGHT PROBLEMS
         else
-            if not player:HasTrait("Dextrous") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED DEXTROUS YET, IF DON'T, THEN THE CODE IS EXECUTED
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if not DTEMHasTrait(player, "Dextrous") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED DEXTROUS YET, IF DON'T, THEN THE CODE IS EXECUTED
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 5);
-                elseif player:getDescriptor():getProfession() == "burglar" then
+                elseif DTEMHasProfession(player, "burglar") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 4);
-                elseif player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" then
+                elseif DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") then
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 3);
                 else
                     player:getModData().DTEMallThumbsDextrousTraits = player:getModData().DTEMallThumbsDextrousTraits + (item:getActualWeight() * 2);
                 end
             end
-            if not player:HasTrait("Organized") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED ORGANIZED YET, IF DON'T, THEN THE CODE IS EXECUTED
-                if player:getDescriptor():getProfession() == "nurse" or player:getDescriptor():getProfession() == "doctor" then
+            if not DTEMHasTrait(player, "Organized") then -- CHECK IF THE PLAYER HAVEN'T OBTAINED ORGANIZED YET, IF DON'T, THEN THE CODE IS EXECUTED
+                if DTEMHasProfession(player, "nurse") or DTEMHasProfession(player, "doctor") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 5);
-                elseif player:getDescriptor():getProfession() == "carpenter" or player:getDescriptor():getProfession() == "chef" or 
-                player:getDescriptor():getProfession() == "electrician" or player:getDescriptor():getProfession() == "engineer" or 
-                player:getDescriptor():getProfession() == "metalworker" or player:getDescriptor():getProfession() == "mechanics" then
+                elseif DTEMHasProfession(player, "carpenter") or DTEMHasProfession(player, "chef") or
+                DTEMHasProfession(player, "electrician") or DTEMHasProfession(player, "engineer") or
+                DTEMHasProfession(player, "metalworker") or DTEMHasProfession(player, "mechanics") then
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 4);
                 else
                     player:getModData().DTEMdisorganizedOrganizedTraits = player:getModData().DTEMdisorganizedOrganizedTraits + (item:getActualWeight() * 3);
@@ -96,18 +96,18 @@ function DTEMtraitsByMovingObjects(player)
     --print("DT Logger: running traitsByMovingObjects function");
     -- CHECK IF THE PLAYER ACHIEVED THE REQUIREMENTS TO REMOVE/GAIN THE TRAITS
     -- ALL THUMBS/DEXTROUS
-    if player:getModData().DTEMallThumbsDextrousTraits >= -75000 and player:HasTrait("AllThumbs") then
-        player:getTraits():remove("AllThumbs");
+    if player:getModData().DTEMallThumbsDextrousTraits >= -75000 and DTEMHasTrait(player, "AllThumbs") then
+        DTEMRemoveTrait(player, "AllThumbs");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_AllThumbs"), false, HaloTextHelper.getColorGreen());
-    elseif player:getModData().DTEMallThumbsDextrousTraits >= 200000 and not player:HasTrait("Dextrous") then
-        player:getTraits():add("Dextrous");
+    elseif player:getModData().DTEMallThumbsDextrousTraits >= 200000 and not DTEMHasTrait(player, "Dextrous") then
+        DTEMAddTrait(player, "Dextrous");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Dexterous"), true, HaloTextHelper.getColorGreen());
     -- ORGANIZED/DISORGANIZED
-    elseif player:getModData().DTEMdisorganizedOrganizedTraits >= -100000 and player:HasTrait("Disorganized") then
-        player:getTraits():remove("Disorganized");
+    elseif player:getModData().DTEMdisorganizedOrganizedTraits >= -100000 and DTEMHasTrait(player, "Disorganized") then
+        DTEMRemoveTrait(player, "Disorganized");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Disorganized"), false, HaloTextHelper.getColorGreen());
-    elseif player:getModData().DTEMdisorganizedOrganizedTraits >= 300000 and not player:HasTrait("Organized") then
-        player:getTraits():add("Organized");
+    elseif player:getModData().DTEMdisorganizedOrganizedTraits >= 300000 and not DTEMHasTrait(player, "Organized") then
+        DTEMAddTrait(player, "Organized");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Packmule"), true, HaloTextHelper.getColorGreen());
     end
     --print("DT Logger: DTatdTraits value is " .. player:getModData().DTEMallThumbsDextrousTraits);
