@@ -20,7 +20,7 @@ function DTEMsmokerTrait(player)
     -- CHECK IF THE PLAYER ACHIEVED THE REQUIREMENTS TO REMOVE SMOKER
     if player:getModData().DTEMdaysSinceLastSmoke >= 1080 then
         player:setTimeSinceLastSmoke(0);
-        player:getStats():setStressFromCigarettes(0);
+        DTEMSetStatValue(player:getStats(), "NICOTINE_WITHDRAWAL", "setStressFromCigarettes", 0);
         DTEMRemoveTrait(player, "Smoker");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Smoker"), false, HaloTextHelper.getColorGreen());
     end
@@ -30,7 +30,7 @@ end
 function DTEMsmokerCough(player)
     --print("DT Logger: running smokerCough function");
     local currentTimeSinceLastSmoke = player:getTimeSinceLastSmoke();
-    local currentEndurance = player:getStats():getEndurance();
+    local currentEndurance = DTEMGetStatValue(player:getStats(), "ENDURANCE", "getEndurance", 1);
     if (currentEndurance < 0.5 or currentTimeSinceLastSmoke < 2) and ZombRand(10) == 0 then
         player:Say(getText("IGUI_PlayerText_Cough"));
         player:playEmote("dtcough");

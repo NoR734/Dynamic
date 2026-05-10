@@ -27,7 +27,7 @@ module Base
         UIName = UI_prof_parkranger,
         UIDescription = UI_profdesc_parkranger,
         IconPathName = profession_parkranger2,
-        GrantedTraits = base:herbalist2;base:herbalist_prof,
+        GrantedTraits = DynamicTraits:herbalist2;base:herbalist_prof,
         XPBoosts = Trapping=2;PlantScavenging=2;Woodwork=1;Axe=1;LongBlade=1;Doctor=1;Tracking=1;FlintKnapping=1,
         GrantedRecipes = MakeStickTrap;MakeSnareTrap;MakeWoodenBoxTrap;MakeTrapBox;MakeCageTrap,
     }
@@ -57,7 +57,7 @@ module Base
         Cost = -2,
         UIName = UI_prof_Carpenter,
         IconPathName = profession_hammer2,
-        GrantedTraits = base:handy2,
+        GrantedTraits = DynamicTraits:handy2,
         XPBoosts = Woodwork=3;Carving=1;SmallBlunt=1;Maintenance=1;Masonry=1,
         GrantedRecipes = MakeBrakeWeapon;CanReinforceLongWeapon;CanReinforceShortWeapon;CanReinforceWeapon;MakeGardenForkHeadWeapon;RailspikeBaseballBat;MakeRailspikeCudgel;MakeRailspikeLongHandle;MakeRakeHeadWeapon;MakeSawPlank;MakeSawbladeCudgel;MakeSawbladeLongHandle;MakeSawbladePlank;MakeSawbladeTableLeg;MakeSawbladeWeapon;SheetMetalWeapon;MakeSpadeHeadCudgel;MakeAdvancedFramepackFrame;MakeAdvancedLargeFramepackFrame,
     }
@@ -80,7 +80,7 @@ module Base
         Cost = -3,
         UIName = UI_prof_Chef,
         IconPathName = profession_chef2,
-        GrantedTraits = base:dextrous2;base:nutritionist2;base:cook2,
+        GrantedTraits = DynamicTraits:dextrous2;base:nutritionist2;base:cook2,
         XPBoosts = Cooking=4;Maintenance=1;SmallBlade=1;Butchering=2,
         GrantedRecipes = MakeCakeBatter;MakePieDough;MakeBreadDough;MakeBaguetteDough;MakeBiscuits;MakeChocolateCookieDough;MakeChocolateChipCookieDough;MakeOatmealCookieDough;MakeShortbreadCookieDough;MakeSugarCookieDough;MakePizza;MakeFriedOnionRings;MakeFriedShrimp;MakeSushi;MakeOnigiri;MakeMaki;MakeCabbageRolls;PrepareMuffins;MakeJarofTomatoes;MakeJarofCarrots;MakeJarofPotatoes;MakeJarofEggplant;MakeJarofLeeks;MakeJarofRedRadishes;MakeJarofBellPeppers;MakeJarofCabbage;MakeJarofBroccoli;MakeGuacamole;MakeJar,
     }
@@ -174,7 +174,7 @@ module Base
         Cost = -10,
         UIName = UI_prof_FitnessInstructor,
         IconPathName = profession_fitnessinstructor,
-        GrantedTraits = base:nutritionist2;base:physicallyactive2,
+        GrantedTraits = base:nutritionist2;DynamicTraits:physicallyactive2,
         XPBoosts = Fitness=3;Sprinting=2;Strength=1,
     }
 
@@ -184,7 +184,7 @@ module Base
         Cost = 0,
         UIName = UI_prof_BurgerFlipper,
         IconPathName = profession_burgerflipper,
-        GrantedTraits = base:dextrous2;base:cook2,
+        GrantedTraits = DynamicTraits:dextrous2;base:cook2,
         XPBoosts = Cooking=2;Maintenance=1;SmallBlade=1,
         GrantedRecipes = MakeCakeBatter;MakePieDough;MakeBreadDough;MakeBaguetteDough;MakeBiscuits;MakeChocolateCookieDough;MakeChocolateChipCookieDough;MakeOatmealCookieDough;MakeShortbreadCookieDough;MakeSugarCookieDough,
     }
@@ -196,7 +196,7 @@ module Base
         UIName = UI_prof_Electrician,
         UIDescription = UI_profdesc_electrician,
         IconPathName = profession_electrician,
-        GrantedTraits = base:amateurelectrician2,
+        GrantedTraits = DynamicTraits:amateurelectrician2,
         XPBoosts = Electricity=4,
         GrantedRecipes = Generator;MakeRemoteControllerV1;MakeRemoteControllerV2;MakeRemoteControllerV3;MakeRemoteTrigger;MakeTimer;CraftMakeshiftRadio;CraftMakeshiftHAMRadio;CraftMakeshiftWalkieTalkie;MakeImprovisedFlashlight;MakeImprovisedLantern;MakeImprovisedLighter,
     }
@@ -208,7 +208,7 @@ module Base
         UIName = UI_prof_Engineer,
         UIDescription = UI_profdesc_engineer,
         IconPathName = profession_engineer,
-        GrantedTraits = base:burglar;base:amateurelectrician2,
+        GrantedTraits = base:burglar;DynamicTraits:amateurelectrician2,
         XPBoosts = Electricity=1;Woodwork=1;Mechanics=1;MetalWelding=1;Masonry=1,
         GrantedRecipes = MakeAerosolBomb;MakeFlameBomb;MakePipeBomb;MakeNoisegenerator;MakeSmokeBomb;MakeFirecracker;MakeCraftedGasMaskFilter;MakeImprovisedGasMask;RechargeGasMaskFilter;RechargeRespiratorFilters;RechargeFilters;MakeImprovisedFlashlight;MakeImprovisedLantern;Generator;MakeImprovisedLighter,
     }

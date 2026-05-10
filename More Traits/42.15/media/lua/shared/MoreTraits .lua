@@ -41,7 +41,8 @@ local function MTResolveDynamicTraitsLuckAlias(traitName)
         return nil
     end
 
-    return CharacterTrait.get(ResourceLocation.of("base:" .. traitName))
+    return CharacterTrait.get(ResourceLocation.of("DynamicTraits:" .. traitName))
+        or CharacterTrait.get(ResourceLocation.of("base:" .. traitName))
 end
 
 function MTBaseOrToadTraitsHasTrait(player, traitName)

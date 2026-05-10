@@ -180,10 +180,11 @@ function DTEMexpandedMoodlesCheckStats(player)
     --print("DT Logger: running DTEMexpandedMoodlesCheckStats function");
 
     -- GETTING CURRENT STATS
-    local currentDrunkeness = player:getStats():getDrunkenness();
-    local currentAnger = player:getStats():getAnger();
-    local currentPanic = player:getStats():getPanic();
-    local currentStress = player:getStats():getStress();
+    local stats = player:getStats();
+    local currentDrunkeness = DTEMGetStatValue(stats, "INTOXICATION", "getDrunkenness", 0);
+    local currentAnger = DTEMGetStatValue(stats, "ANGER", "getAnger", 0);
+    local currentPanic = DTEMGetStatValue(stats, "PANIC", "getPanic", 0);
+    local currentStress = DTEMGetStatValue(stats, "STRESS", "getStress", 0);
 
     -- INCREASING ANGRY WHEN BEING DRUNK
     DTEMincreaseAnger(player, ZombRand(30), currentDrunkeness / 100);

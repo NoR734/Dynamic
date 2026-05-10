@@ -72,7 +72,7 @@ function DTEMnightmaresTrait(player)
     --print("DT Logger: running nightmaresTrait function");
     if DTEMHasTrait(player, "Nightmares") and player:isAsleep() and ZombRand(100) == 0 then
         player:forceAwake();
-        player:getStats():setPanic(95);
+        DTEMSetStatValue(player:getStats(), "PANIC", "setPanic", 95);
         DTEMincreaseStress(player, 0, 0.5);
         DTEMincreaseWetness(player, 0, ZombRand(99));
     end

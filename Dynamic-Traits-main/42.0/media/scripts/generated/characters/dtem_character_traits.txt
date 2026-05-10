@@ -61,7 +61,7 @@ module Base
         UIName = UI_trait_unfit,
         UIDescription = UI_trait_unfitdesc,
         XPBoosts = Fitness=-4,
-        MutuallyExclusiveTraits = base:athletic;base:fit;base:out of shape;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:athletic;base:fit;base:out of shape;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:out of shape
@@ -73,7 +73,7 @@ module Base
         UIName = UI_trait_outofshape,
         UIDescription = UI_trait_outofshapedesc,
         XPBoosts = Fitness=-2,
-        MutuallyExclusiveTraits = base:athletic;base:fit;base:unfit;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:athletic;base:fit;base:unfit;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:fit
@@ -85,7 +85,7 @@ module Base
         UIName = UI_trait_fit,
         UIDescription = UI_trait_fitdesc,
         XPBoosts = Fitness=2,
-        MutuallyExclusiveTraits = base:obese;base:athletic;base:out of shape;base:unfit;base:overweight;base:very underweight;base:sedentary,
+        MutuallyExclusiveTraits = base:obese;base:athletic;base:out of shape;base:unfit;base:overweight;base:very underweight;DynamicTraits:sedentary,
     }
 
     character_trait_definition base:athletic
@@ -97,7 +97,7 @@ module Base
         UIName = UI_trait_athletic,
         UIDescription = UI_trait_athleticdesc,
         XPBoosts = Fitness=4,
-        MutuallyExclusiveTraits = base:overweight;base:fit;base:obese;base:out of shape;base:unfit;base:very underweight;base:underweight;base:anorexy;base:sedentary;base:smoker,
+        MutuallyExclusiveTraits = base:overweight;base:fit;base:obese;base:out of shape;base:unfit;base:very underweight;base:underweight;DynamicTraits:anorexy;DynamicTraits:sedentary;base:smoker,
     }
 
     character_trait_definition base:weak
@@ -109,7 +109,7 @@ module Base
         UIName = UI_trait_weak,
         UIDescription = UI_trait_weakdesc,
         XPBoosts = Strength=-5,
-        MutuallyExclusiveTraits = base:strong;base:stout;base:feeble;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:strong;base:stout;base:feeble;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:feeble
@@ -121,7 +121,7 @@ module Base
         UIName = UI_trait_feeble,
         UIDescription = UI_trait_feebledesc,
         XPBoosts = Strength=-2,
-        MutuallyExclusiveTraits = base:weak;base:stout;base:strong;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:weak;base:stout;base:strong;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:stout
@@ -145,7 +145,7 @@ module Base
         UIName = UI_trait_strong,
         UIDescription = UI_trait_strongdesc,
         XPBoosts = Strength=4,
-        MutuallyExclusiveTraits = base:weak;base:feeble;base:stout;base:very underweight;base:underweight;base:anorexy;base:sedentary,
+        MutuallyExclusiveTraits = base:weak;base:feeble;base:stout;base:very underweight;base:underweight;DynamicTraits:anorexy;DynamicTraits:sedentary,
     }
 
     character_trait_definition base:emaciated
@@ -192,7 +192,7 @@ module Base
         UIName = UI_trait_veryunderweight,
         UIDescription = UI_trait_veryunderweightdesc,
         XPBoosts = Fitness=-2,
-        MutuallyExclusiveTraits = base:underweight;base:heartyappetite;base:overweight;base:obese;base:athletic;base:strong;base:stout;base:fit;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:underweight;base:heartyappetite;base:overweight;base:obese;base:athletic;base:strong;base:stout;base:fit;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:underweight
@@ -204,7 +204,7 @@ module Base
         UIName = UI_trait_underweight,
         UIDescription = UI_trait_underweightdesc,
         XPBoosts = Fitness=-1,
-        MutuallyExclusiveTraits = base:overweight;base:very underweight;base:obese;base:strong;base:athletic;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:overweight;base:very underweight;base:obese;base:strong;base:athletic;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:overweight
@@ -216,7 +216,7 @@ module Base
         UIName = UI_trait_overweight,
         UIDescription = UI_trait_overweightdesc,
         XPBoosts = Fitness=-1,
-        MutuallyExclusiveTraits = base:obese;base:underweight;base:very underweight;base:emaciated;base:athletic;base:fit;base:anorexy;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:obese;base:underweight;base:very underweight;base:emaciated;base:athletic;base:fit;DynamicTraits:anorexy;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:obese
@@ -228,7 +228,7 @@ module Base
         UIName = UI_trait_obese,
         UIDescription = UI_trait_obesedesc,
         XPBoosts = Fitness=-2,
-        MutuallyExclusiveTraits = base:overweight;base:underweight;base:very underweight;base:emaciated;base:lighteater;base:fit;base:athletic;base:inconspicuous;base:graceful;base:anorexy;base:physicallyactive;base:physicallyactive2,
+        MutuallyExclusiveTraits = base:overweight;base:underweight;base:very underweight;base:emaciated;base:lighteater;base:fit;base:athletic;base:inconspicuous;base:graceful;DynamicTraits:anorexy;DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2,
     }
 
     character_trait_definition base:gymnast
@@ -372,7 +372,7 @@ module Base
         UIName = UI_trait_handy,
         UIDescription = UI_trait_handydesc,
         XPBoosts = Maintenance=1;Woodwork=1;Carving=1;Masonry=1,
-        MutuallyExclusiveTraits = base:handy2,
+        MutuallyExclusiveTraits = DynamicTraits:handy2,
         GrantedRecipes = BarbedWireWeapon;BoltBat;MakeBrakeWeapon;MakeBucketMaul;CanReinforceLongWeapon;CanReinforceShortWeapon;CanReinforceWeapon;MakeGardenForkHeadWeapon;MakeKettleMaul;RailspikeBaseballBat;MakeRailspikeCudgel;MakeRailspikeIronPipe;MakeRailspikeLongHandle;MakeRailspikeWeapon;MakeRakeHeadWeapon;MakeSawPlank;MakeSawbladeCudgel;MakeSawbladeLongHandle;MakeSawbladePlank;MakeSawbladeTableLeg;MakeSawbladeWeapon;SheetMetalWeapon;MakeSpadeHeadCudgel;MakeScrewdriver,
     }
 
@@ -433,7 +433,7 @@ module Base
         UIName = UI_trait_Herbalist,
         UIDescription = UI_trait_HerbalistDesc,
         XPBoosts = PlantScavenging=1,
-        MutuallyExclusiveTraits = base:wildernessknowledge;base:herbalist2;base:herbalist_prof,
+        MutuallyExclusiveTraits = base:wildernessknowledge;DynamicTraits:herbalist2;base:herbalist_prof,
         GrantedRecipes = Herbalist;MakePlantainPoultice;MakeComfreyPoultice;MakeWildGarlicPoultice;base:black sage growing season;base:broadleaf plantain growing season;base:comfrey growing season;base:common mallow growing season;base:wild garlic growing season,
     }
 
@@ -548,7 +548,7 @@ module Base
         Cost = -4,
         UIName = UI_trait_clumsy,
         UIDescription = UI_trait_clumsydesc,
-        MutuallyExclusiveTraits = base:graceful;base:lightfooted,
+        MutuallyExclusiveTraits = base:graceful;DynamicTraits:lightfooted,
     }
 
     character_trait_definition base:graceful
@@ -581,7 +581,7 @@ module Base
         Cost = -4,
         UIName = UI_trait_Conspicuous,
         UIDescription = UI_trait_ConspicuousDesc,
-        MutuallyExclusiveTraits = base:inconspicuous;base:sneaky,
+        MutuallyExclusiveTraits = base:inconspicuous;DynamicTraits:sneaky,
     }
 
     character_trait_definition base:shortsighted
@@ -639,26 +639,26 @@ module Base
         MutuallyExclusiveTraits = base:shortsighted,
     }
 
-    character_trait_definition base:lucky
+    character_trait_definition DynamicTraits:lucky
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:lucky,
+        CharacterTrait = DynamicTraits:lucky,
         Cost = 3,
         UIName = UI_trait_lucky,
         UIDescription = UI_trait_luckydesc,
-        MutuallyExclusiveTraits = base:unlucky,
+        MutuallyExclusiveTraits = DynamicTraits:unlucky,
     }
 
-    character_trait_definition base:unlucky
+    character_trait_definition DynamicTraits:unlucky
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:unlucky,
+        CharacterTrait = DynamicTraits:unlucky,
         Cost = -3,
         UIName = UI_trait_unlucky,
         UIDescription = UI_trait_unluckydesc,
-        MutuallyExclusiveTraits = base:lucky,
+        MutuallyExclusiveTraits = DynamicTraits:lucky,
     }
 
     character_trait_definition base:fastreader
@@ -768,7 +768,7 @@ module Base
         Cost = 6,
         UIName = UI_trait_Dexterous,
         UIDescription = UI_trait_DexterousDesc,
-        MutuallyExclusiveTraits = base:allthumbs;base:dextrous2,
+        MutuallyExclusiveTraits = base:allthumbs;DynamicTraits:dextrous2,
     }
 
     character_trait_definition base:allthumbs
@@ -779,7 +779,7 @@ module Base
         Cost = -8,
         UIName = UI_trait_AllThumbs,
         UIDescription = UI_trait_AllThumbsDesc,
-        MutuallyExclusiveTraits = base:dextrous;base:dextrous2,
+        MutuallyExclusiveTraits = base:dextrous;DynamicTraits:dextrous2,
     }
 
     character_trait_definition base:speeddemon
@@ -804,11 +804,11 @@ module Base
         MutuallyExclusiveTraits = base:speeddemon,
     }
 
-    character_trait_definition base:poorpassenger
+    character_trait_definition DynamicTraits:poorpassenger
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:poorpassenger,
+        CharacterTrait = DynamicTraits:poorpassenger,
         Cost = -1,
         UIName = UI_trait_PoorPassenger,
         UIDescription = UI_trait_PoorPassengerDesc,
@@ -844,7 +844,7 @@ module Base
         Cost = 8,
         UIName = UI_trait_outdoorsman,
         UIDescription = UI_trait_outdoorsmandesc,
-        MutuallyExclusiveTraits = base:pluviophobia,
+        MutuallyExclusiveTraits = DynamicTraits:pluviophobia,
     }
 
     character_trait_definition base:nightvision
@@ -1042,211 +1042,211 @@ module Base
         MutuallyExclusiveTraits = base:thickskinned,
     }
 
-    character_trait_definition base:flimsy
+    character_trait_definition DynamicTraits:flimsy
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:flimsy,
+        CharacterTrait = DynamicTraits:flimsy,
         Cost = 0,
         UIName = UI_trait_Flimsy,
         UIDescription = UI_trait_FlimsyDesc,
     }
 
-    character_trait_definition base:frail
+    character_trait_definition DynamicTraits:frail
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:frail,
+        CharacterTrait = DynamicTraits:frail,
         Cost = 0,
         UIName = UI_trait_Frail,
         UIDescription = UI_trait_FrailDesc,
     }
 
-    character_trait_definition base:addictedtocaffeine
+    character_trait_definition DynamicTraits:addictedtocaffeine
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:addictedtocaffeine,
+        CharacterTrait = DynamicTraits:addictedtocaffeine,
         Cost = -4,
         UIName = UI_trait_AddictedToCaffeine,
         UIDescription = UI_trait_AddictedToCaffeineDesc,
     }
 
-    character_trait_definition base:bloodlust
+    character_trait_definition DynamicTraits:bloodlust
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:bloodlust,
+        CharacterTrait = DynamicTraits:bloodlust,
         Cost = 0,
         UIName = UI_trait_Bloodlust,
         UIDescription = UI_trait_BloodlustDesc,
     }
 
-    character_trait_definition base:amateurelectrician
+    character_trait_definition DynamicTraits:amateurelectrician
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:amateurelectrician,
+        CharacterTrait = DynamicTraits:amateurelectrician,
         Cost = 1,
         UIName = UI_trait_AmateurElectrician,
         UIDescription = UI_trait_AmateurElectricianDesc,
-        MutuallyExclusiveTraits = base:amateurelectrician2,
+        MutuallyExclusiveTraits = DynamicTraits:amateurelectrician2,
         GrantedRecipes = Generator,
     }
 
-    character_trait_definition base:amateurelectrician2
+    character_trait_definition DynamicTraits:amateurelectrician2
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:amateurelectrician2,
+        CharacterTrait = DynamicTraits:amateurelectrician2,
         Cost = 0,
         UIName = UI_trait_AmateurElectrician,
         UIDescription = UI_trait_AmateurElectricianDesc,
-        MutuallyExclusiveTraits = base:amateurelectrician,
+        MutuallyExclusiveTraits = DynamicTraits:amateurelectrician,
         GrantedRecipes = Generator,
     }
 
-    character_trait_definition base:pluviophile
+    character_trait_definition DynamicTraits:pluviophile
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:pluviophile,
+        CharacterTrait = DynamicTraits:pluviophile,
         Cost = 2,
         UIName = UI_trait_Pluviophile,
         UIDescription = UI_trait_PluviophileDesc,
-        MutuallyExclusiveTraits = base:pluviophobia,
+        MutuallyExclusiveTraits = DynamicTraits:pluviophobia,
     }
 
-    character_trait_definition base:pluviophobia
+    character_trait_definition DynamicTraits:pluviophobia
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:pluviophobia,
+        CharacterTrait = DynamicTraits:pluviophobia,
         Cost = -2,
         UIName = UI_trait_Pluviophobia,
         UIDescription = UI_trait_PluviophobiaDesc,
-        MutuallyExclusiveTraits = base:pluviophile;base:outdoorsman,
+        MutuallyExclusiveTraits = DynamicTraits:pluviophile;base:outdoorsman,
     }
 
-    character_trait_definition base:alcoholic
+    character_trait_definition DynamicTraits:alcoholic
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:alcoholic,
+        CharacterTrait = DynamicTraits:alcoholic,
         Cost = -8,
         UIName = UI_trait_Alcoholic,
         UIDescription = UI_trait_AlcoholicDesc,
     }
 
-    character_trait_definition base:anorexy
+    character_trait_definition DynamicTraits:anorexy
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:anorexy,
+        CharacterTrait = DynamicTraits:anorexy,
         Cost = -6,
         UIName = UI_trait_Anorexy,
         UIDescription = UI_trait_AnorexyDesc,
         MutuallyExclusiveTraits = base:overweight;base:obese;base:strong;base:athletic,
     }
 
-    character_trait_definition base:bigorexia
+    character_trait_definition DynamicTraits:bigorexia
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:bigorexia,
+        CharacterTrait = DynamicTraits:bigorexia,
         Cost = -8,
         UIName = UI_trait_Bigorexia,
         UIDescription = UI_trait_BigorexiaDesc,
     }
 
-    character_trait_definition base:prodigy
+    character_trait_definition DynamicTraits:prodigy
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:prodigy,
+        CharacterTrait = DynamicTraits:prodigy,
         Cost = 6,
         UIName = UI_trait_Prodigy,
         UIDescription = UI_trait_ProdigyDesc,
     }
 
-    character_trait_definition base:physicallyactive
+    character_trait_definition DynamicTraits:physicallyactive
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:physicallyactive,
+        CharacterTrait = DynamicTraits:physicallyactive,
         Cost = 10,
         UIName = UI_trait_PhysicallyActive,
         UIDescription = UI_trait_PhysicallyActiveDesc,
-        MutuallyExclusiveTraits = base:sedentary;base:physicallyactive2;base:underweight;base:very underweight;base:overweight;base:obese;base:feeble;base:weak;base:out of shape;base:unfit,
+        MutuallyExclusiveTraits = DynamicTraits:sedentary;DynamicTraits:physicallyactive2;base:underweight;base:very underweight;base:overweight;base:obese;base:feeble;base:weak;base:out of shape;base:unfit,
     }
 
-    character_trait_definition base:physicallyactive2
+    character_trait_definition DynamicTraits:physicallyactive2
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:physicallyactive2,
+        CharacterTrait = DynamicTraits:physicallyactive2,
         Cost = 0,
         UIName = UI_trait_PhysicallyActive,
         UIDescription = UI_trait_PhysicallyActiveDesc,
-        MutuallyExclusiveTraits = base:sedentary;base:physicallyactive;base:underweight;base:very underweight;base:overweight;base:obese;base:feeble;base:weak;base:out of shape;base:unfit,
+        MutuallyExclusiveTraits = DynamicTraits:sedentary;DynamicTraits:physicallyactive;base:underweight;base:very underweight;base:overweight;base:obese;base:feeble;base:weak;base:out of shape;base:unfit,
     }
 
-    character_trait_definition base:sedentary
+    character_trait_definition DynamicTraits:sedentary
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:sedentary,
+        CharacterTrait = DynamicTraits:sedentary,
         Cost = -10,
         UIName = UI_trait_Sedentary,
         UIDescription = UI_trait_SedentaryDesc,
-        MutuallyExclusiveTraits = base:physicallyactive;base:physicallyactive2;base:strong;base:athletic;base:fit,
+        MutuallyExclusiveTraits = DynamicTraits:physicallyactive;DynamicTraits:physicallyactive2;base:strong;base:athletic;base:fit,
     }
 
-    character_trait_definition base:nightmares
+    character_trait_definition DynamicTraits:nightmares
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:nightmares,
+        CharacterTrait = DynamicTraits:nightmares,
         Cost = 0,
         UIName = UI_trait_Nightmares,
         UIDescription = UI_trait_NightmaresDesc,
     }
 
-    character_trait_definition base:fibromyalgia
+    character_trait_definition DynamicTraits:fibromyalgia
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:fibromyalgia,
+        CharacterTrait = DynamicTraits:fibromyalgia,
         Cost = -10,
         UIName = UI_trait_Fibromyalgia,
         UIDescription = UI_trait_FibromyalgiaDesc,
     }
 
-    character_trait_definition base:nervouswreck
+    character_trait_definition DynamicTraits:nervouswreck
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:nervouswreck,
+        CharacterTrait = DynamicTraits:nervouswreck,
         Cost = -4,
         UIName = UI_trait_NervousWreck,
         UIDescription = UI_trait_NervousWreckDesc,
     }
 
-    character_trait_definition base:melancholic
+    character_trait_definition DynamicTraits:melancholic
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:melancholic,
+        CharacterTrait = DynamicTraits:melancholic,
         Cost = -4,
         UIName = UI_trait_Melancholic,
         UIDescription = UI_trait_MelancholicDesc,
     }
 
-    character_trait_definition base:handy2
+    character_trait_definition DynamicTraits:handy2
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:handy2,
+        CharacterTrait = DynamicTraits:handy2,
         Cost = 0,
         UIName = UI_trait_handy,
         UIDescription = UI_trait_handydesc,
@@ -1255,11 +1255,11 @@ module Base
         GrantedRecipes = BarbedWireWeapon;BoltBat;MakeBrakeWeapon;MakeBucketMaul;CanReinforceLongWeapon;CanReinforceShortWeapon;CanReinforceWeapon;MakeGardenForkHeadWeapon;MakeKettleMaul;RailspikeBaseballBat;MakeRailspikeCudgel;MakeRailspikeIronPipe;MakeRailspikeLongHandle;MakeRailspikeWeapon;MakeRakeHeadWeapon;MakeSawPlank;MakeSawbladeCudgel;MakeSawbladeLongHandle;MakeSawbladePlank;MakeSawbladeTableLeg;MakeSawbladeWeapon;SheetMetalWeapon;MakeSpadeHeadCudgel;MakeScrewdriver,
     }
 
-    character_trait_definition base:herbalist2
+    character_trait_definition DynamicTraits:herbalist2
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:herbalist2,
+        CharacterTrait = DynamicTraits:herbalist2,
         Cost = 0,
         UIName = UI_trait_Herbalist,
         UIDescription = UI_trait_HerbalistDesc,
@@ -1267,62 +1267,62 @@ module Base
         GrantedRecipes = Herbalist,
     }
 
-    character_trait_definition base:dextrous2
+    character_trait_definition DynamicTraits:dextrous2
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:dextrous2,
+        CharacterTrait = DynamicTraits:dextrous2,
         Cost = 0,
         UIName = UI_trait_Dexterous,
         UIDescription = UI_trait_DexterousDesc,
         MutuallyExclusiveTraits = base:dextrous;base:allthumbs,
     }
 
-    character_trait_definition base:pillsallergy
+    character_trait_definition DynamicTraits:pillsallergy
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:pillsallergy,
+        CharacterTrait = DynamicTraits:pillsallergy,
         Cost = -6,
         UIName = UI_trait_PillsAllergy,
         UIDescription = UI_trait_PillsAllergyDesc,
     }
 
-    character_trait_definition base:wildplantsallergy
+    character_trait_definition DynamicTraits:wildplantsallergy
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:wildplantsallergy,
+        CharacterTrait = DynamicTraits:wildplantsallergy,
         Cost = -4,
         UIName = UI_trait_WildPlantsAllergy,
         UIDescription = UI_trait_WildPlantsAllergyDesc,
     }
 
-    character_trait_definition base:flabby
+    character_trait_definition DynamicTraits:flabby
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:flabby,
+        CharacterTrait = DynamicTraits:flabby,
         Cost = 0,
         UIName = UI_trait_Flabby,
         UIDescription = UI_trait_FlabbyDesc,
     }
 
-    character_trait_definition base:brittleknees
+    character_trait_definition DynamicTraits:brittleknees
     {
         IsProfessionTrait = true,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:brittleknees,
+        CharacterTrait = DynamicTraits:brittleknees,
         Cost = 0,
         UIName = UI_trait_BrittleKnees,
         UIDescription = UI_trait_BrittleKneesDesc,
     }
 
-    character_trait_definition base:sneaky
+    character_trait_definition DynamicTraits:sneaky
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:sneaky,
+        CharacterTrait = DynamicTraits:sneaky,
         Cost = 2,
         UIName = UI_trait_sneaky,
         UIDescription = UI_trait_sneakydesc,
@@ -1330,11 +1330,11 @@ module Base
         MutuallyExclusiveTraits = base:conspicuous,
     }
 
-    character_trait_definition base:lightfooted
+    character_trait_definition DynamicTraits:lightfooted
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:lightfooted,
+        CharacterTrait = DynamicTraits:lightfooted,
         Cost = 2,
         UIName = UI_trait_lightfooted,
         UIDescription = UI_trait_lightfooteddesc,
@@ -1342,165 +1342,165 @@ module Base
         MutuallyExclusiveTraits = base:clumsy,
     }
 
-    character_trait_definition base:nimble
+    character_trait_definition DynamicTraits:nimble
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:nimble,
+        CharacterTrait = DynamicTraits:nimble,
         Cost = 3,
         UIName = UI_trait_nimble,
         UIDescription = UI_trait_nimbledesc,
         XPBoosts = Nimble=1,
     }
 
-    character_trait_definition base:amforager
+    character_trait_definition DynamicTraits:amforager
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:amforager,
+        CharacterTrait = DynamicTraits:amforager,
         Cost = 1,
         UIName = UI_trait_amforager,
         UIDescription = UI_trait_amforagerdesc,
         XPBoosts = PlantScavenging=1,
     }
 
-    character_trait_definition base:amtrapper
+    character_trait_definition DynamicTraits:amtrapper
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:amtrapper,
+        CharacterTrait = DynamicTraits:amtrapper,
         Cost = 1,
         UIName = UI_trait_amtrapper,
         UIDescription = UI_trait_amtrapperdesc,
         XPBoosts = Trapping=1,
     }
 
-    character_trait_definition base:amcook
+    character_trait_definition DynamicTraits:amcook
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:amcook,
+        CharacterTrait = DynamicTraits:amcook,
         Cost = 1,
         UIName = UI_trait_amcook,
         UIDescription = UI_trait_amcookdesc,
         XPBoosts = Cooking=1,
     }
 
-    character_trait_definition base:amelectrician
+    character_trait_definition DynamicTraits:amelectrician
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:amelectrician,
+        CharacterTrait = DynamicTraits:amelectrician,
         Cost = 1,
         UIName = UI_trait_amelectrician,
         UIDescription = UI_trait_amelectriciandesc,
         XPBoosts = Electricity=1,
     }
 
-    character_trait_definition base:ammechanic
+    character_trait_definition DynamicTraits:ammechanic
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:ammechanic,
+        CharacterTrait = DynamicTraits:ammechanic,
         Cost = 2,
         UIName = UI_trait_ammechanic,
         UIDescription = UI_trait_ammechanicdesc,
         XPBoosts = Mechanics=1,
     }
 
-    character_trait_definition base:amcarpenter
+    character_trait_definition DynamicTraits:amcarpenter
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:amcarpenter,
+        CharacterTrait = DynamicTraits:amcarpenter,
         Cost = 1,
         UIName = UI_trait_amcarpenter,
         UIDescription = UI_trait_amcarpenterdesc,
         XPBoosts = Woodwork=1,
     }
 
-    character_trait_definition base:ammetalworker
+    character_trait_definition DynamicTraits:ammetalworker
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:ammetalworker,
+        CharacterTrait = DynamicTraits:ammetalworker,
         Cost = 2,
         UIName = UI_trait_ammetalworker,
         UIDescription = UI_trait_ammetalworkerdesc,
         XPBoosts = MetalWelding=1,
     }
 
-    character_trait_definition base:durabile
+    character_trait_definition DynamicTraits:durabile
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:durabile,
+        CharacterTrait = DynamicTraits:durabile,
         Cost = 3,
         UIName = UI_trait_durabile,
         UIDescription = UI_trait_durabiledesc,
         XPBoosts = Maintenance=1,
     }
 
-    character_trait_definition base:shortbladefan
+    character_trait_definition DynamicTraits:shortbladefan
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:shortbladefan,
+        CharacterTrait = DynamicTraits:shortbladefan,
         Cost = 2,
         UIName = UI_trait_shortbladefan,
         UIDescription = UI_trait_shortbladefandesc,
         XPBoosts = SmallBlade=1,
     }
 
-    character_trait_definition base:shortbluntfan
+    character_trait_definition DynamicTraits:shortbluntfan
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:shortbluntfan,
+        CharacterTrait = DynamicTraits:shortbluntfan,
         Cost = 3,
         UIName = UI_trait_shortbluntfan,
         UIDescription = UI_trait_shortbluntfandesc,
         XPBoosts = SmallBlunt=1,
     }
 
-    character_trait_definition base:cutter
+    character_trait_definition DynamicTraits:cutter
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:cutter,
+        CharacterTrait = DynamicTraits:cutter,
         Cost = 4,
         UIName = UI_trait_cutter,
         UIDescription = UI_trait_cutterdesc,
         XPBoosts = Axe=1,
     }
 
-    character_trait_definition base:spearman
+    character_trait_definition DynamicTraits:spearman
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:spearman,
+        CharacterTrait = DynamicTraits:spearman,
         Cost = 5,
         UIName = UI_trait_spearman,
         UIDescription = UI_trait_spearmandesc,
         XPBoosts = Spear=1,
     }
 
-    character_trait_definition base:swordsman
+    character_trait_definition DynamicTraits:swordsman
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:swordsman,
+        CharacterTrait = DynamicTraits:swordsman,
         Cost = 4,
         UIName = UI_trait_swordsman,
         UIDescription = UI_trait_swordsmandesc,
         XPBoosts = LongBlade=1,
     }
 
-    character_trait_definition base:gunfan
+    character_trait_definition DynamicTraits:gunfan
     {
         IsProfessionTrait = false,
         DisabledInMultiplayer = false,
-        CharacterTrait = base:gunfan,
+        CharacterTrait = DynamicTraits:gunfan,
         Cost = 4,
         UIName = UI_trait_gunfan,
         UIDescription = UI_trait_gunfandesc,

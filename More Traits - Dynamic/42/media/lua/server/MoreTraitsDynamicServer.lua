@@ -22,21 +22,21 @@ local function evaluateLevelTraits(player, vars)
     if not player or player:isDead() or not vars then return end
 
     if vars.PackMouseDynamic == true
-        and player:HasTrait("packmouse")
+        and MTDHasTrait(player, "packmouse")
         and player:getPerkLevel(Perks.Strength) >= vars.PackMouseDynamicSkill then
-        player:getTraits():remove("packmouse")
+        MTDRemoveTrait(player, "packmouse")
     end
 
     if vars.PackMuleDynamic == true
-        and not player:HasTrait("packmule")
+        and not MTDHasTrait(player, "packmule")
         and player:getPerkLevel(Perks.Strength) >= vars.PackMuleDynamicSkill then
-        player:getTraits():add("packmule")
+        MTDAddTrait(player, "packmule")
     end
 
     if vars.HardyDynamic == true
-        and not player:HasTrait("hardy")
+        and not MTDHasTrait(player, "hardy")
         and player:getPerkLevel(Perks.Fitness) >= vars.HardyDynamicSkill then
-        player:getTraits():add("hardy")
+        MTDAddTrait(player, "hardy")
     end
 end
 
@@ -48,15 +48,16 @@ local function onPanicMinute(player)
     evaluateLevelTraits(player, vars)
     md.FiftyPlusStressAndPanicTime = md.FiftyPlusStressAndPanicTime or 0
 
-    if player:getStats():getStress() >= 0.5 and player:getStats():getPanic() >= 50 then
+    local stats = player:getStats()
+    if stats:get(CharacterStat.STRESS) >= 0.5 and stats:get(CharacterStat.PANIC) >= 50 then
         md.FiftyPlusStressAndPanicTime = md.FiftyPlusStressAndPanicTime + 1
     end
 
     if vars.ParanoiaDynamic == true
-        and player:HasTrait("paranoia")
+        and MTDHasTrait(player, "paranoia")
         and md.FiftyPlusStressAndPanicTime >= vars.ParanoiaDynamicHoursLose * 60 then
         md.FiftyPlusStressAndPanicTime = 0
-        player:getTraits():remove("paranoia")
+        MTDRemoveTrait(player, "paranoia")
     end
 end
 
@@ -80,17 +81,17 @@ local function onInjuryTenMinutes(player)
     end
 
     if vars.ImmunocompromisedDynamic == true
-        and player:HasTrait("immunocompromised")
-        and not player:HasTrait("superimmune")
+        and MTDHasTrait(player, "immunocompromised")
+        and not MTDHasTrait(player, "superimmune")
         and md.totalInfectionTime >= vars.ImmunocompromisedDynamicInfectionTime then
-        player:getTraits():remove("immunocompromised")
+        MTDRemoveTrait(player, "immunocompromised")
     end
 
     if vars.SuperImmuneDynamic == true
-        and not player:HasTrait("superimmune")
-        and not player:HasTrait("immunocompromised")
+        and not MTDHasTrait(player, "superimmune")
+        and not MTDHasTrait(player, "immunocompromised")
         and md.totalInfectionTime >= vars.SuperImmuneDynamicInfectionTime then
-        player:getTraits():add("superimmune")
+        MTDAddTrait(player, "superimmune")
     end
 end
 
@@ -104,7 +105,7 @@ local function onWeightHour(player)
     md.WeightNotMaintainedHours = md.WeightNotMaintainedHours or 0
 
     local weight = player:getNutrition():getWeight()
-    if not player:HasTrait("idealweight") then
+    if not MTDHasTrait(player, "idealweight") then
         if weight >= 78 and weight <= 82 then
             md.WeightMaintainedHours = md.WeightMaintainedHours + 1
         else
@@ -116,7 +117,7 @@ local function onWeightHour(player)
         end
 
         if md.WeightMaintainedHours >= vars.IdealWeightDynamicTargetDaysToObtain * 24 then
-            player:getTraits():add("idealweight")
+            MTDAddTrait(player, "idealweight")
             md.WeightMaintainedHours = 0
             md.WeightNotMaintainedHours = 0
         end
@@ -129,7 +130,7 @@ local function onWeightHour(player)
         elseif weight <= 75 or weight >= 85 then
             md.WeightMaintainedHours = md.WeightMaintainedHours - 1
             if md.WeightMaintainedHours <= 0 then
-                player:getTraits():remove("idealweight")
+                MTDRemoveTrait(player, "idealweight")
                 md.WeightMaintainedHours = 0
                 md.WeightNotMaintainedHours = 0
             end

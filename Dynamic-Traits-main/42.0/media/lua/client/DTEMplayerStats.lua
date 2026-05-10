@@ -93,40 +93,45 @@ function DTEMincreaseStress(player, chance, stress)
         -- Stress only increases if the player is not sleeping.
         if not player:isAsleep() then
             --print("DT Logger: player is not sleeping, increasing stress");
-            local currentStress = player:getStats():getStress();
+            local stats = player:getStats();
+            local currentStress = DTEMGetStatValue(stats, "STRESS", "getStress", 0);
             -- If the books set for Stress is all read, the stress gained is reduced in 30%.
             if player:getModData().DTEMstressIntelligence == true then
                 stress = stress * 0.7;
             end
             -- If Nervous Wreck trait is present the stress gained increases in 30%.
+            local newStress = currentStress + stress;
             if DTEMHasTrait(player, "NervousWreck") then
-                player:getStats():setStress(currentStress + (stress * 1.3));
-            else
-                player:getStats():setStress(currentStress + stress);
+                newStress = currentStress + (stress * 1.3);
             end
-            if player:getStats():getStress() > 1 then
-                player:getStats():setStress(1);
+            if newStress > 1 then
+                newStress = 1;
             end
+            DTEMSetStatValue(stats, "STRESS", "setStress", newStress);
         end
     end
 end
 
 function DTEMdecreaseStress(player, stress)
     --print("DT Logger: running DTEMdecreaseStress function");
-    local currentStress = player:getStats():getStress();
-    player:getStats():setStress(currentStress - stress);
-    if player:getStats():getStress() < 0 then
-        player:getStats():setStress(0);
+    local stats = player:getStats();
+    local currentStress = DTEMGetStatValue(stats, "STRESS", "getStress", 0);
+    local newStress = currentStress - stress;
+    if newStress < 0 then
+        newStress = 0;
     end
+    DTEMSetStatValue(stats, "STRESS", "setStress", newStress);
 end
 
 function DTEMdecreaseStressFromCigarettes(player, stress)
     --print("DT Logger: running DTEMdecreaseStressFromCigarettes function");
-    local currentStressByCigarettes = player:getStats():getStressFromCigarettes();
-    player:getStats():setStressFromCigarettes(currentStressByCigarettes - stress);
-    if player:getStats():getStressFromCigarettes() < 0 then
-        player:getStats():setStressFromCigarettes(0);
+    local stats = player:getStats();
+    local currentStressByCigarettes = DTEMGetStatValue(stats, "NICOTINE_WITHDRAWAL", "getStressFromCigarettes", 0);
+    local newStressByCigarettes = currentStressByCigarettes - stress;
+    if newStressByCigarettes < 0 then
+        newStressByCigarettes = 0;
     end
+    DTEMSetStatValue(stats, "NICOTINE_WITHDRAWAL", "setStressFromCigarettes", newStressByCigarettes);
 end
 
 function DTEMincreaseUnhappiness(player, chance, unhappyness)
@@ -197,11 +202,13 @@ function DTEMincreaseFatigue(player, chance, fatigue)
     if chance == 0 then
         if not player:isAsleep() then
             --print("DT Logger: player is not sleeping, increasing fatigue");
-            local currentFatigue = player:getStats():getFatigue();
-            player:getStats():setFatigue(currentFatigue + fatigue);
-            if player:getStats():getFatigue() > 1 then
-                player:getStats():setFatigue(1);
+            local stats = player:getStats();
+            local currentFatigue = DTEMGetStatValue(stats, "FATIGUE", "getFatigue", 0);
+            local newFatigue = currentFatigue + fatigue;
+            if newFatigue > 1 then
+                newFatigue = 1;
             end
+            DTEMSetStatValue(stats, "FATIGUE", "setFatigue", newFatigue);
         end
     end
 end
@@ -209,11 +216,13 @@ end
 function DTEMdecreaseFatigue(player, chance, fatigue)
     --print("DT Logger: running DTEMdecreaseFatigue function");
     if chance == 0 then
-        local currentFatigue = player:getStats():getFatigue();
-        player:getStats():setFatigue(currentFatigue - fatigue);
-        if player:getStats():getFatigue() < 0 then
-            player:getStats():setFatigue(0);
+        local stats = player:getStats();
+        local currentFatigue = DTEMGetStatValue(stats, "FATIGUE", "getFatigue", 0);
+        local newFatigue = currentFatigue - fatigue;
+        if newFatigue < 0 then
+            newFatigue = 0;
         end
+        DTEMSetStatValue(stats, "FATIGUE", "setFatigue", newFatigue);
     end
 end
 
@@ -222,11 +231,13 @@ function DTEMdecreaseEndurance(player, chance, endurance)
     if chance == 0 then
         if not player:isAsleep() then
             --print("DT Logger: player is not sleeping, decreasing endurance");
-            local currentEndurance = player:getStats():getEndurance();
-            player:getStats():setEndurance(currentEndurance - endurance);
-            if player:getStats():getEndurance() < 0 then
-                player:getStats():setEndurance(0);
+            local stats = player:getStats();
+            local currentEndurance = DTEMGetStatValue(stats, "ENDURANCE", "getEndurance", 0);
+            local newEndurance = currentEndurance - endurance;
+            if newEndurance < 0 then
+                newEndurance = 0;
             end
+            DTEMSetStatValue(stats, "ENDURANCE", "setEndurance", newEndurance);
         end
     end
 end
@@ -250,15 +261,17 @@ function DTEMincreaseAnger(player, chance, anger)
     if chance == 0 then
         if not player:isAsleep() then
             --print("DT Logger: player is not sleeping, increasing anger");
-            local currentAnger = player:getStats():getAnger();
+            local stats = player:getStats();
+            local currentAnger = DTEMGetStatValue(stats, "ANGER", "getAnger", 0);
             -- If the books set for Anger is all read, the Anger gained is reduced in 30%.
             if player:getModData().DTEMangerIntelligence == true then
                 anger = anger * 0.7;
             end
-            player:getStats():setAnger(currentAnger + anger);
-            if player:getStats():getAnger() > 1 then
-                player:getStats():setAnger(1);
+            local newAnger = currentAnger + anger;
+            if newAnger > 1 then
+                newAnger = 1;
             end
+            DTEMSetStatValue(stats, "ANGER", "setAnger", newAnger);
         end
     end
 end
@@ -266,11 +279,13 @@ end
 function DTEMdecreaseAnger(player, anger)
     --print("DT Logger: running DTEMdecreaseAnger function");
     --print("DT Logger: anger: " .. anger);
-    local currentAnger = player:getStats():getAnger();
-    player:getStats():setAnger(currentAnger - anger);
-    if player:getStats():getAnger() < 0 then
-        player:getStats():setAnger(0);
+    local stats = player:getStats();
+    local currentAnger = DTEMGetStatValue(stats, "ANGER", "getAnger", 0);
+    local newAnger = currentAnger - anger;
+    if newAnger < 0 then
+        newAnger = 0;
     end
+    DTEMSetStatValue(stats, "ANGER", "setAnger", newAnger);
 end
 
 function DTEMapplyPain(player, chance, bodyPart, pain)

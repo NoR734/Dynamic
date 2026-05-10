@@ -9,6 +9,55 @@ DTEMCompat.TraitAliases = DTEMCompat.TraitAliases or {
     ["Very Underweight"] = "base:very underweight",
 }
 
+DTEMCompat.DynamicTraitIds = DTEMCompat.DynamicTraitIds or {
+    addictedtocaffeine = true,
+    alcoholic = true,
+    amateurelectrician = true,
+    amateurelectrician2 = true,
+    amcarpenter = true,
+    amcook = true,
+    amelectrician = true,
+    amforager = true,
+    ammechanic = true,
+    ammetalworker = true,
+    amtrapper = true,
+    anorexy = true,
+    bigorexia = true,
+    bloodlust = true,
+    brittleknees = true,
+    cutter = true,
+    dextrous2 = true,
+    durabile = true,
+    fibromyalgia = true,
+    flabby = true,
+    flimsy = true,
+    frail = true,
+    gunfan = true,
+    handy2 = true,
+    herbalist2 = true,
+    lightfooted = true,
+    lucky = true,
+    melancholic = true,
+    nervouswreck = true,
+    nightmares = true,
+    nimble = true,
+    physicallyactive = true,
+    physicallyactive2 = true,
+    pillsallergy = true,
+    pluviophile = true,
+    pluviophobia = true,
+    poorpassenger = true,
+    prodigy = true,
+    sedentary = true,
+    shortbladefan = true,
+    shortbluntfan = true,
+    sneaky = true,
+    spearman = true,
+    swordsman = true,
+    unlucky = true,
+    wildplantsallergy = true,
+}
+
 local resolvedTraits = {}
 
 local function getMoreTraitsLuckAlias(trait)
@@ -17,13 +66,20 @@ local function getMoreTraitsLuckAlias(trait)
     end
 
     local normalizedTrait = string.lower(tostring(trait))
-    if normalizedTrait == "lucky" or normalizedTrait == "base:lucky" then
+    if normalizedTrait == "lucky" or normalizedTrait == "base:lucky" or normalizedTrait == "dynamictraits:lucky" then
         return ToadTraitsRegistries.lucky
     end
-    if normalizedTrait == "unlucky" or normalizedTrait == "base:unlucky" then
+    if normalizedTrait == "unlucky" or normalizedTrait == "base:unlucky" or normalizedTrait == "dynamictraits:unlucky" then
         return ToadTraitsRegistries.unlucky
     end
 
+    return nil
+end
+
+local function getDynamicTraitResourceName(traitId)
+    if DTEMCompat.DynamicTraitIds[traitId] then
+        return "DynamicTraits:" .. traitId
+    end
     return nil
 end
 
@@ -32,16 +88,93 @@ local function getTraitResourceName(trait)
         return nil
     end
 
-    if string.find(trait, ":", 1, true) then
-        return string.lower(trait)
-    end
-
     local alias = DTEMCompat.TraitAliases[trait]
     if alias then
         return alias
     end
 
-    return "base:" .. string.lower(trait)
+    local value = tostring(trait)
+    local lowerValue = string.lower(value)
+
+    if string.find(value, ":", 1, true) then
+        local namespace, traitId = string.match(lowerValue, "^([^:]+):(.+)$")
+        if (namespace == "base" or namespace == "dynamictraits") and traitId then
+            return getDynamicTraitResourceName(traitId) or lowerValue
+        end
+        return value
+    end
+
+    local compactTraitId = string.gsub(lowerValue, "%s+", "")
+    return getDynamicTraitResourceName(compactTraitId) or "base:" .. lowerValue
+end
+
+local function getCharacterStat(statName)
+    if not CharacterStat then
+        return nil
+    end
+
+    if statName == "ANGER" then return CharacterStat.ANGER end
+    if statName == "ENDURANCE" then return CharacterStat.ENDURANCE end
+    if statName == "FATIGUE" then return CharacterStat.FATIGUE end
+    if statName == "INTOXICATION" then return CharacterStat.INTOXICATION end
+    if statName == "NICOTINE_WITHDRAWAL" then return CharacterStat.NICOTINE_WITHDRAWAL end
+    if statName == "PANIC" then return CharacterStat.PANIC end
+    if statName == "STRESS" then return CharacterStat.STRESS end
+    return nil
+end
+
+function DTEMGetStatValue(stats, statName, legacyGetter, defaultValue)
+    if not stats then
+        return defaultValue or 0
+    end
+
+    local characterStat = getCharacterStat(statName)
+    if characterStat then
+        local ok, value = pcall(function()
+            return stats:get(characterStat)
+        end)
+        if ok and value ~= nil then
+            return value
+        end
+    end
+
+    local legacyMethod = legacyGetter and stats[legacyGetter] or nil
+    if legacyMethod then
+        local ok, value = pcall(function()
+            return legacyMethod(stats)
+        end)
+        if ok and value ~= nil then
+            return value
+        end
+    end
+
+    return defaultValue or 0
+end
+
+function DTEMSetStatValue(stats, statName, legacySetter, value)
+    if not stats then
+        return false
+    end
+
+    local characterStat = getCharacterStat(statName)
+    if characterStat then
+        local ok = pcall(function()
+            stats:set(characterStat, value)
+        end)
+        if ok then
+            return true
+        end
+    end
+
+    local legacyMethod = legacySetter and stats[legacySetter] or nil
+    if legacyMethod then
+        local ok = pcall(function()
+            legacyMethod(stats, value)
+        end)
+        return ok == true
+    end
+
+    return false
 end
 
 local function normalizeProfessionName(profession)

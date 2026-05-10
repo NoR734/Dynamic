@@ -169,7 +169,7 @@ function DTEMonPlayerHittingAZombie(player, target, weapon, damage)
             --print("DT Logger: damage: " .. damage);
             local currentTargetHealth = target:getHealth();
             --print("DT Logger: current target health: " .. currentTargetHealth);
-            local additionalDamageToDeal = (damage * player:getStats():getAnger()) / 2;
+            local additionalDamageToDeal = (damage * DTEMGetStatValue(player:getStats(), "ANGER", "getAnger", 0)) / 2;
             --print("DT Logger: additionalDamageToDeal: " .. additionalDamageToDeal);
             target:setHealth(currentTargetHealth - additionalDamageToDeal);
             --print("DT Logger: new target health: " .. target:getHealth());

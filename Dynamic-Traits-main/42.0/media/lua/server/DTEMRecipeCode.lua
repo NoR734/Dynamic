@@ -391,9 +391,10 @@ function OnEat_Gum(food, player, percent)
     --print("DT Logger: running OnEat_Gum function")
     local stats = player:getStats()
     if DTEMHasTrait(player, "Smoker") then
-        stats:setStressFromCigarettes(0);
-        if stats:getStress() > 0 then
-            stats:setStress(stats:getStress() / 2)
+        DTEMSetStatValue(stats, "NICOTINE_WITHDRAWAL", "setStressFromCigarettes", 0);
+        local currentStress = DTEMGetStatValue(stats, "STRESS", "getStress", 0);
+        if currentStress > 0 then
+            DTEMSetStatValue(stats, "STRESS", "setStress", currentStress / 2)
         end
     end
 end
