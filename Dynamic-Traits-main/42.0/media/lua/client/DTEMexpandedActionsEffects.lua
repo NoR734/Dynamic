@@ -1,9 +1,33 @@
 require "TimedActions/ISFitnessAction"
 
+local function DTEMWeaponHasCategory(weapon, category)
+    if not weapon then
+        return false
+    end
+
+    local ok, hasCategory = pcall(function()
+        return weapon:getCategories():contains(category)
+    end)
+
+    return ok and hasCategory == true
+end
+
+local function DTEMWeaponHasCategories(weapon)
+    if not weapon then
+        return false
+    end
+
+    local ok, categories = pcall(function()
+        return weapon:getCategories()
+    end)
+
+    return ok and categories ~= nil
+end
+
 -- Additional tweaks and trait effects when the player hit a tree
 function DTEMonHitTree(player, weapon)
     --print("DT Logger: running DTEMonHitTree function");
-	if weapon:getCategories():contains("Axe") then
+	if DTEMWeaponHasCategory(weapon, "Axe") then
 		player:getXp():AddXP(Perks.Axe, 1);
 	end
 	if DTEMHasTrait(player, "Prodigy") then
@@ -34,7 +58,7 @@ end
 function DTEMonSwingWeapon(player, weapon)
     --print("DT Logger: running DTEMonSwingWeapon function");
 	-- If the player has the trait "Prodigy" extra XP is given to the player for Strength and Fitness
-	if weapon:getCategories():contains("Axe") or weapon:getCategories():contains("Blunt") then
+	if DTEMWeaponHasCategory(weapon, "Axe") or DTEMWeaponHasCategory(weapon, "Blunt") then
 		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.80);
 			player:getXp():AddXP(Perks.Strength, 0.80);
@@ -46,7 +70,7 @@ function DTEMonSwingWeapon(player, weapon)
 			DTEMapplyPain(player, ZombRand(10), "UpperArm_R", ZombRand(15));
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 4;
-	elseif weapon:getCategories():contains("Spear") or weapon:getCategories():contains("LongBlade")then
+	elseif DTEMWeaponHasCategory(weapon, "Spear") or DTEMWeaponHasCategory(weapon, "LongBlade")then
 		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.70);
 			player:getXp():AddXP(Perks.Strength, 0.70);
@@ -58,7 +82,7 @@ function DTEMonSwingWeapon(player, weapon)
 			DTEMapplyPain(player, ZombRand(10), "UpperArm_R", ZombRand(10));
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 3;
-	elseif weapon:getCategories():contains("SmallBlunt") then
+	elseif DTEMWeaponHasCategory(weapon, "SmallBlunt") then
 		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.60);
 			player:getXp():AddXP(Perks.Strength, 0.60);
@@ -70,7 +94,7 @@ function DTEMonSwingWeapon(player, weapon)
 			DTEMapplyPain(player, ZombRand(12), "UpperArm_R", ZombRand(10));
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 2;
-	elseif weapon:getCategories():contains("SmallBlade") then
+	elseif DTEMWeaponHasCategory(weapon, "SmallBlade") then
 		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.50);
 			player:getXp():AddXP(Perks.Strength, 0.50);
@@ -82,7 +106,7 @@ function DTEMonSwingWeapon(player, weapon)
 			DTEMapplyPain(player, ZombRand(15), "UpperArm_R", ZombRand(8));
 		end
 		player:getModData().DTEMphysicallyActiveSedentaryTraits = player:getModData().DTEMphysicallyActiveSedentaryTraits + 1;
-	elseif weapon:getCategories():contains("Unarmed") then
+	elseif DTEMWeaponHasCategory(weapon, "Unarmed") then
 		if DTEMHasTrait(player, "Prodigy") then
 			player:getXp():AddXP(Perks.Fitness, 0.25);
 			player:getXp():AddXP(Perks.Strength, 0.25);
@@ -164,7 +188,7 @@ function DTEMonPlayerHittingAZombie(player, target, weapon, damage)
     --print("DT Logger: running DTEMonPlayerHittingAZombie function");
     if target:isZombie() and not target:getVariableBoolean("Bandit") then
         --print("DT Logger: target is a zombie and not a Bandit");
-        if not weapon:getCategories():contains("Unarmed") then
+        if DTEMWeaponHasCategories(weapon) and not DTEMWeaponHasCategory(weapon, "Unarmed") then
             --print("DT Logger: using a weapon");
             --print("DT Logger: damage: " .. damage);
             local currentTargetHealth = target:getHealth();
