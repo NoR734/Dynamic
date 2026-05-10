@@ -2,12 +2,16 @@ require "ISUI/ISPanelJoypad"
 require "OptionScreens/CoopCharacterCreation"
 
 function CoopCharacterCreation:newPlayerMouse()
-    ProfessionFactory.Reset();
-    BaseGameCharacterDetails.DoProfessions();
-    if SUP then
+    if ProfessionFactory and ProfessionFactory.Reset then
+        ProfessionFactory.Reset();
+    end
+    if BaseGameCharacterDetails and BaseGameCharacterDetails.DoProfessions then
+        BaseGameCharacterDetails.DoProfessions();
+    end
+    if SUP and SUP.DoProfessions then
 		SUP.DoProfessions();
 	end
-    if DTEMBaseGameCharacterDetails then
+    if DTEMBaseGameCharacterDetails and DTEMBaseGameCharacterDetails.DoProfessions then
         DTEMBaseGameCharacterDetails.DoProfessions();
     end
 	if CoopCharacterCreation.instance then return end

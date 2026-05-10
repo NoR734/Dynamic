@@ -114,12 +114,18 @@ local function getCharacterStat(statName)
     end
 
     if statName == "ANGER" then return CharacterStat.ANGER end
+    if statName == "BOREDOM" then return CharacterStat.BOREDOM end
     if statName == "ENDURANCE" then return CharacterStat.ENDURANCE end
     if statName == "FATIGUE" then return CharacterStat.FATIGUE end
+    if statName == "FOOD_SICKNESS" then return CharacterStat.FOOD_SICKNESS end
     if statName == "INTOXICATION" then return CharacterStat.INTOXICATION end
     if statName == "NICOTINE_WITHDRAWAL" then return CharacterStat.NICOTINE_WITHDRAWAL end
+    if statName == "PAIN" then return CharacterStat.PAIN end
     if statName == "PANIC" then return CharacterStat.PANIC end
+    if statName == "SICKNESS" then return CharacterStat.SICKNESS end
     if statName == "STRESS" then return CharacterStat.STRESS end
+    if statName == "UNHAPPINESS" or statName == "UNHAPPYNESS" then return CharacterStat.UNHAPPINESS end
+    if statName == "WETNESS" then return CharacterStat.WETNESS end
     return nil
 end
 
@@ -273,6 +279,17 @@ if Events and Events.OnGameBoot then
     Events.OnGameBoot.Add(DTEMApplyMoreTraitsCompatibility)
 end
 
+local function DTEMSyncTraitChange(player, trait, command)
+    if isClient and isClient() and sendClientCommand then
+        sendClientCommand("DynamicTraits", command, { trait = trait })
+    end
+    if isClient and isClient() and sendPlayerStatsChange and player then
+        pcall(function()
+            sendPlayerStatsChange(player)
+        end)
+    end
+end
+
 function DTEMAddTrait(player, trait)
     if not player or not trait then
         return false
@@ -284,12 +301,21 @@ function DTEMAddTrait(player, trait)
 
     local characterTrait = DTEMResolveTrait(trait)
     if characterTrait and player.getCharacterTraits then
-        player:getCharacterTraits():add(characterTrait)
-        return true
+        local characterTraits = player:getCharacterTraits()
+        if characterTraits then
+            local ok = pcall(function()
+                characterTraits:add(characterTrait)
+            end)
+            if ok then
+                DTEMSyncTraitChange(player, trait, "addTrait")
+                return true
+            end
+        end
     end
 
     if not CharacterTrait and player.getTraits then
         player:getTraits():add(trait)
+        DTEMSyncTraitChange(player, trait, "addTrait")
         return true
     end
 
@@ -307,12 +333,21 @@ function DTEMRemoveTrait(player, trait)
 
     local characterTrait = DTEMResolveTrait(trait)
     if characterTrait and player.getCharacterTraits then
-        player:getCharacterTraits():remove(characterTrait)
-        return true
+        local characterTraits = player:getCharacterTraits()
+        if characterTraits then
+            local ok = pcall(function()
+                characterTraits:remove(characterTrait)
+            end)
+            if ok then
+                DTEMSyncTraitChange(player, trait, "removeTrait")
+                return true
+            end
+        end
     end
 
     if not CharacterTrait and player.getTraits then
         player:getTraits():remove(trait)
+        DTEMSyncTraitChange(player, trait, "removeTrait")
         return true
     end
 

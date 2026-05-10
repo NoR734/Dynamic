@@ -1,8 +1,34 @@
+require "DTEMB42Compat"
+
+local function DTEMclampStat(value, minValue, maxValue)
+    if value < minValue then
+        return minValue
+    end
+    if value > maxValue then
+        return maxValue
+    end
+    return value
+end
+
+local function DTEMgetPlayerStat(player, statName, defaultValue)
+    if not player or not player.getStats then
+        return defaultValue or 0
+    end
+    return DTEMGetStatValue(player:getStats(), statName, nil, defaultValue or 0)
+end
+
+local function DTEMsetPlayerStat(player, statName, value)
+    if not player or not player.getStats then
+        return false
+    end
+    return DTEMSetStatValue(player:getStats(), statName, nil, value)
+end
+
 function DTEMincreaseFoodSickness(player, chance, poison)
     --print("DT Logger: running DTEMincreaseFoodSickness function");
     --print("DT Logger: Chance: " .. chance);
     --print("DT Logger: Poison: " .. poison);
-    local currentFoodPoison = player:getBodyDamage():getFoodSicknessLevel();
+    local currentFoodPoison = DTEMgetPlayerStat(player, "FOOD_SICKNESS", 0);
     if chance == 0 then
         if ZombRand(2) == 0 then
             player:playEmote("dtpoisonvomit");
@@ -38,11 +64,7 @@ function DTEMincreaseFoodSickness(player, chance, poison)
             --print("DT Logger: Poison: " .. poison);
         end
 
-        player:getBodyDamage():setFoodSicknessLevel(currentFoodPoison + poison);
-
-        if player:getBodyDamage():getFoodSicknessLevel() > 100 then
-            player:getBodyDamage():setFoodSicknessLevel(100);
-        end
+        DTEMsetPlayerStat(player, "FOOD_SICKNESS", DTEMclampStat(currentFoodPoison + poison, 0, 100));
     end
 end
 
@@ -50,7 +72,7 @@ function DTEMincreaseFoodSicknessByWounds(player, chance, poison)
     --print("DT Logger: Chance: " .. chance);
     --print("DT Logger: Poison: " .. poison);
     --print("DT Logger: running DTEMincreaseFoodSicknessByWounds function");
-    local currentFoodPoison = player:getBodyDamage():getFoodSicknessLevel();
+    local currentFoodPoison = DTEMgetPlayerStat(player, "FOOD_SICKNESS", 0);
     if chance == 0 then
         if ZombRand(2) == 0 then
             player:playEmote("dtpoisonvomit");
@@ -78,11 +100,7 @@ function DTEMincreaseFoodSicknessByWounds(player, chance, poison)
             --print("DT Logger: Poison: " .. poison);
         end
 
-        player:getBodyDamage():setFoodSicknessLevel(currentFoodPoison + poison);
-
-        if player:getBodyDamage():getFoodSicknessLevel() > 100 then
-            player:getBodyDamage():setFoodSicknessLevel(100);
-        end
+        DTEMsetPlayerStat(player, "FOOD_SICKNESS", DTEMclampStat(currentFoodPoison + poison, 0, 100));
     end
 end
 
@@ -141,31 +159,25 @@ function DTEMincreaseUnhappiness(player, chance, unhappyness)
         -- Unhappyness only increases if the player is not sleeping.
         if not player:isAsleep() then
             --print("DT Logger: player is not sleeping, increasing unhappyness");
-            local currentUnhappyness = player:getBodyDamage():getUnhappynessLevel();
+            local currentUnhappyness = DTEMgetPlayerStat(player, "UNHAPPINESS", 0);
             -- If the books set for Unhappyness is all read, the unhappyness gained is reduced in 30%.
             if player:getModData().DTEMunhappynessIntelligence == true then
                 unhappyness = unhappyness * 0.7;
             end
             -- If Melancholic trait is present the Unhappyness gained increases in 30%.
+            local newUnhappyness = currentUnhappyness + unhappyness;
             if DTEMHasTrait(player, "Melancholic") then
-                player:getBodyDamage():setUnhappynessLevel(currentUnhappyness + (unhappyness * 1.3));
-            else
-                player:getBodyDamage():setUnhappynessLevel(currentUnhappyness + unhappyness);
+                newUnhappyness = currentUnhappyness + (unhappyness * 1.3);
             end
-            if player:getBodyDamage():getUnhappynessLevel() > 100 then
-                player:getBodyDamage():setUnhappynessLevel(100);
-            end
+            DTEMsetPlayerStat(player, "UNHAPPINESS", DTEMclampStat(newUnhappyness, 0, 100));
         end
     end
 end
 
 function DTEMdecreaseUnhappiness(player, unhappyness)
     --print("DT Logger: running DTEMdecreaseUnhappiness function");
-    local currentUnhappyness = player:getBodyDamage():getUnhappynessLevel();
-    player:getBodyDamage():setUnhappynessLevel(currentUnhappyness - unhappyness);
-    if player:getBodyDamage():getUnhappynessLevel() < 0 then
-        player:getBodyDamage():setUnhappynessLevel(0);
-    end
+    local currentUnhappyness = DTEMgetPlayerStat(player, "UNHAPPINESS", 0);
+    DTEMsetPlayerStat(player, "UNHAPPINESS", DTEMclampStat(currentUnhappyness - unhappyness, 0, 100));
 end
 
 function DTEMincreaseBoredom(player, chance, boredom)
@@ -175,26 +187,20 @@ function DTEMincreaseBoredom(player, chance, boredom)
         -- Boredom only increases if the player is not sleeping.
         if not player:isAsleep() then
             --print("DT Logger: player is not sleeping, increasing boredom");
-            local currentBoredom = player:getBodyDamage():getBoredomLevel();
+            local currentBoredom = DTEMgetPlayerStat(player, "BOREDOM", 0);
             -- If the books set for Boredom is all read, the boredom gained is reduced in 30%.
             if player:getModData().DTEMboredomIntelligence == true then
                 boredom = boredom * 0.7;
             end
-            player:getBodyDamage():setBoredomLevel(currentBoredom + boredom);
-            if player:getBodyDamage():getBoredomLevel() > 100 then
-                player:getBodyDamage():setBoredomLevel(100);
-            end
+            DTEMsetPlayerStat(player, "BOREDOM", DTEMclampStat(currentBoredom + boredom, 0, 100));
         end
     end
 end
 
 function DTEMdecreaseBoredom(player, boredom)
     --print("DT Logger: running DTEMdecreaseBoredom function");
-    local currentBoredom = player:getBodyDamage():getBoredomLevel();
-    player:getBodyDamage():setBoredomLevel(currentBoredom - boredom);
-    if player:getBodyDamage():getBoredomLevel() < 0 then
-        player:getBodyDamage():setBoredomLevel(0);
-    end
+    local currentBoredom = DTEMgetPlayerStat(player, "BOREDOM", 0);
+    DTEMsetPlayerStat(player, "BOREDOM", DTEMclampStat(currentBoredom - boredom, 0, 100));
 end
 
 function DTEMincreaseFatigue(player, chance, fatigue)
@@ -246,11 +252,8 @@ function DTEMincreaseWetness(player, chance, wetness)
     --print("DT Logger: running DTEMincreaseWetness function");
     --print("DT Logger: chance: " .. chance);
     if chance == 0 then
-        local currentWetness = player:getBodyDamage():getWetness();
-        player:getBodyDamage():setWetness(currentWetness + wetness);
-        if player:getBodyDamage():getWetness() > 100 then
-            player:getBodyDamage():setWetness(100);
-        end
+        local currentWetness = DTEMgetPlayerStat(player, "WETNESS", 0);
+        DTEMsetPlayerStat(player, "WETNESS", DTEMclampStat(currentWetness + wetness, 0, 100));
     end
 end
 
