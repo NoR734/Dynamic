@@ -2,6 +2,8 @@ require "ISUI/AdminPanel/ISItemsListTable"
 
 local DTEM_NO_ITEM_TYPE = "<No item type>"
 local DTEM_NO_LOOT_CATEGORY = "<No loot category>"
+local DTEM_FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
+local DTEM_UI_BORDER_SPACING = 10
 local DTEM_GHC = getCore():getGoodHighlitedColor()
 local DTEM_BHC = getCore():getBadHighlitedColor()
 
@@ -261,8 +263,8 @@ function ISItemsListTable:drawDatas(y, item, alt)
     self:drawRectBorder(0, (y), self:getWidth(), self.itemheight, a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
 
     local iconX = 4
-    local iconSize = FONT_HGT_SMALL;
-    local xoffset = UI_BORDER_SPACING;
+    local iconSize = DTEM_FONT_HGT_SMALL;
+    local xoffset = DTEM_UI_BORDER_SPACING;
 
     local column = 1
     local clipY = math.max(0, y + self:getYScroll())

@@ -5,11 +5,16 @@ local function DTEMWeaponHasCategory(weapon, category)
         return false
     end
 
-    local ok, hasCategory = pcall(function()
-        return weapon:getCategories():contains(category)
-    end)
+    if not weapon.getCategories then
+        return false
+    end
 
-    return ok and hasCategory == true
+    local categories = weapon:getCategories()
+    if not categories or not categories.contains then
+        return false
+    end
+
+    return categories:contains(category) == true
 end
 
 local function DTEMWeaponHasCategories(weapon)
@@ -17,11 +22,11 @@ local function DTEMWeaponHasCategories(weapon)
         return false
     end
 
-    local ok, categories = pcall(function()
-        return weapon:getCategories()
-    end)
+    if not weapon.getCategories then
+        return false
+    end
 
-    return ok and categories ~= nil
+    return weapon:getCategories() ~= nil
 end
 
 local function DTEMGetActionModData(player)
@@ -38,18 +43,15 @@ local function DTEMGetActionModData(player)
 end
 
 local function DTEMIsNonBanditZombie(target)
-    local okZombie, isZombie = pcall(function()
-        return target and target:isZombie()
-    end)
-    if not okZombie or isZombie ~= true then
+    if not target or not target.isZombie or target:isZombie() ~= true then
         return false
     end
 
-    local okBandit, isBandit = pcall(function()
-        return target:getVariableBoolean("Bandit")
-    end)
+    if target.getVariableBoolean and target:getVariableBoolean("Bandit") == true then
+        return false
+    end
 
-    return not (okBandit and isBandit == true)
+    return true
 end
 
 -- Additional tweaks and trait effects when the player hit a tree
