@@ -24,9 +24,41 @@ local function DTEMWeaponHasCategories(weapon)
     return ok and categories ~= nil
 end
 
+local function DTEMGetActionModData(player)
+    if not player then
+        return nil
+    end
+
+    local modData = player:getModData()
+    if modData and modData.DTEMphysicallyActiveSedentaryTraits == nil then
+        modData.DTEMphysicallyActiveSedentaryTraits = 0
+    end
+
+    return modData
+end
+
+local function DTEMIsNonBanditZombie(target)
+    local okZombie, isZombie = pcall(function()
+        return target and target:isZombie()
+    end)
+    if not okZombie or isZombie ~= true then
+        return false
+    end
+
+    local okBandit, isBandit = pcall(function()
+        return target:getVariableBoolean("Bandit")
+    end)
+
+    return not (okBandit and isBandit == true)
+end
+
 -- Additional tweaks and trait effects when the player hit a tree
 function DTEMonHitTree(player, weapon)
     --print("DT Logger: running DTEMonHitTree function");
+    if not DTEMGetActionModData(player) then
+        return
+    end
+
 	if DTEMWeaponHasCategory(weapon, "Axe") then
 		player:getXp():AddXP(Perks.Axe, 1);
 	end
@@ -57,6 +89,10 @@ end
 -- Additional tweaks and trait effects when the player swings the weapon
 function DTEMonSwingWeapon(player, weapon)
     --print("DT Logger: running DTEMonSwingWeapon function");
+    if not DTEMGetActionModData(player) then
+        return
+    end
+
 	-- If the player has the trait "Prodigy" extra XP is given to the player for Strength and Fitness
 	if DTEMWeaponHasCategory(weapon, "Axe") or DTEMWeaponHasCategory(weapon, "Blunt") then
 		if DTEMHasTrait(player, "Prodigy") then
@@ -129,6 +165,10 @@ end
 
 function DTEMonPlayerMoving(player)
     --print("DT Logger: running DTEMonPlayerMoving function");
+    if not DTEMGetActionModData(player) then
+        return
+    end
+
     -- Player is walking
     if player:isPlayerMoving() and not player:isRunning() and not player:isSprinting() then
         --print("Player is walking");
@@ -186,22 +226,27 @@ end
 
 function DTEMonPlayerHittingAZombie(player, target, weapon, damage)
     --print("DT Logger: running DTEMonPlayerHittingAZombie function");
-    if target:isZombie() and not target:getVariableBoolean("Bandit") then
+    if not player then
+        return
+    end
+
+    if DTEMIsNonBanditZombie(target) then
         --print("DT Logger: target is a zombie and not a Bandit");
         if DTEMWeaponHasCategories(weapon) and not DTEMWeaponHasCategory(weapon, "Unarmed") then
             --print("DT Logger: using a weapon");
             --print("DT Logger: damage: " .. damage);
-            local currentTargetHealth = target:getHealth();
+            local currentTargetHealth = target:getHealth() or 0;
             --print("DT Logger: current target health: " .. currentTargetHealth);
-            local additionalDamageToDeal = (damage * DTEMGetStatValue(player:getStats(), "ANGER", "getAnger", 0)) / 2;
+            local hitDamage = tonumber(damage) or 0
+            local additionalDamageToDeal = (hitDamage * DTEMGetStatValue(player:getStats(), "ANGER", "getAnger", 0)) / 2;
             --print("DT Logger: additionalDamageToDeal: " .. additionalDamageToDeal);
             target:setHealth(currentTargetHealth - additionalDamageToDeal);
             --print("DT Logger: new target health: " .. target:getHealth());
             if target:getHealth() <= 0 then
-			    target:update();
+			    pcall(function() target:update() end);
 		    end
             if player:getMoodles():getMoodleLevel(MoodleType.ANGRY) ~= 0 then
-                local currentWeaponCondition = weapon:getCondition();
+                local currentWeaponCondition = weapon:getCondition() or 0;
                 --print("DT Logger: current weapon condition: " .. currentWeaponCondition);
                 local range = 0;
                 if player:getMoodles():getMoodleLevel(MoodleType.ANGRY) == 1 then
@@ -213,11 +258,13 @@ function DTEMonPlayerHittingAZombie(player, target, weapon, damage)
                 elseif player:getMoodles():getMoodleLevel(MoodleType.ANGRY) == 4 then
                     range = 10;
                 end
-                range = range + player:getPerkLevel(Perks.Maintenance) + weapon:getConditionLowerChance() + DTEMluckyUnluckyModifier(player, 15);
+                local conditionLowerChance = weapon:getConditionLowerChance() or 0
+                range = range + player:getPerkLevel(Perks.Maintenance) + conditionLowerChance + DTEMluckyUnluckyModifier(player, 15);
+                range = math.max(1, math.floor(range))
                 --print("DT Logger: range: " .. range);
                 if ZombRand(range) == 0 then
                     --print("DT Logger: reducing weapon condition");
-                    weapon:setCondition(currentWeaponCondition - 1);
+                    weapon:setCondition(math.max(0, currentWeaponCondition - 1));
                     --print("DT Logger: new weapon condition: " .. weapon:getCondition());
                     DTEMincreaseAnger(player, 0, 0.15);
                 end
@@ -238,7 +285,11 @@ function ISFitnessAction:exeLooped()
     DTfitness.ISFitnessAction.exeLooped(self)
     --print("DT Logger: running ISFitnessAction:exeLooped function");
     --print("self.exercise: " .. self.exercise)
-    player = self.character;
+    local player = self.character;
+    if not DTEMGetActionModData(player) then
+        return
+    end
+
     -- If the player has the trait "Prodigy", extra experience is added to Strength or/and Fitness on each loop (depending on the exercise)
     -- If the player has the trait "Physically Active" the negative moods are reduced when doing exercise
     -- If the player has the trait "Sedentary" extra pain is added the the bodyparts based on the exercise

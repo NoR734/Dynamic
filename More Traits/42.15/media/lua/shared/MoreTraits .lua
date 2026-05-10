@@ -3093,7 +3093,7 @@ local function SuperImmune(player, playerdata)
 
     timeOfRecovery = math.max(minimum, math.min(maximum, timeOfRecovery))
 
-    if playerdata.SuperImmuneHealedOnce and playerdata.SuperImmuneFirstInfectionBonus then
+    if playerdata.SuperImmuneHealedOnce and SandboxVars.MoreTraits.SuperImmuneFirstInfectionBonus ~= false then
         --Halve the time needed once it beat the virus once, since immune system
         timeOfRecovery = timeOfRecovery / 2 --will know how to beat it.
     end
@@ -3115,7 +3115,7 @@ local function SuperImmuneRecoveryProcess(player, playerdata)
     local minutesPerDay = 1440
     local maxRecoveryMinutes = recoveryDays * minutesPerDay
     local timeElapsed = playerdata.SuperImmuneMinutesPassed or 0
-    local speedRun = playerdata.QuickSuperImmune and 6 or 1
+    local speedRun = SandboxVars.MoreTraits.QuickSuperImmune == true and 6 or 1
 
     local stats = player:getStats()
     local illness = stats:get(CharacterStat.ZOMBIE_FEVER)
