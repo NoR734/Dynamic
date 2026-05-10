@@ -3,3 +3,4 @@
 - Полностью починил Dynamic-Traits-main и добавил совместимость с мультиплеером
 - More traits original link: https://steamcommunity.com/sharedfiles/filedetails/?id=1299328280
 - Dynamic Traits and Expanded Moodles [B41 & B42] original link: https://steamcommunity.com/sharedfiles/filedetails/?id=2459400130
+- В благодарность напишите +rep в стиме
