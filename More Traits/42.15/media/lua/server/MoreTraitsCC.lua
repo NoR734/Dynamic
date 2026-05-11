@@ -15,17 +15,27 @@ local function playerHasTrait(player, trait)
         return false
     end
 
+    local traitNames = { trait }
+    if type(trait) == "string" then
+        local lowerTrait = string.lower(trait)
+        table.insert(traitNames, lowerTrait)
+        table.insert(traitNames, "ToadTraits:" .. trait)
+        table.insert(traitNames, "ToadTraits:" .. lowerTrait)
+    end
+
     if player.getTraits then
         local traits = player:getTraits()
         if traits and traits.contains then
-            if traits:contains(trait) then
-                return true
-            end
-
-            if TraitFactory and TraitFactory.getTrait then
-                local traitDefinition = TraitFactory.getTrait(trait)
-                if traitDefinition and traits:contains(traitDefinition) then
+            for _, traitName in ipairs(traitNames) do
+                if traits:contains(traitName) then
                     return true
+                end
+
+                if TraitFactory and TraitFactory.getTrait then
+                    local traitDefinition = TraitFactory.getTrait(traitName)
+                    if traitDefinition and traits:contains(traitDefinition) then
+                        return true
+                    end
                 end
             end
         end
@@ -41,7 +51,7 @@ local traitCommandGuards = {
     Incomprehensive = "Incomprehensive",
     Gourmand = "Gourmand",
     GraveRobber = "GraveRobber",
-    FastGimp = "Fast",
+    FastGimp = { "Fast", "Gimp" },
     Immunocompromised = "Immunocompromised",
     GlassBody = "GlassBody",
     InfectPlayer = "SelfDestructive",
@@ -60,6 +70,16 @@ local function canRunTraitCommand(player, command)
     if not requiredTrait then
         return true
     end
+
+    if type(requiredTrait) == "table" then
+        for _, trait in ipairs(requiredTrait) do
+            if playerHasTrait(player, trait) then
+                return true
+            end
+        end
+        return false
+    end
+
     return playerHasTrait(player, requiredTrait)
 end
 

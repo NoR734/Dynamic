@@ -2875,12 +2875,15 @@ local function MT_FastGimpTraits(player)
     FastGimpVector:setX(x * modifier)
     FastGimpVector:setY(y * modifier)
 
-    if isClient() and internalTick % 10 == 0 then
-        sendClientCommand(player, "ToadTraits", "FastGimp", { xSpeed = x, ySpeed = y })
+    local extraX = FastGimpVector:getX()
+    local extraY = FastGimpVector:getY()
+
+    if isClient() then
+        sendClientCommand(player, "ToadTraits", "FastGimp", { xSpeed = extraX, ySpeed = extraY })
     end
 
     if player.moveUnmodded then
-        player:moveUnmodded(FastGimpVector:getX(), FastGimpVector:getY())
+        player:moveUnmodded(extraX, extraY)
     elseif player.Move then
         player:Move(FastGimpVector)
     end

@@ -4163,26 +4163,32 @@ local function antigunxpdecrease(player, perk, amount)
 end
 
 local function IdealWeight(player, playerdata)
-    if player:HasTrait("idealweight") then
-        local calories = player:getNutrition():getCalories()
-        local weight = player:getNutrition():getWeight()
-        local oldcalories = playerdata.OldCalories
-        if oldcalories == nil then
-            playerdata.OldCalories = 810;
-        end
-        playerdata.OldCalories = player:getNutrition():getCalories() + 10;
-        if oldcalories < calories then
-            local calorieschange = calories - oldcalories;
-            if weight <= 78 then
-                player:getNutrition():setCalories(calories + calorieschange * 0.5)
-                playerdata.OldCalories = player:getNutrition():getCalories()
-            end
-            if weight >= 82 then
-                player:getNutrition():setCalories(calories - calorieschange * 0.25)
-                playerdata.OldCalories = player:getNutrition():getCalories()
-            end
+    if not player:HasTrait("idealweight") then
+        return
+    end
+
+    local nutrition = player:getNutrition()
+    local currentCalories = nutrition:getCalories()
+    local weight = nutrition:getWeight()
+
+    if playerdata.OldCalories == nil then
+        playerdata.OldCalories = currentCalories
+        return
+    end
+
+    local oldCalories = playerdata.OldCalories
+
+    if currentCalories > oldCalories then
+        local caloriesChange = currentCalories - oldCalories
+
+        if weight <= 78 then
+            nutrition:setCalories(currentCalories + (caloriesChange * 0.5))
+        elseif weight >= 82 then
+            nutrition:setCalories(currentCalories - (caloriesChange * 0.25))
         end
     end
+
+    playerdata.OldCalories = nutrition:getCalories()
 end
 
 local function QuickRest(player, playerdata)
