@@ -3034,6 +3034,40 @@ local function vehicleCheck(player)
     end
 end
 
+local function SuperImmuneGetMinimumHealth(player)
+    local minimumHealth = isClient() and 20 or 15
+    if player:hasTrait(ToadTraitsRegistries.indefatigable) then
+        minimumHealth = isClient() and 30 or 25
+    end
+
+    return minimumHealth
+end
+
+local function SuperImmuneGetMaxFever(player)
+    return 100 - SuperImmuneGetMinimumHealth(player)
+end
+
+local function SuperImmuneClampFever(player, playerdata)
+    if not player:hasTrait(ToadTraitsRegistries.superimmune) or not playerdata.SuperImmuneActive then
+        return
+    end
+    if playerdata.SuperImmuneLethal then
+        return
+    end
+
+    local stats = player:getStats()
+    local maxFever = SuperImmuneGetMaxFever(player)
+    if stats:get(CharacterStat.ZOMBIE_FEVER) <= maxFever then
+        return
+    end
+
+    if isClient() then
+        sendClientCommand(player, "ToadTraits", "UpdateStats", { zombie_fever = maxFever })
+    else
+        stats:set(CharacterStat.ZOMBIE_FEVER, maxFever)
+    end
+end
+
 local function SuperImmune(player, playerdata)
     if not player:hasTrait(ToadTraitsRegistries.superimmune) then
         return
@@ -3048,11 +3082,11 @@ local function SuperImmune(player, playerdata)
     end
 
     if isClient() then
-        local args = { zombie_fever = 100, zombie_infection = 0, clear_wounds = true }
+        local args = { zombie_fever = SuperImmuneGetMaxFever(player), zombie_infection = 0, clear_wounds = true }
         sendClientCommand(player, "ToadTraits", "UpdateStats", args)
     else
-        -- We set the Fever here to 100 for the Health Loss and simulate fighting the infection
-        stats:set(CharacterStat.ZOMBIE_FEVER, 100)
+        -- Keep fever high enough to simulate the infection without letting B42.18 kill Super Immune players outright.
+        stats:set(CharacterStat.ZOMBIE_FEVER, SuperImmuneGetMaxFever(player))
         stats:set(CharacterStat.ZOMBIE_INFECTION, 0)
         bodyDamage:setInfected(false)
         bodyDamage:setInfectionMortalityDuration(-1)
@@ -3156,6 +3190,10 @@ local function SuperImmuneRecoveryProcess(player, playerdata)
             illness = illness - (0.333 * speedRun)
         end
 
+        if not playerdata.SuperImmuneLethal then
+            illness = math.min(illness, SuperImmuneGetMaxFever(player))
+        end
+
         illness = illness - (playerdata.SuperImmuneMinutesWellFed / 50)
         playerdata.SuperImmuneAbsoluteWellFedAmount = (playerdata.SuperImmuneAbsoluteWellFedAmount or 0)
                 + playerdata.SuperImmuneMinutesWellFed
@@ -3257,21 +3295,9 @@ local function SuperImmuneRecoveryProcess(player, playerdata)
     end
 end
 
-local function SuperImmuneFakeInfectionHealthLoss(player, playerdata)
-    if not player:hasTrait(ToadTraitsRegistries.superimmune) then
-        return
-    end
-    if not playerdata.SuperImmuneActive then
-        return
-    end
+local function SuperImmuneGetHealthTarget(player, playerdata, illness)
+    local minimumHealth = SuperImmuneGetMinimumHealth(player)
 
-    local maxHealth = isClient() and 20 or 15
-    if player:hasTrait(ToadTraitsRegistries.indefatigable) then
-        maxHealth = isClient() and 30 or 25
-    end
-
-    local stats = player:getStats()
-    local illness = stats:get(CharacterStat.ZOMBIE_FEVER)
     if SandboxVars.MoreTraits.SuperImmuneWeakness then
         local limit = 4
 
@@ -3285,18 +3311,33 @@ local function SuperImmuneFakeInfectionHealthLoss(player, playerdata)
             limit = limit - 1
         end
 
-        if playerdata.SuperImmuneInfections >= limit then
-            maxHealth = 0
-            illness = 100 -- Force them to die
+        if (playerdata.SuperImmuneInfections or 0) >= limit then
             playerdata.SuperImmuneLethal = true
-        else
-            playerdata.SuperImmuneLethal = false
+            return 0, 0
         end
+    end
+
+    playerdata.SuperImmuneLethal = false
+    return math.max(minimumHealth, 100 - illness), minimumHealth
+end
+
+local function SuperImmuneFakeInfectionHealthLoss(player, playerdata)
+    if not player:hasTrait(ToadTraitsRegistries.superimmune) then
+        return
+    end
+    if not playerdata.SuperImmuneActive then
+        return
+    end
+
+    local stats = player:getStats()
+    local illness = stats:get(CharacterStat.ZOMBIE_FEVER)
+    local targetHealth, maxHealth = SuperImmuneGetHealthTarget(player, playerdata, illness)
+    if playerdata.SuperImmuneLethal then
+        illness = 100 -- Force them to die
     end
 
     local bodyDamage = player:getBodyDamage()
     local currentHealth = bodyDamage:getOverallBodyHealth()
-    local targetHealth = math.max(maxHealth, 100 - illness) -- Prevent it dropping below maxHealth unless Lethal
 
     if playerdata.SuperImmuneLethal or currentHealth > targetHealth then
         -- Increased damage amounts because this only fires once per in-game minute
@@ -5411,6 +5452,7 @@ local function OnPlayerUpdate(player)
         clothingUpdate(player)
     elseif internalTick == 20 then
         FearfulUpdate(player, playerdata)
+        SuperImmuneClampFever(player, playerdata)
     elseif internalTick == 10 then
         SuperImmune(player, playerdata)
     end
